@@ -1,5 +1,5 @@
 """
-.. module:: generator
+.. module:: geppy.tools.generator
 .. moduleauthor:: Shuhua Gao
 
 This module :mod:`generator` provides functionality to generate a genome for a gene. That is, choose functions and

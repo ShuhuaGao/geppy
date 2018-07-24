@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 .. module:: geppy.core.symbol
 .. moduleauthor:: Shuhua Gao
@@ -382,9 +383,3 @@ class PrimitiveSet:
         """
         return self._globals
 
-
-"""
-.. rubric:: Footnotes
-.. [FC2006] Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
-    intelligence. Vol. 21. Springer, 2006.
-"""
