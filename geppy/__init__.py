@@ -22,9 +22,14 @@ The *geppy* package supports gene expression programming in Python.
 #    You should have received a copy of the GNU Lesser General Public
 #    License along with geppy. If not, see <http://www.gnu.org/licenses/>.
 
-from pkg_resources import get_distribution
+from pkg_resources import get_distribution, DistributionNotFound
 
-__version__ = get_distribution('geppy').version
+# fetch version from setup.py
+try:
+    __version__ = get_distribution('geppy').version
+except DistributionNotFound as e:
+    __version__ = 'Please install this package with setup.py'
+
 __author__ = 'Shuhua Gao'
 # __revision__ = "1.2.2"
 

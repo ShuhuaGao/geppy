@@ -14,7 +14,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../geppy'))
+sys.path.insert(0, os.path.abspath('../../'))
 
 
 # -- Project information -----------------------------------------------------
@@ -26,7 +26,7 @@ author = 'Shuhua Gao'
 # The short X.Y version
 version = '0.1.0'
 # The full version, including alpha/beta/rc tags
-release = '0.1.0a'
+release = '0.1.0a0'
 
 
 
