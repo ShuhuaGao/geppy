@@ -101,4 +101,7 @@ venv.bak/
 /site
 
 # mypy
+
+.idea/
+tmp_files/
 .mypy_cache/

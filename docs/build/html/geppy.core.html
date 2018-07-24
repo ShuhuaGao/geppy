@@ -1,0 +1,757 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>geppy.core package &#8212; geppy 0.1.0a0 documentation</title>
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+ 
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15144370-3']);
+  _gaq.push(['_trackPageview']);
+</script>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    <li><a href="https://github.com/ShuhuaGao/geppy"><img src="_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
+	<li><a href="index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="geppy-core-package">
+<h1>geppy.core package<a class="headerlink" href="#geppy-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-geppy.core.entity">
+<span id="geppy-core-entity-module"></span><h2>geppy.core.entity module<a class="headerlink" href="#module-geppy.core.entity" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-geppy.core.entity"></span><p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">entity</span></code> defines the core data structures used in GEP, including the gene, the chromosome, the
+K-expression and the expression tree. We use primitives (functions and terminals) to build genes and then compose
+a chromosome with one or multiple genes. Refer to the <a class="reference internal" href="#module-geppy.core.symbol" title="geppy.core.symbol"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geppy.core.symbol</span></code></a> module for information on primitives.</p>
+<p>A chromosome composed of only one gene is called a <em>monogenic</em> chromosome, while one composed of more than one genes
+is named a <em>multigenic</em> chromosome. A multigenic chromosome can be assigned a linking function to combine the results
+from multiple genes into a single result.</p>
+<dl class="class">
+<dt id="geppy.core.entity.Chromosome">
+<em class="property">class </em><code class="descclassname">geppy.core.entity.</code><code class="descname">Chromosome</code><span class="sig-paren">(</span><em>gene_gen</em>, <em>n_genes</em>, <em>linker=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Chromosome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Chromosome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<p>Individual representation in gene expression programming (GEP), which may contain one or more genes. Note that in a
+multigenic chromosome, all genes must share the same head length and the same primitive set. Each element of
+<a class="reference internal" href="#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a> is of type <a class="reference internal" href="#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>.</p>
+<dl class="method">
+<dt id="geppy.core.entity.Chromosome.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>gene_gen</em>, <em>n_genes</em>, <em>linker=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Chromosome.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Chromosome.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize an individual in GEP.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>gene_gen</strong> – callable, a gene generator, i.e., <code class="docutils literal notranslate"><span class="pre">gene_gen()</span></code> should return a gene</li>
+<li><strong>n_genes</strong> – number of genes</li>
+<li><strong>linker</strong> – callable, a linking function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="geppy.core.entity.Chromosome.from_genes">
+<em class="property">classmethod </em><code class="descname">from_genes</code><span class="sig-paren">(</span><em>genes</em>, <em>linker=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Chromosome.from_genes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Chromosome.from_genes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a chromosome instance by providing a list of genes directly. The number of genes is implicitly specified
+by <code class="docutils literal notranslate"><span class="pre">len(genes)</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>genes</strong> – iterable, a list of genes</li>
+<li><strong>linker</strong> – callable, a linking function. Refer to <a class="reference internal" href="#geppy.core.entity.Chromosome.__init__" title="geppy.core.entity.Chromosome.__init__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Chromosome.__init__()</span></code></a> for more details.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Chromosome.head_length">
+<code class="descname">head_length</code><a class="headerlink" href="#geppy.core.entity.Chromosome.head_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the length of the head domain. All genes in a chromosome should have the same head length.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Chromosome.kexpressions">
+<code class="descname">kexpressions</code><a class="headerlink" href="#geppy.core.entity.Chromosome.kexpressions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of K-expressions for all the genes in this chromosome.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Chromosome.linker">
+<code class="descname">linker</code><a class="headerlink" href="#geppy.core.entity.Chromosome.linker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the linking function.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Chromosome.max_arity">
+<code class="descname">max_arity</code><a class="headerlink" href="#geppy.core.entity.Chromosome.max_arity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max arity of the functions in the primitive set with which all genes are built. Note that all genes
+in a chromosome should share the same primitive set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Chromosome.tail_length">
+<code class="descname">tail_length</code><a class="headerlink" href="#geppy.core.entity.Chromosome.tail_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the length of the tail domain. All genes in a chromosome should have the same tail length.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.entity.ExpressionTree">
+<em class="property">class </em><code class="descclassname">geppy.core.entity.</code><code class="descname">ExpressionTree</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#ExpressionTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.ExpressionTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing an expression tree (ET) in GEP, which may be obtained by translating a K-expression, a
+gene, or a chromosome, i.e., genotype-phenotype mapping.</p>
+<dl class="class">
+<dt id="geppy.core.entity.ExpressionTree.Node">
+<em class="property">class </em><code class="descname">Node</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#ExpressionTree.Node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.ExpressionTree.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing a node in the expression tree. Each node has a variable number of children, depending on
+the arity of the primitive at this node.</p>
+<dl class="method">
+<dt id="geppy.core.entity.ExpressionTree.Node.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#ExpressionTree.Node.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.ExpressionTree.Node.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.ExpressionTree.Node.children">
+<code class="descname">children</code><a class="headerlink" href="#geppy.core.entity.ExpressionTree.Node.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the children of this node.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.ExpressionTree.Node.name">
+<code class="descname">name</code><a class="headerlink" href="#geppy.core.entity.ExpressionTree.Node.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name (label) of this node.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.entity.ExpressionTree.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#ExpressionTree.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.ExpressionTree.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a tree with the given <em>root</em> node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root</strong> – <a class="reference internal" href="#geppy.core.entity.ExpressionTree.Node" title="geppy.core.entity.ExpressionTree.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpressionTree.Node</span></code></a>, the root node</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="geppy.core.entity.ExpressionTree.from_genotype">
+<em class="property">classmethod </em><code class="descname">from_genotype</code><span class="sig-paren">(</span><em>genome</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#ExpressionTree.from_genotype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.ExpressionTree.from_genotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an expression tree by translating <em>genome</em>, which may be a K-expression, a gene, or a chromosome.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>genome</strong> – <a class="reference internal" href="#geppy.core.entity.KExpression" title="geppy.core.entity.KExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">KExpression</span></code></a>, <a class="reference internal" href="#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>, or <a class="reference internal" href="#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, the genotype of an individual</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#geppy.core.entity.ExpressionTree" title="geppy.core.entity.ExpressionTree"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExpressionTree</span></code></a>, an expression tree</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.ExpressionTree.root">
+<code class="descname">root</code><a class="headerlink" href="#geppy.core.entity.ExpressionTree.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the root node of this expression tree.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.entity.Gene">
+<em class="property">class </em><code class="descclassname">geppy.core.entity.</code><code class="descname">Gene</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Gene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<p>A single gene in GEP, which is a fixed-length linear sequence composed of functions and terminals.</p>
+<dl class="method">
+<dt id="geppy.core.entity.Gene.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Gene.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Gene.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate a gene.
+:param head_length: length of the head domain
+:param pset: a primitive set including functions and terminals for genome construction.</p>
+<p>Supposing the maximum arity of functions in <em>pset</em> is <em>max_arity</em>, then the tail length is automatically
+determined to be <code class="docutils literal notranslate"><span class="pre">tail_length</span> <span class="pre">=</span> <span class="pre">head_length</span> <span class="pre">*</span> <span class="pre">(max_arity</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">+</span> <span class="pre">1</span></code>. The genome, i.e., list of symbols in
+the instantiated gene is formed randomly from <em>pset</em>.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="geppy.core.entity.Gene.from_genome">
+<em class="property">classmethod </em><code class="descname">from_genome</code><span class="sig-paren">(</span><em>genome</em>, <em>head_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Gene.from_genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Gene.from_genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a gene directly from the given <em>genome</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>genome</strong> – iterable, a list of symbols representing functions and terminals</li>
+<li><strong>head_length</strong> – length of the head domain</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>, a gene</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Gene.head">
+<code class="descname">head</code><a class="headerlink" href="#geppy.core.entity.Gene.head" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the head domain of the gene.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Gene.head_length">
+<code class="descname">head_length</code><a class="headerlink" href="#geppy.core.entity.Gene.head_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the length of the head domain.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Gene.kexpression">
+<code class="descname">kexpression</code><a class="headerlink" href="#geppy.core.entity.Gene.kexpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the K-expression represented by this gene.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Gene.max_arity">
+<code class="descname">max_arity</code><a class="headerlink" href="#geppy.core.entity.Gene.max_arity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max arity of the functions in the primitive set with which the gene is built.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Gene.tail">
+<code class="descname">tail</code><a class="headerlink" href="#geppy.core.entity.Gene.tail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tail domain of the gene.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.Gene.tail_length">
+<code class="descname">tail_length</code><a class="headerlink" href="#geppy.core.entity.Gene.tail_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the length of the tail domain.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.entity.KExpression">
+<em class="property">class </em><code class="descclassname">geppy.core.entity.</code><code class="descname">KExpression</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#KExpression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.KExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<p>Class representing the K-expression, or the open reading frame (ORF), of a gene in GEP. A K-expression is actually
+a linear form of an expression tree obtained by level-order traversal.</p>
+<dl class="method">
+<dt id="geppy.core.entity.KExpression.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#KExpression.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.KExpression.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a K-expression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>content</strong> – iterable, each element is a primitive (function or terminal)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geppy.core.symbol">
+<span id="geppy-core-symbol-module"></span><h2>geppy.core.symbol module<a class="headerlink" href="#module-geppy.core.symbol" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-geppy.core.symbol"></span><p>This <a class="reference external" href="https://docs.python.org/3/library/symbol.html#module-symbol" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symbol</span></code></a> module defines the classes encapsulating the symbols in GEP. A gene in GEP is composed of multiple
+symbols,  which include <em>terminals</em> and <em>functions</em>. Together, they are called <em>primitives</em>. This module also
+provides a <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet" title="geppy.core.symbol.PrimitiveSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code></a> class, which represents a primitive set containing <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Terminal</span></code></a>
+and <a class="reference internal" href="#geppy.core.symbol.Function" title="geppy.core.symbol.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> items, for management purpose.</p>
+<p>This module implementation refers a lot to the
+<a class="reference external" href="http://deap.readthedocs.io/en/master/tutorials/advanced/gp.html">deap.gp</a> module in DEAP,
+especially on primitive management and parsing during evaluation. However, unlike genetic programming (GP) in
+<a class="reference external" href="http://deap.readthedocs.io/en/master/api/gp.html#module-deap.gp" title="(in DEAP v1.2)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">deap.gp</span></code></a>, in GEP we usually only consider loosely  typed evolution, i.e., the terminals and functions don’t
+require specific data types. As a result, the codes can be greatly simplified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In GEP and GP terminology, there are two kinds of primitives: <em>functions</em> and <em>terminals</em>. In
+<a class="reference external" href="http://deap.readthedocs.io/en/master/tutorials/advanced/gp.html">deap.gp</a>, a <em>primitive</em> actually refers to
+a function. To avoid possible ambiguity, in <a class="reference internal" href="geppy.html#module-geppy" title="geppy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geppy</span></code></a> they are explicitly named <em>function</em> and <em>terminal</em>
+respectively. For instance, the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_function" title="geppy.core.symbol.PrimitiveSet.add_function"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PrimitiveSet.add_function()</span></code></a> method can be used to add a function primitive.</p>
+</div>
+<p><strong>Reference:</strong></p>
+<table class="docutils citation" frame="void" id="fc2006" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[FC2006]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
+intelligence. Vol. 21. Springer, 2006.</td></tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="geppy.core.symbol.Ephemeral">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Ephemeral</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
+<p>Class that encapsulates an ephemeral random constant terminal in GEP, which can be used to build a normal constant
+terminal with a randomly produced value when needed using the <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generate" title="geppy.core.symbol.Ephemeral.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code></a> method.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
+by Koza to handle numerical constants in evolutionary programming. However, it is NOT the recommended way
+to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain
+in genes.See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id2">[FC2006]</a>.</p>
+</div>
+<dl class="method">
+<dt id="geppy.core.symbol.Ephemeral.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – str, name of the ephemeral constant</li>
+<li><strong>gen</strong> – callable, an ephemeral number generator, which should return a random value when called with
+no arguments.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.Ephemeral.format">
+<code class="descname">format</code><a class="headerlink" href="#geppy.core.symbol.Ephemeral.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>This doesn’t make sense for an ephemeral constant terminal. Simply raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.Ephemeral.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a constant terminal, whose value is randomly produced by the <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generator" title="geppy.core.symbol.Ephemeral.generator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generator()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.Ephemeral.generator">
+<code class="descname">generator</code><a class="headerlink" href="#geppy.core.symbol.Ephemeral.generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ephemeral random number generator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.Ephemeral.value">
+<code class="descname">value</code><a class="headerlink" href="#geppy.core.symbol.Ephemeral.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>This doesn’t make sense for an ephemeral constant terminal. Simply raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.Function">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Function</code><span class="sig-paren">(</span><em>name</em>, <em>arity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Primitive" title="geppy.core.symbol.Primitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Primitive</span></code></a></p>
+<p>Class that encapsulates a function in GEP. Note that this class only stores the function ID, i.e., the <em>name</em>
+attributed instead of the callable function itself. On the tmp hand, the underlying callable is retrieved
+somewhere else when needed, for example, from <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet" title="geppy.core.symbol.PrimitiveSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code></a>. Thus, in the whole GEP program the provided
+name for each function must be unique.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.Function.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>arity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Function.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Function.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – str, name of the function</li>
+<li><strong>arity</strong> – int, arity of the function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.Function.format">
+<code class="descname">format</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Function.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Function.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the arguments <em>args</em> into the function and get a Python statement to call the functions with the
+arguments in a string form. This returned string can afterwards by evaluated using the builtin
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#eval" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> function.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">&#39;add(2, 10)&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – arguments, whose number should be equal to the arity of this function</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str, a string form of function calling with arguments</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.Primitive">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Primitive</code><span class="sig-paren">(</span><em>name</em>, <em>arity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Primitive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Primitive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that encapsulates a primitive in GEP. A primitive may be a function or a terminal.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.Primitive.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>arity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Primitive.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Primitive.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a primitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – str, name of the primitive</li>
+<li><strong>arity</strong> – int, arity of the primitive</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.Primitive.arity">
+<code class="descname">arity</code><a class="headerlink" href="#geppy.core.symbol.Primitive.arity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the arity of this primitive. For a terminal, the arity is 0.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.Primitive.format">
+<code class="descname">format</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Primitive.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Primitive.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of the underlying concept with possible arguments. The derived classes should
+implement this method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – variable number of arguments</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str, a string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.Primitive.name">
+<code class="descname">name</code><a class="headerlink" href="#geppy.core.symbol.Primitive.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of this primitive.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.PrimitiveSet">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">PrimitiveSet</code><span class="sig-paren">(</span><em>name</em>, <em>input_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A class representing a primitive set, which contains the primitives (terminals and functions) that are used in GEP.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>input_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate a primitive set with the given <em>name</em> and the list of input names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – name of the primitive set</li>
+<li><strong>input_names</strong> – iterable, a list of names for the inputs in the GEP problem, for instance,
+<code class="docutils literal notranslate"><span class="pre">['x',</span> <span class="pre">'y']</span></code> for two inputs.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.add_ephemeral">
+<code class="descname">add_ephemeral</code><span class="sig-paren">(</span><em>gen</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_ephemeral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an ephemeral constant to the set. An ephemeral’s true value is generated by <em>gen</em>, which should be a no
+argument function that returns a random value, when the ephemeral is picked to build a gene. Once an ephemeral
+is picked, its <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generate" title="geppy.core.symbol.Ephemeral.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code></a> method is called to produce a constant terminal with a random value
+generated by <em>gen</em>. Thus, each time <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generate" title="geppy.core.symbol.Ephemeral.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code></a> is called, a terminal with a different value may
+be yielded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>gen</strong> – callable, a random number generator which returns a random constant when called by <code class="docutils literal notranslate"><span class="pre">gen()</span></code></li>
+<li><strong>name</strong> – str, name of the ephemeral</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
+by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works
+in GEP, it is NOT the recommended way to evolve constants in GEP, especially for complex problems.
+The recommended method is to add a RNC domain in genes. See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.add_function">
+<code class="descname">add_function</code><span class="sig-paren">(</span><em>func</em>, <em>arity</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a function, which is internally encapsulated as a <a class="reference internal" href="#geppy.core.symbol.Function" title="geppy.core.symbol.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>func</strong> – callable</li>
+<li><strong>arity</strong> – number of arguments accepted by <em>func</em></li>
+<li><strong>name</strong> – name of <em>func</em>. If remaining <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the <code class="docutils literal notranslate"><span class="pre">func.__name__</span></code> attribute is used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.add_terminal">
+<code class="descname">add_terminal</code><span class="sig-paren">(</span><em>value</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a non-ephemeral terminal, which is internally encapsulated as a <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Terminal</span></code></a> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> – value of the terminal</li>
+<li><strong>name</strong> – name of the terminal, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If a constant terminal like a number 5 is expected, then simply leave <em>name</em> as <code class="docutils literal notranslate"><span class="pre">None</span></code>, and use
+<code class="docutils literal notranslate"><span class="pre">add_terminal(5)</span></code>. Otherwise, please specify a valid <em>name</em> to create a symbolic terminal.
+For instance, <code class="docutils literal notranslate"><span class="pre">add_terminal(3.14,</span> <span class="pre">'pi')</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.ephemerals">
+<code class="descname">ephemerals</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.ephemerals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the ephemeral terminals.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.functions">
+<code class="descname">functions</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the functions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.globals">
+<code class="descname">globals</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.globals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a dictionary which can be used to set up the evaluation/execution environment. This dictionary can be
+fed into the builtin <a class="reference external" href="https://docs.python.org/3/library/functions.html#eval" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/functions.html#exec" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a> functions for expression evaluation.</p>
+<p>For example, if we call <code class="docutils literal notranslate"><span class="pre">add_function(max,</span> <span class="pre">2,</span> <span class="pre">'max2')</span></code>, then <code class="docutils literal notranslate"><span class="pre">globals['max2']</span></code> corresponds to a
+<a class="reference internal" href="#geppy.core.symbol.Function" title="geppy.core.symbol.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> object encapsulating the <a class="reference external" href="https://docs.python.org/3/library/functions.html#max" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a> function.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.input_names">
+<code class="descname">input_names</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.input_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of names for the input arguments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.name">
+<code class="descname">name</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of this primitive set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.terminals">
+<code class="descname">terminals</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.terminals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the terminals, including the ephemeral ones and input terminals if any.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.Terminal">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Terminal</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Primitive" title="geppy.core.symbol.Primitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Primitive</span></code></a></p>
+<p>Class that encapsulates a terminal in GEP.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.Terminal.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Terminal.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Terminal.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a terminal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – str, name of the terminal</li>
+<li><strong>value</strong> – value of the terminal</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.Terminal.format">
+<code class="descname">format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Terminal.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Terminal.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of this terminal for subsequent evaluation purpose, which may be a symbol or a
+numeric string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">str, a string representation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.Terminal.value">
+<code class="descname">value</code><a class="headerlink" href="#geppy.core.symbol.Terminal.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of this terminal.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geppy.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-geppy.core" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">geppy.core package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-geppy.core.entity">geppy.core.entity module</a></li>
+<li><a class="reference internal" href="#module-geppy.core.symbol">geppy.core.symbol module</a></li>
+<li><a class="reference internal" href="#module-geppy.core">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/geppy.core.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    <li><a href="https://github.com/ShuhuaGao/geppy"><img src="_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
+	<li><a href="index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+ 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2018, Shuhua Gao.
+    <br />
+    Built on None.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+</div>
+<script type="text/javascript">
+  (function() {
+     var ga = document.createElement('script');
+         ga.src = ('https:' == document.location.protocol ?
+                'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+  </body>
+</html>

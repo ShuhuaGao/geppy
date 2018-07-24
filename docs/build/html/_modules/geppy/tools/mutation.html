@@ -1,0 +1,259 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>geppy.tools.mutation &#8212; geppy 0.1.0a0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+ 
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15144370-3']);
+  _gaq.push(['_trackPageview']);
+</script>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    <li><a href="https://github.com/ShuhuaGao/geppy"><img src="../../../_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
+	<li><a href="../../../index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for geppy.tools.mutation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: geppy.tools.mutation</span>
+<span class="sd">.. moduleauthor:: Shuhua Gao</span>
+
+<span class="sd">The module :mod:`mutation` provides mutation related genetic modifications in GEP, including point-mutation,</span>
+<span class="sd">transposition and inversion. Please refer to Chapter 3 of [FC2006]_ for more details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span>
+
+<span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">_choose_function</span><span class="p">(</span><span class="n">pset</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pset</span><span class="o">.</span><span class="n">functions</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_choose_terminal</span><span class="p">(</span><span class="n">pset</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pset</span><span class="o">.</span><span class="n">terminals</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_choose_subsequence</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">max_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span>
+
+
+<div class="viewcode-block" id="mutUniform"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutUniform">[docs]</a><span class="k">def</span> <span class="nf">mutUniform</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">indpb</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For each symbol in *individual*, change it to another randomly chosen symbol from *pset* with the probability</span>
+<span class="sd">    *indpb*.</span>
+
+<span class="sd">    :param individual: the chromosome to be mutated.</span>
+<span class="sd">    :param pset: :class:`PrimitiveSet`, a primitive set</span>
+<span class="sd">    :param indpb: probability of mutating each symbol</span>
+<span class="sd">    :return: A tuple of one chromosome</span>
+
+<span class="sd">    It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">individual</span><span class="p">:</span>
+        <span class="c1"># mutate the gene with the associated pset</span>
+        <span class="c1"># head: any symbol can be changed into a function or a terminal</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gene</span><span class="o">.</span><span class="n">head_length</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">indpb</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>  <span class="c1"># to a function</span>
+                    <span class="n">gene</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_function</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">gene</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_terminal</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
+        <span class="c1"># tail: only change to another terminal</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gene</span><span class="o">.</span><span class="n">head_length</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">gene</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">indpb</span><span class="p">:</span>
+                <span class="n">gene</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_terminal</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
+
+
+<div class="viewcode-block" id="invert"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.invert">[docs]</a><span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A gene is randomly chosen, and afterwards as subsequence within this gene&#39;s head domain is randomly selected</span>
+<span class="sd">    and inverted.</span>
+
+<span class="sd">    :param individual: a chromosome</span>
+<span class="sd">    :return: a tuple of one individual</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">individual</span><span class="o">.</span><span class="n">head_length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">gene</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+    <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">_choose_subsequence</span><span class="p">(</span><span class="n">gene</span><span class="o">.</span><span class="n">head</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">gene</span><span class="o">.</span><span class="n">head_length</span><span class="p">)</span>
+    <span class="n">gene</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">gene</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">end</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
+
+
+<span class="k">def</span> <span class="nf">_choose_donor_donee</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+    <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)),</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># with replacement</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">[</span><span class="n">i1</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="n">i2</span><span class="p">],</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span>
+
+
+<div class="viewcode-block" id="isTranspose"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.isTranspose">[docs]</a><span class="k">def</span> <span class="nf">isTranspose</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform IS transposition in place</span>
+
+<span class="sd">    :param individual: a chromosome</span>
+<span class="sd">    :return: a tuple of one individual</span>
+
+<span class="sd">    An Insertion Sequence (IS) is a random chosen segment across the chromosome, and then the</span>
+<span class="sd">    IS is copied to be inserted at another position in the head of gene, except the start position. Note that an IS from</span>
+<span class="sd">    one gene may be copied to a different gene. Typically, `ispb` is set around 0.1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">donor</span><span class="p">,</span> <span class="n">donee</span><span class="p">,</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">_choose_donor_donee</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+    <span class="n">is_start</span><span class="p">,</span> <span class="n">is_end</span> <span class="o">=</span> <span class="n">_choose_subsequence</span><span class="p">(</span><span class="n">donor</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">donee</span><span class="o">.</span><span class="n">head_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">is_</span> <span class="o">=</span> <span class="n">donor</span><span class="p">[</span><span class="n">is_start</span><span class="p">:</span> <span class="n">is_end</span><span class="p">]</span>
+    <span class="n">insertion_pos</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">donee</span><span class="o">.</span><span class="n">head_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">is_</span><span class="p">))</span>
+    <span class="n">donee</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">donee</span><span class="p">[:</span><span class="n">insertion_pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">is_</span> <span class="o">+</span> \
+        <span class="n">donee</span><span class="p">[</span><span class="n">insertion_pos</span><span class="p">:</span> <span class="n">insertion_pos</span> <span class="o">+</span> <span class="n">donee</span><span class="o">.</span><span class="n">head_length</span> <span class="o">-</span> <span class="n">insertion_pos</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">is_</span><span class="p">)]</span> <span class="o">+</span> <span class="n">donee</span><span class="o">.</span><span class="n">tail</span>
+    <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;IS transpose: g</span><span class="si">{}</span><span class="s1">[</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">] -&gt; g</span><span class="si">{}</span><span class="s1">[</span><span class="si">{}</span><span class="s1">:]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">is_start</span><span class="p">,</span> <span class="n">is_end</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">insertion_pos</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
+
+
+<div class="viewcode-block" id="risTranspose"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.risTranspose">[docs]</a><span class="k">def</span> <span class="nf">risTranspose</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform RIS transposition in place</span>
+
+<span class="sd">    :param individual: a chromosome</span>
+<span class="sd">    :return: a tuple of one individual</span>
+
+<span class="sd">    A Root Insertion Sequence (RIS) is a segment of consecutive elements that starts with a</span>
+<span class="sd">    function. Once an RIS is randomly chosen, it is copied and inserted at the root (first position) of a gene. Note</span>
+<span class="sd">    that an RIS from one gene may be copied to a different gene. Typically, `rispb` is set around 0.1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_trial</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n_trial</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+        <span class="n">donor</span><span class="p">,</span> <span class="n">donee</span><span class="p">,</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">_choose_donor_donee</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+        <span class="c1"># choose a function node randomly to start RIS</span>
+        <span class="n">function_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">donor</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Function</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">function_indices</span><span class="p">:</span>  <span class="c1"># no functions in this donor, try another</span>
+            <span class="n">n_trial</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">continue</span>
+        <span class="n">ris_start</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">function_indices</span><span class="p">)</span>
+        <span class="c1"># determine the length randomly</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">donee</span><span class="o">.</span><span class="n">head_length</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">donor</span><span class="p">)</span> <span class="o">-</span> <span class="n">ris_start</span><span class="p">))</span>
+        <span class="c1"># insert ris at the root of donee</span>
+        <span class="n">ris</span> <span class="o">=</span> <span class="n">donor</span><span class="p">[</span><span class="n">ris_start</span><span class="p">:</span> <span class="n">ris_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span>
+        <span class="n">donee</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">ris</span> <span class="o">+</span> <span class="n">donee</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="n">donee</span><span class="o">.</span><span class="n">head_length</span> <span class="o">-</span> <span class="n">length</span><span class="p">]</span> <span class="o">+</span> <span class="n">donee</span><span class="o">.</span><span class="n">tail</span>
+        <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RIS transpose: g</span><span class="si">{}</span><span class="s1">[</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">] -&gt; g</span><span class="si">{}</span><span class="s1">[0:]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">ris_start</span><span class="p">,</span> <span class="n">ris_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">,</span> <span class="n">i2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">individual</span><span class="p">,</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
+
+
+<div class="viewcode-block" id="geneTranspose"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.geneTranspose">[docs]</a><span class="k">def</span> <span class="nf">geneTranspose</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform gene transposition in place</span>
+
+<span class="sd">    :param individual: a chromosome</span>
+<span class="sd">    :return: a tuple of one individual</span>
+
+<span class="sd">    An entire gene is selected randomly and exchanged with the first gene in the chromosome.</span>
+<span class="sd">    Obviously, this operation only makes sense if the chromosome is a multigenic one. Typically, `gpb` is set</span>
+<span class="sd">    around 0.1.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">individual</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">individual</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="n">source</span><span class="p">],</span> <span class="n">individual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Gene transpose: g0 &lt;-&gt; g</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    <li><a href="https://github.com/ShuhuaGao/geppy"><img src="../../../_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
+	<li><a href="../../../index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2018, Shuhua Gao.
+    <br />
+    Built on None.
+    <a href="../../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+</div>
+<script type="text/javascript">
+  (function() {
+     var ga = document.createElement('script');
+         ga.src = ('https:' == document.location.protocol ?
+                'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+  </body>
+</html>

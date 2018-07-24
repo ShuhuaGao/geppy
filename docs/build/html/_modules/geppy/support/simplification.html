@@ -1,0 +1,209 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>geppy.support.simplification &#8212; geppy 0.1.0a0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+ 
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15144370-3']);
+  _gaq.push(['_trackPageview']);
+</script>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    <li><a href="https://github.com/ShuhuaGao/geppy"><img src="../../../_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
+	<li><a href="../../../index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for geppy.support.simplification</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: geppy.support.simplification</span>
+<span class="sd">.. moduleauthor:: Shuhua Gao</span>
+
+<span class="sd">This module :mod:`simplification` provides utility functions for symbolic simplification of GEP individuals, which may</span>
+<span class="sd">be used in postprocessing.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">from</span> <span class="nn">geppy.core.entity</span> <span class="k">import</span> <span class="n">KExpression</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">Gene</span>
+<span class="kn">from</span> <span class="nn">geppy.core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Terminal</span>
+
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="c1">#: the default symbolic function map for the :func:`simplify` function, which includes common arithmetic operations,</span>
+<span class="c1">#: Boolean operations.</span>
+<span class="n">DEFAULT_SYMBOLIC_FUNCTION_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">And</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Or</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">not_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Not</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">neg</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">neg</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">floordiv</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">floordiv</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_simplify_kexpression</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">symbolic_function_map</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simplify a K-expression.</span>
+<span class="sd">    :return: a symbolic expression</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="p">[:]</span>
+    <span class="c1"># K-expression is simply a level-order serialization of an expression tree.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">))):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Function</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sym_func</span> <span class="o">=</span> <span class="n">symbolic_function_map</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please provide the symbolic function mapping for &#39;</span><span class="si">{}</span><span class="s2">&#39; in symbolic_function_map.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">e</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">arity</span><span class="p">):</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  <span class="c1"># t may be a terminal or a symbolic expression already</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Terminal</span><span class="p">):</span>
+                    <span class="c1"># a terminal may be a constant or an input</span>
+                    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># an input</span>
+                        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>  <span class="c1"># &#39;x&#39; -&gt; symbol x</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="c1"># evaluate this function node symbolically</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">sym_func</span><span class="p">(</span><span class="o">*</span><span class="nb">reversed</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+            <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="simplify"><a class="viewcode-back" href="../../../geppy.support.html#geppy.support.simplification.simplify">[docs]</a><span class="k">def</span> <span class="nf">simplify</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">symbolic_function_map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compile the primitive tree into a (possibly simplified) symbolic expression.</span>
+
+<span class="sd">    :param genome: :class:`~geppy.core.entity.KExpression`, :class:`~geppy.core.entity.Gene`, or</span>
+<span class="sd">        :class:`~geppy.core.entity.Chromosome`, the genotype of an individual</span>
+<span class="sd">    :param symbolic_function_map: dict, maps each function name in the primitive set to a symbolic version</span>
+<span class="sd">    :return: a (simplified) symbol expression</span>
+
+<span class="sd">    For example, *add(sub(3, 3), x)* may be simplified to *x*. This :func:`simplify` function can be used to</span>
+<span class="sd">    postprocess the best individual obtained in GEP for a simplified representation. Some Python functions like</span>
+<span class="sd">    :func:`operator.add` can be used directly in *sympy*. However, there are also functions that have their own</span>
+<span class="sd">    symbolic versions to be used in *sympy*, like the :func:`operator.and_`, which should be replaced by</span>
+<span class="sd">    :func:`sympy.And`. In such a case, we may provide a map</span>
+<span class="sd">    ``symbolic_function_map={operator.and_.__name__, sympy.And}`` supposing the function primitive encapsulating</span>
+<span class="sd">    :func:`operator.and_` uses its default name.</span>
+
+<span class="sd">    Such simplification doesn&#39;t affect GEP at all. It should be used as a postprocessing step to simplify the final</span>
+<span class="sd">    solution evolved by GEP.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        If the *symbolic_function_map* argument remains as the default value ``None``, then a default map</span>
+<span class="sd">        :data:`DEFAULT_SYMBOLIC_FUNCTION_MAP` is used, which contains common</span>
+<span class="sd">        *name-to-symbolic function* mappings, including the arithmetic operators and Boolean logic operators..</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        This function depends on the :mod:`sympy` module. You can find it `here &lt;http://www.sympy.org/en/index.html&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">symbolic_function_map</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">symbolic_function_map</span> <span class="o">=</span> <span class="n">DEFAULT_SYMBOLIC_FUNCTION_MAP</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">KExpression</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_simplify_kexpression</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">symbolic_function_map</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">Gene</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_simplify_kexpression</span><span class="p">(</span><span class="n">genome</span><span class="o">.</span><span class="n">kexpression</span><span class="p">,</span> <span class="n">symbolic_function_map</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">genome</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_simplify_kexpression</span><span class="p">(</span><span class="n">genome</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">kexpression</span><span class="p">,</span> <span class="n">symbolic_function_map</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Only an argument of type KExpression, Gene, and Chromosome is acceptable. The provided &#39;</span>
+                        <span class="s1">&#39;genome type is </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">genome</span><span class="p">)))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    <li><a href="https://github.com/ShuhuaGao/geppy"><img src="../../../_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
+	<li><a href="../../../index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2018, Shuhua Gao.
+    <br />
+    Built on None.
+    <a href="../../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+</div>
+<script type="text/javascript">
+  (function() {
+     var ga = document.createElement('script');
+         ga.src = ('https:' == document.location.protocol ?
+                'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+</script>
+
+  </body>
+</html>
