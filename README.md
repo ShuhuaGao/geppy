@@ -1,5 +1,5 @@
 # *geppy:* gene expression programming in Python
-<img src="docs/source/_static/geppy-icon.png" alt="drawing" width="400px"/>
+<img src="docs/source/_static/geppy-icon.png" alt="drawing" width="300px"/>
 
 *geppy* is a computational framework dedicated to [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP) in Python,  which is proposed by C. Ferreira  in 2001 [1].  *geppy* is developed in Python 3.
 
@@ -13,10 +13,10 @@ GEP can be seen as a variant of [genetic programming](https://en.wikipedia.org/w
 
 ## Features
 - Compatilibity with the [DEAP](https://github.com/DEAP/deap) infrastructure and accessibility to DEAP's functionality including:
-	- Multi-objective optimisation
-	- Parallelization of the evaluations
-	- Hall of Fame of the best individuals that lived in the population
-	- Checkpoints that take snapshots of a system regularly
+  - Multi-objective optimisation
+  - Parallelization of the evaluations
+  - Hall of Fame of the best individuals that lived in the population
+  - Checkpoints that take snapshots of a system regularly
 - Core data structures in GEP, including gene, chromosome, expression tree, and K-expression.
 - Implementation of common mutation, transposition, inversion and crossover operators in GEP.
 - Boilerplate algorithms, including the simple GEP algorithm and symbolic regression algorithm (TODO).
@@ -38,7 +38,9 @@ pip install .
 ```
 (TODO) Later, I will publish *geppy* to pip. 
 ## Documentation
-Check [*geppy* documentation]() for a comprehensive introduction of its API and typical usages.
+Check [*geppy* documentation](http://geppy.readthedocs.io/en/latest/) for a comprehensive introduction of its API and typical usages.
+
+TODO: add more examples and tutorials into the documentation.
 
 ## Examples
 
