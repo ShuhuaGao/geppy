@@ -12,7 +12,6 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import geppy
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../geppy'))
@@ -25,9 +24,9 @@ copyright = '2018, Shuhua Gao'
 author = 'Shuhua Gao'
 
 # The short X.Y version
-version = geppy.__version__
+version = '0.1.0'
 # The full version, including alpha/beta/rc tags
-release = version
+release = '0.1.0a'
 
 
 
