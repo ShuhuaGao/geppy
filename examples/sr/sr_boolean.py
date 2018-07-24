@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Symbolic regression for Boolean expressions.
 """

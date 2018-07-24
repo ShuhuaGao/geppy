@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    geppy.algorithms
     geppy.core
     geppy.support
     geppy.tools

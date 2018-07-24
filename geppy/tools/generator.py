@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 .. module:: geppy.tools.generator
 .. moduleauthor:: Shuhua Gao

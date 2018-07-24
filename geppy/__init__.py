@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 The *geppy* package supports gene expression programming in Python.
 

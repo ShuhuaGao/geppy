@@ -1,3 +1,13 @@
+# coding=utf-8
+"""
+.. module:: geppy.algorithms.basic
+.. moduleauthor:: Shuhua Gao
+
+This :mod:`basic` module provides fundamental boilerplate GEP algorithm implementations. After registering proper
+operations into a :class:`deap.base.Toolbox` object, the GEP evolution can be simply launched using the present
+algorithms. Of course, for complicated problems, you may want to define your own algorithms, and the implementation here
+can be used as a reference.
+"""
 from deap import tools
 import random
 
@@ -78,7 +88,7 @@ def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb,
     :param cxgpb: probability of gene crossover
     :param n_gen: number of generation.
     :param n_elites: number of elites to be cloned to next generation
-    :param stats: a:class:`~deap.tools.Statistics` object that is updated
+    :param stats: a :class:`~deap.tools.Statistics` object that is updated
                   inplace, optional.
     :param halloffame: a :class:`~deap.tools.HallOfFame` object that will
                        contain the best individuals, optional.
@@ -87,8 +97,7 @@ def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb,
     :returns: A class:`~deap.tools.Logbook` with the statistics of the
               evolution
 
-    ..note::
-
+    .. note::
         This function expects the following aliases to be registered in the toolbox: :meth:`toolbox.mutate`,
         :meth:`toolbox.invert`, :meth:`toolbox.isTranspose`, :meth:`toolbox.risTranspose`,
         :meth:`toolbox.geneTranspose` :meth:`toolbox.mate1p`, :meth:`toolbox.mate2p`, :meth:`toolbox.mateg`

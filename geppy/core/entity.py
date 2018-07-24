@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 .. module:: geppy.core.entity
 .. moduleauthor:: Shuhua Gao

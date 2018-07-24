@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 .. module:: geppy.support.visualization
 .. moduleauthor:: Shuhua Gao

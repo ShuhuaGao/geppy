@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 .. module:: geppy.tools.crossover
 .. moduleauthor:: Shuhua Gao
