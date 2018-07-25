@@ -1,4 +1,4 @@
-# *geppy:* gene expression programming in Python
+# *geppy:* a gene expression programming framework in Python
 <img src="docs/source/_static/geppy-icon.png" alt="drawing" width="300px"/>
 
 *geppy* is a computational framework dedicated to [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP) in Python,  which is proposed by C. Ferreira  in 2001 [1].  *geppy* is developed in Python 3.
@@ -20,7 +20,7 @@ GEP can be seen as a variant of [genetic programming](https://en.wikipedia.org/w
 - Core data structures in GEP, including gene, chromosome, expression tree, and K-expression.
 - Implementation of common mutation, transposition, inversion and crossover operators in GEP.
 - Boilerplate algorithms, including the simple GEP algorithm and symbolic regression algorithm (TODO).
-- Support numerical constants inference with a third Dc domain in genes. (TODO)
+- Support numerical constants inference with a third Dc domain in genes: GEP-RNC.
 - Visualization of the expression tree.
 - Symbolic simplification of a gene, a chromosome, or a K-expression in postprocessing.
 - Examples of different applications  in GEP.
