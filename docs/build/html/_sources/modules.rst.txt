@@ -5,4 +5,3 @@ geppy
    :maxdepth: 4
 
    geppy
-   setup

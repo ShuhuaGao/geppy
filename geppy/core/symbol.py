@@ -209,14 +209,38 @@ class Ephemeral(Terminal):
         return '{}(name={}, gen={})'.format(self.__class__, self.name, self.generator)
 
 
+class TerminalRNC(Terminal):
+    """
+    A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC
+    algorithm. This class is mainly used internally by the :class:`~geppy.core.entity.GeneDc` class. The name of a
+    :class:`TerminalRNC` object is '?' by default, and its value is retrieved dynamically according to the GEP-RNC
+    algorithm. Refer to Chapter 5 of [FC2006]_ for more details.
+    """
+    def __init__(self, name='?', value=None):
+        """
+        Initialize a RNC terminal.
+
+        :param name: str, name of the terminal
+        :param value: value of the terminal
+        """
+        super().__init__(name, value)
+
+
 class PrimitiveSet:
     """
     A class representing a primitive set, which contains the primitives (terminals and functions) that are used in GEP.
 
-    .. note:
+    .. warning::
         Each primitive in this set must have a unique name, which should also be a valid non-keyword
-        Python identifier, except the constant terminals. For more details, refer to the
-        :meth:`~PrimitiveSet.add_terminal` method.
+        Python identifier, except the constant terminals and RNC terminals. For more details, refer to the
+        :meth:`~PrimitiveSet.add_terminal` and :meth:`add_rnc` methods.
+
+    .. note::
+        To use the GEP-RNC algorithm, i.e., to use :class:`~geppy.core.entity.GeneDc` for numerical constant handling,
+        please use the :meth:`PrimitiveSet.add_rnc` method, which will add a special terminal
+        of type :class:`~geppy.core.symbol.TerminalRNC` internally. Then, use a chromosome composed of
+        :class:`~geppy.core.entity.GeneDc` genes as the individual.
+        Refer to Chapter 5 of [FC2006]_ for more details.
     """
     def __init__(self, name, input_names):
         """
@@ -301,7 +325,7 @@ class PrimitiveSet:
         Add a non-ephemeral terminal, which is internally encapsulated as a :class:`Terminal` object.
 
         :param value: value of the terminal
-        :param name: name of the terminal, default: ``None``.
+        :param name: str, name of the terminal, default: ``None``.
 
         If a constant terminal like a number 5 is expected, then simply leave *name* as ``None``, and use
         ``add_terminal(5)``. Otherwise, please specify a valid *name* to create a symbolic terminal.
@@ -331,6 +355,21 @@ class PrimitiveSet:
         """
         self._assert_symbol_valid_and_unique(name)
         self._terminals.append(Ephemeral(name, gen))
+
+    def add_rnc(self, name='?'):
+        """
+        Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.
+        This terminal's value is retrieved dynamically from an RNC array attached to a gene of type
+        :class:`~geppy.core.entity.GeneDc` according to the GEP-RNC algorithm.
+        See also :class:`TerminalRNC` and refer to Chapter 5 of [FC2006]_ about GEP-RNC.
+
+        :param name: str, name of the terminal. For a RNC terminal, generally there is no need to specify a name and
+            the default value '?' is recommended.
+
+        Usually it is sufficient to call this method once to add only one RNC terminal, since the values of the
+        RNC terminals at different positions are different random numerical constants..
+        """
+        self._terminals.append(TerminalRNC(name))
 
     @property
     def functions(self):
@@ -383,3 +422,9 @@ class PrimitiveSet:
         """
         return self._globals
 
+    @property
+    def max_arity(self):
+        """
+        Get the max arity of functions in this primitive set.
+        """
+        return max(f.arity for f in self.functions)

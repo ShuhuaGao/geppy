@@ -60,9 +60,9 @@
 <span class="sd">is named a *multigenic* chromosome. A multigenic chromosome can be assigned a linking function to combine the results</span>
 <span class="sd">from multiple genes into a single result.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">..tools.generator</span> <span class="k">import</span> <span class="n">generate_genome</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">..tools.generator</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">TerminalRNC</span>
 
 
 <span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
@@ -81,8 +81,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ele</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span></div>
+<div class="viewcode-block" id="KExpression.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.KExpression.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a string representation of this expression by joining the name of each primitive.</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ele</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="ExpressionTree"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.ExpressionTree">[docs]</a><span class="k">class</span> <span class="nc">ExpressionTree</span><span class="p">:</span>
@@ -214,9 +221,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">from_genome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Gene.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the expression in a human readable string.</span>
+<span class="sd">        Return the expression in a human readable string, which is also a legal python code that can be evaluated.</span>
 
 <span class="sd">        :return: string form of the expression</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -235,11 +242,12 @@
                 <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="nb">reversed</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>  <span class="c1"># replace the operator with its result (str)</span>
             <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
 
-        <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
+        <span class="c1"># the final result is at the root. It may happen that the K-expression contains only one terminal at its root.</span>
+        <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">()</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">kexpression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the K-expression represented by this gene.</span>
+        <span class="sd">&quot;&quot;&quot;Get the K-expression of type :class:`KExpression` represented by this gene.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># get the level-order K expression</span>
         <span class="n">expr</span> <span class="o">=</span> <span class="n">KExpression</span><span class="p">([</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
@@ -285,7 +293,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the tail domain of the gene.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -293,16 +301,167 @@
 
 <span class="sd">        :return: a string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">info</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Function</span><span class="p">):</span>
-                <span class="n">info</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>   <span class="c1"># normally, a terminal or an ephemeral constant</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">info</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">format</span><span class="p">())</span>
-                <span class="k">except</span><span class="p">:</span>
-                    <span class="n">info</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> [&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span></div>
+
+
+<div class="viewcode-block" id="GeneDc"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc">[docs]</a><span class="k">class</span> <span class="nc">GeneDc</span><span class="p">(</span><span class="n">Gene</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class represents a gene with an additional Dc domain to handle numerical constants in GEP.</span>
+
+<span class="sd">    The basic :class:`Gene`</span>
+<span class="sd">    has two domains, a head and a tail, while this :class:`GeneDc` class introduces another domain called *Dc*</span>
+<span class="sd">    after the tail. The length of the Dc domain is equal to the length of the tail domain. The Dc domain only stores</span>
+<span class="sd">    the indices of numbers present in a separate array :meth:`rnc_array`, which collects a group of candidate</span>
+<span class="sd">    random numerical constants (RNCs). Thus, each :class:`GeneDc` instance comes with a *rnc_array*, which are</span>
+<span class="sd">    generally different among different instances.</span>
+
+<span class="sd">    In addition to the operators of the basic gene expression algorithm (mutation, inversion, transposition, and</span>
+<span class="sd">    recombination), Dc-specific operators in GEP-RNC are also created to better evolve the Dc domain and to manipulate</span>
+<span class="sd">    the attached set of constants *rnc_array*. Such operators are all suffixed with &#39;_dc&#39; in</span>
+<span class="sd">    :mod:`~geppy.tools.crossover` and :mod:`~geppy.tools.mutation` modules, for example, the method</span>
+<span class="sd">    :func:`~geppy.tools.mutation.invert_dc`.</span>
+
+<span class="sd">    The *rnc_array* associated with each :class:`GeneDc` instance can be provided explicitly when creating</span>
+<span class="sd">    a :class:`GeneDc` instance. See :meth:`from_genome`. Or more generally, a</span>
+<span class="sd">    random number generator *rnc_gen* can be provided, with which a specified number of RNCs are generated during the</span>
+<span class="sd">    creation of gene instances.</span>
+
+<span class="sd">    A special terminal of type :class:`~geppy.core.symbol.TerminalRNC` is used internally to represent the RNCs.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        To create an effective :class:`GeneDc` gene, the primitive set should contain at least one</span>
+<span class="sd">        :class:`~geppy.core.symbol.TerminalRNC` terminal. See :meth:`~geppy.core.symbol.PrimitiveSet.add_rnc`</span>
+<span class="sd">        for details.</span>
+
+<span class="sd">    Refer to Chapter 5 of [FC2006]_ for more knowledge about GEP-RNC.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GeneDc.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">rnc_array_length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a gene with a Dc domain.</span>
+
+<span class="sd">        :param head_length: length of the head domain</span>
+<span class="sd">        :param pset: a primitive set including functions and terminals for genome construction.</span>
+<span class="sd">        :param rnc_gen: callable, which should generate a random number when called by ``rnc_gen()``.</span>
+<span class="sd">        :param rnc_array_length: int, number of random numerical constant candidates associated with this gene,</span>
+<span class="sd">            usually 10 is enough</span>
+
+<span class="sd">        Supposing the maximum arity of functions in *pset* is *max_arity*, then the tail length is automatically</span>
+<span class="sd">        determined to be ``tail_length = head_length * (max_arity - 1) + 1``. The genome, i.e., list of symbols in</span>
+<span class="sd">        the instantiated gene is formed randomly from *pset*. The length of Dc domain is equal to *tail_length*, i.e.,</span>
+<span class="sd">        the tail domain and the Dc domain share the same length.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># first generate the gene without Dc</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">head_length</span> <span class="o">*</span> <span class="p">(</span><span class="n">pset</span><span class="o">.</span><span class="n">max_arity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">t</span>
+        <span class="c1"># complement it with a Dc domain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rnc_gen</span> <span class="o">=</span> <span class="n">rnc_gen</span>
+        <span class="n">dc</span> <span class="o">=</span> <span class="n">generate_dc</span><span class="p">(</span><span class="n">rnc_array_length</span><span class="p">,</span> <span class="n">dc_length</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>
+        <span class="c1"># generate the rnc array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rnc_array</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_rnc_gen</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rnc_array_length</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="GeneDc.from_genome"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.from_genome">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_genome</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">genome</span><span class="p">,</span> <span class="n">head_length</span><span class="p">,</span> <span class="n">rnc_array</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a gene directly from the given *genome* and the random numerical constant (RNC) array *rnc_array*.</span>
+
+<span class="sd">        :param genome: iterable, a list of symbols representing functions and terminals (especially the special RNC</span>
+<span class="sd">            terminal of type :class:`~geppy.core.symbol.TerminalRNC`). This genome should have three</span>
+<span class="sd">            domains: head, tail and Dc. The Dc domain should be composed only of integers representing indices into the</span>
+<span class="sd">            *rnc_array*.</span>
+<span class="sd">        :param head_length: length of the head domain. The length of the tail and Dc domain should follow the rule and</span>
+<span class="sd">            can be determined from the head_length: ``dc_length = tail_length = (len(genome) - head_length) / 2``.</span>
+<span class="sd">        :param rnc_array: the RNC array associated with the gene, which contains random constant candidates</span>
+<span class="sd">        :return: :class:`GeneDc`, a gene</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_genome</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">head_length</span><span class="p">)</span>  <span class="c1"># the genome is copied and the head-length is fixed</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">_rnc_array</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">rnc_array</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">g</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dc_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the length of the Dc domain, which is equal to :meth:`GeneDc.tail_length`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rnc_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the random numerical array (RNC) associated with this gene.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rnc_array</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tail_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the tail domain length.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_arity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the max arity of functions in the primitive set used to build this gene.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># determine from the head-tail-Dc length relations</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">)</span> <span class="o">//</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Dc domain of this gene.</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_length</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">from_genome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GeneDc.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the expression in a human readable string, which is also a legal python code that can be evaluated.</span>
+<span class="sd">        The special terminal representing a RNC will be replaced by their true values retrieved from the array</span>
+<span class="sd">        :meth:`rnc_array`.</span>
+
+<span class="sd">        :return: string form of the expression</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kexpression</span>
+        <span class="n">n_total_rncs</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">TerminalRNC</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">)</span>  <span class="c1"># how many RNCs in total?</span>
+        <span class="n">n_encountered_rncs</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># how many RNCs we have encountered in reverse order?</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">arity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># a function</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">arity</span><span class="p">):</span>
+                    <span class="n">ele</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ele</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>  <span class="c1"># a terminal or a RNC terminal</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ele</span><span class="p">,</span> <span class="n">TerminalRNC</span><span class="p">):</span>
+                            <span class="c1"># retrieve its true value</span>
+                            <span class="n">which</span> <span class="o">=</span> <span class="n">n_total_rncs</span> <span class="o">-</span> <span class="n">n_encountered_rncs</span> <span class="o">-</span> <span class="mi">1</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc</span><span class="p">[</span><span class="n">which</span><span class="p">]</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                            <span class="n">n_encountered_rncs</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">else</span><span class="p">:</span>   <span class="c1"># a normal terminal</span>
+                            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="o">.</span><span class="n">format</span><span class="p">())</span>
+                <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="nb">reversed</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>  <span class="c1"># replace the operator with its result (str)</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="c1"># the final result is at the root</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">TerminalRNC</span><span class="p">):</span>  <span class="c1"># only contains a single RNC, let&#39;s retrieve its value</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dc</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>    <span class="c1"># only contains a normal terminal</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;, rnc_array=[&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span></div>
 
 
 <div class="viewcode-block" id="Chromosome"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Chromosome">[docs]</a><span class="k">class</span> <span class="nc">Chromosome</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
@@ -346,7 +505,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">c</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">genes</span><span class="p">)</span>
-        <span class="n">c</span><span class="o">.</span><span class="n">linker</span> <span class="o">=</span> <span class="n">linker</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">_linker</span> <span class="o">=</span> <span class="n">linker</span>
         <span class="k">return</span> <span class="n">c</span></div>
 
     <span class="nd">@property</span>
@@ -371,11 +530,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max_arity</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Chromosome.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Chromosome.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the expressions in a human readable string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s1">&#39;[</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;,</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">]&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;[</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;,</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">]&#39;</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">kexpressions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -402,6 +561,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">[</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;,</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span> <span class="o">+</span> \
                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">], linker=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linker</span><span class="p">)</span></div>
+
+
 </pre></div>
 
           </div>

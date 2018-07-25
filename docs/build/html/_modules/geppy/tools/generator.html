@@ -94,6 +94,19 @@
         <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">terminal</span>
     <span class="k">return</span> <span class="n">expr</span></div>
 
+
+<div class="viewcode-block" id="generate_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.generator.generate_dc">[docs]</a><span class="k">def</span> <span class="nf">generate_dc</span><span class="p">(</span><span class="n">rnc_array_length</span><span class="p">,</span> <span class="n">dc_length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Dc domain for a RNC array of size *rnc_array_length*.</span>
+
+<span class="sd">    :param rnc_array_length: length of the RNC array</span>
+<span class="sd">    :param dc_length: length of the Dc domain</span>
+<span class="sd">    :return: a list of integers of length *dc_length*, each element in range `[0, rnc_array_length - 1]`</span>
+
+<span class="sd">    Refer to Chapter 5 of [FC2006]_ for more details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rnc_array_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dc_length</span><span class="p">)]</span></div>
+
 </pre></div>
 
           </div>

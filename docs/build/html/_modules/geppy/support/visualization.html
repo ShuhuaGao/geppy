@@ -93,6 +93,9 @@
 <span class="sd">        to a new one for better visualization. The default label for each node is just the name of the primitive</span>
 <span class="sd">        placed on this node. For example, you may provide ``renamed_labels={&#39;and_&#39;: &#39;and&#39;}``.</span>
 <span class="sd">    :return: A node list, an edge list, and a dictionary of labels.</span>
+
+<span class="sd">    You can visualize a genome and export the tree visualization to an image file directly using the</span>
+<span class="sd">    :func:`export_expression_tree` function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
@@ -147,7 +150,7 @@
 <span class="sd">        This function currently depends on the :mod:`graphviz` module to render the tree. Please first install the</span>
 <span class="sd">        `graphviz &lt;https://pypi.org/project/graphviz/&gt;`_ module before using this function.</span>
 <span class="sd">        Alternatively, you can always obtain the raw graph data with the :func:`graph` function, then postprocess the</span>
-<span class="sd">        data and render them with tmp tools as you want.</span>
+<span class="sd">        data and render them with other tools as you want.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">graphviz</span> <span class="k">as</span> <span class="nn">gv</span>
     <span class="kn">import</span> <span class="nn">os.path</span>

@@ -44,13 +44,18 @@ def _modify(population, toolbox, mutpb, invpb, ispb, rispb, gpb, rep=True):
         offspring = population
 
     # mutate
-    _apply_modification(offspring, toolbox.mutate, mutpb)
+    if hasattr(toolbox, 'mutate'):
+        _apply_modification(offspring, toolbox.mutate, mutpb)
     # inversion
-    _apply_modification(offspring, toolbox.invert, invpb)
+    if hasattr(toolbox, 'invert'):
+        _apply_modification(offspring, toolbox.invert, invpb)
     # transposition
-    _apply_modification(offspring, toolbox.isTranspose, ispb)
-    _apply_modification(offspring, toolbox.risTranspose, rispb)
-    _apply_modification(offspring, toolbox.geneTranspose, gpb)
+    if hasattr(toolbox, 'isTranspose'):
+        _apply_modification(offspring, toolbox.isTranspose, ispb)
+    if hasattr(toolbox, 'risTranspose'):
+        _apply_modification(offspring, toolbox.risTranspose, rispb)
+    if hasattr(toolbox, 'geneTranspose'):
+        _apply_modification(offspring, toolbox.geneTranspose, gpb)
 
     return offspring
 

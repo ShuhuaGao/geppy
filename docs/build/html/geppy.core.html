@@ -84,6 +84,12 @@ multigenic chromosome, all genes must share the same head length and the same pr
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="geppy.core.entity.Chromosome.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Chromosome.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Chromosome.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the expressions in a human readable string.</p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="geppy.core.entity.Chromosome.from_genes">
 <em class="property">classmethod </em><code class="descname">from_genes</code><span class="sig-paren">(</span><em>genes</em>, <em>linker=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Chromosome.from_genes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Chromosome.from_genes" title="Permalink to this definition">¶</a></dt>
@@ -225,6 +231,20 @@ determined to be <code class="docutils literal notranslate"><span class="pre">ta
 the instantiated gene is formed randomly from <em>pset</em>.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="geppy.core.entity.Gene.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Gene.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Gene.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the expression in a human readable string, which is also a legal python code that can be evaluated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string form of the expression</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="geppy.core.entity.Gene.from_genome">
 <em class="property">classmethod </em><code class="descname">from_genome</code><span class="sig-paren">(</span><em>genome</em>, <em>head_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#Gene.from_genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.Gene.from_genome" title="Permalink to this definition">¶</a></dt>
@@ -261,7 +281,7 @@ the instantiated gene is formed randomly from <em>pset</em>.</p>
 <dl class="attribute">
 <dt id="geppy.core.entity.Gene.kexpression">
 <code class="descname">kexpression</code><a class="headerlink" href="#geppy.core.entity.Gene.kexpression" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the K-expression represented by this gene.</p>
+<dd><p>Get the K-expression of type <a class="reference internal" href="#geppy.core.entity.KExpression" title="geppy.core.entity.KExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">KExpression</span></code></a> represented by this gene.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -285,6 +305,134 @@ the instantiated gene is formed randomly from <em>pset</em>.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="geppy.core.entity.GeneDc">
+<em class="property">class </em><code class="descclassname">geppy.core.entity.</code><code class="descname">GeneDc</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em>, <em>rnc_gen</em>, <em>rnc_array_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#GeneDc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.GeneDc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.entity.Gene</span></code></a></p>
+<p>Class represents a gene with an additional Dc domain to handle numerical constants in GEP.</p>
+<p>The basic <a class="reference internal" href="#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>
+has two domains, a head and a tail, while this <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> class introduces another domain called <em>Dc</em>
+after the tail. The length of the Dc domain is equal to the length of the tail domain. The Dc domain only stores
+the indices of numbers present in a separate array <a class="reference internal" href="#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>, which collects a group of candidate
+random numerical constants (RNCs). Thus, each <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> instance comes with a <em>rnc_array</em>, which are
+generally different among different instances.</p>
+<p>In addition to the operators of the basic gene expression algorithm (mutation, inversion, transposition, and
+recombination), Dc-specific operators in GEP-RNC are also created to better evolve the Dc domain and to manipulate
+the attached set of constants <em>rnc_array</em>. Such operators are all suffixed with ‘_dc’ in
+<a class="reference internal" href="geppy.tools.html#module-geppy.tools.crossover" title="geppy.tools.crossover"><code class="xref py py-mod docutils literal notranslate"><span class="pre">crossover</span></code></a> and <a class="reference internal" href="geppy.tools.html#module-geppy.tools.mutation" title="geppy.tools.mutation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mutation</span></code></a> modules, for example, the method
+<a class="reference internal" href="geppy.tools.html#geppy.tools.mutation.invert_dc" title="geppy.tools.mutation.invert_dc"><code class="xref py py-func docutils literal notranslate"><span class="pre">invert_dc()</span></code></a>.</p>
+<p>The <em>rnc_array</em> associated with each <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> instance can be provided explicitly when creating
+a <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> instance. See <a class="reference internal" href="#geppy.core.entity.GeneDc.from_genome" title="geppy.core.entity.GeneDc.from_genome"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_genome()</span></code></a>. Or more generally, a
+random number generator <em>rnc_gen</em> can be provided, with which a specified number of RNCs are generated during the
+creation of gene instances.</p>
+<p>A special terminal of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> is used internally to represent the RNCs.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To create an effective <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> gene, the primitive set should contain at least one
+<a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> terminal. See <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code></a>
+for details.</p>
+</div>
+<p>Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id1">[FC2006]</a> for more knowledge about GEP-RNC.</p>
+<dl class="method">
+<dt id="geppy.core.entity.GeneDc.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em>, <em>rnc_gen</em>, <em>rnc_array_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#GeneDc.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.GeneDc.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a gene with a Dc domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>head_length</strong> – length of the head domain</li>
+<li><strong>pset</strong> – a primitive set including functions and terminals for genome construction.</li>
+<li><strong>rnc_gen</strong> – callable, which should generate a random number when called by <code class="docutils literal notranslate"><span class="pre">rnc_gen()</span></code>.</li>
+<li><strong>rnc_array_length</strong> – int, number of random numerical constant candidates associated with this gene,
+usually 10 is enough</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Supposing the maximum arity of functions in <em>pset</em> is <em>max_arity</em>, then the tail length is automatically
+determined to be <code class="docutils literal notranslate"><span class="pre">tail_length</span> <span class="pre">=</span> <span class="pre">head_length</span> <span class="pre">*</span> <span class="pre">(max_arity</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">+</span> <span class="pre">1</span></code>. The genome, i.e., list of symbols in
+the instantiated gene is formed randomly from <em>pset</em>. The length of Dc domain is equal to <em>tail_length</em>, i.e.,
+the tail domain and the Dc domain share the same length.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.entity.GeneDc.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#GeneDc.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.GeneDc.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the expression in a human readable string, which is also a legal python code that can be evaluated.
+The special terminal representing a RNC will be replaced by their true values retrieved from the array
+<a class="reference internal" href="#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string form of the expression</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.GeneDc.dc">
+<code class="descname">dc</code><a class="headerlink" href="#geppy.core.entity.GeneDc.dc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Dc domain of this gene.
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.GeneDc.dc_length">
+<code class="descname">dc_length</code><a class="headerlink" href="#geppy.core.entity.GeneDc.dc_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the length of the Dc domain, which is equal to <a class="reference internal" href="#geppy.core.entity.GeneDc.tail_length" title="geppy.core.entity.GeneDc.tail_length"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GeneDc.tail_length()</span></code></a></p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="geppy.core.entity.GeneDc.from_genome">
+<em class="property">classmethod </em><code class="descname">from_genome</code><span class="sig-paren">(</span><em>genome</em>, <em>head_length</em>, <em>rnc_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#GeneDc.from_genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.GeneDc.from_genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a gene directly from the given <em>genome</em> and the random numerical constant (RNC) array <em>rnc_array</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>genome</strong> – iterable, a list of symbols representing functions and terminals (especially the special RNC
+terminal of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a>). This genome should have three
+domains: head, tail and Dc. The Dc domain should be composed only of integers representing indices into the
+<em>rnc_array</em>.</li>
+<li><strong>head_length</strong> – length of the head domain. The length of the tail and Dc domain should follow the rule and
+can be determined from the head_length: <code class="docutils literal notranslate"><span class="pre">dc_length</span> <span class="pre">=</span> <span class="pre">tail_length</span> <span class="pre">=</span> <span class="pre">(len(genome)</span> <span class="pre">-</span> <span class="pre">head_length)</span> <span class="pre">/</span> <span class="pre">2</span></code>.</li>
+<li><strong>rnc_array</strong> – the RNC array associated with the gene, which contains random constant candidates</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>, a gene</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.GeneDc.max_arity">
+<code class="descname">max_arity</code><a class="headerlink" href="#geppy.core.entity.GeneDc.max_arity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max arity of functions in the primitive set used to build this gene.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.GeneDc.rnc_array">
+<code class="descname">rnc_array</code><a class="headerlink" href="#geppy.core.entity.GeneDc.rnc_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the random numerical array (RNC) associated with this gene.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.entity.GeneDc.tail_length">
+<code class="descname">tail_length</code><a class="headerlink" href="#geppy.core.entity.GeneDc.tail_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tail domain length.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="geppy.core.entity.KExpression">
 <em class="property">class </em><code class="descclassname">geppy.core.entity.</code><code class="descname">KExpression</code><span class="sig-paren">(</span><em>content</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#KExpression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.KExpression" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
@@ -302,6 +450,13 @@ a linear form of an expression tree obtained by level-order traversal.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.entity.KExpression.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#KExpression.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.KExpression.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of this expression by joining the name of each primitive.
+:return:</p>
 </dd></dl>
 
 </dd></dl>
@@ -329,7 +484,7 @@ respectively. For instance, the <a class="reference internal" href="#geppy.core.
 <table class="docutils citation" frame="void" id="fc2006" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[FC2006]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>)</em> Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
+<tr><td class="label">[FC2006]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id5">4</a>, <a class="fn-backref" href="#id6">5</a>, <a class="fn-backref" href="#id7">6</a>)</em> Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
 intelligence. Vol. 21. Springer, 2006.</td></tr>
 </tbody>
 </table>
@@ -344,7 +499,7 @@ terminal with a randomly produced value when needed using the <a class="referenc
 <p class="last">This special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
 by Koza to handle numerical constants in evolutionary programming. However, it is NOT the recommended way
 to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain
-in genes.See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id2">[FC2006]</a>.</p>
+in genes.See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
 </div>
 <dl class="method">
 <dt id="geppy.core.symbol.Ephemeral.__init__">
@@ -464,6 +619,12 @@ arguments in a string form. This returned string can afterwards by evaluated usi
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="geppy.core.symbol.Primitive.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Primitive.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Primitive.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="geppy.core.symbol.Primitive.arity">
 <code class="descname">arity</code><a class="headerlink" href="#geppy.core.symbol.Primitive.arity" title="Permalink to this definition">¶</a></dt>
@@ -500,6 +661,20 @@ implement this method.</p>
 <em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">PrimitiveSet</code><span class="sig-paren">(</span><em>name</em>, <em>input_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A class representing a primitive set, which contains the primitives (terminals and functions) that are used in GEP.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Each primitive in this set must have a unique name, which should also be a valid non-keyword
+Python identifier, except the constant terminals and RNC terminals. For more details, refer to the
+<a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_terminal" title="geppy.core.symbol.PrimitiveSet.add_terminal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_terminal()</span></code></a> and <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code></a> methods.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To use the GEP-RNC algorithm, i.e., to use <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> for numerical constant handling,
+please use the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PrimitiveSet.add_rnc()</span></code></a> method, which will add a special terminal
+of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> internally. Then, use a chromosome composed of
+<a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> genes as the individual.
+Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id4">[FC2006]</a> for more details.</p>
+</div>
 <dl class="method">
 <dt id="geppy.core.symbol.PrimitiveSet.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>input_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.__init__" title="Permalink to this definition">¶</a></dt>
@@ -517,6 +692,12 @@ implement this method.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
 </dd></dl>
 
 <dl class="method">
@@ -544,7 +725,7 @@ be yielded.</p>
 <p class="last">The special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
 by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works
 in GEP, it is NOT the recommended way to evolve constants in GEP, especially for complex problems.
-The recommended method is to add a RNC domain in genes. See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
+The recommended method is to add a RNC domain in genes. See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id5">[FC2006]</a>.</p>
 </div>
 </dd></dl>
 
@@ -568,6 +749,26 @@ The recommended method is to add a RNC domain in genes. See Chapter 5 of <a clas
 </dd></dl>
 
 <dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.add_rnc">
+<code class="descname">add_rnc</code><span class="sig-paren">(</span><em>name='?'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_rnc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.
+This terminal’s value is retrieved dynamically from an RNC array attached to a gene of type
+<a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> according to the GEP-RNC algorithm.
+See also <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – str, name of the terminal. For a RNC terminal, generally there is no need to specify a name and
+the default value ‘?’ is recommended.</td>
+</tr>
+</tbody>
+</table>
+<p>Usually it is sufficient to call this method once to add only one RNC terminal, since the values of the
+RNC terminals at different positions are different random numerical constants..</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="geppy.core.symbol.PrimitiveSet.add_terminal">
 <code class="descname">add_terminal</code><span class="sig-paren">(</span><em>value</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_terminal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a non-ephemeral terminal, which is internally encapsulated as a <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Terminal</span></code></a> object.</p>
@@ -577,7 +778,7 @@ The recommended method is to add a RNC domain in genes. See Chapter 5 of <a clas
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>value</strong> – value of the terminal</li>
-<li><strong>name</strong> – name of the terminal, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+<li><strong>name</strong> – str, name of the terminal, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
 </ul>
 </td>
 </tr>
@@ -613,6 +814,12 @@ fed into the builtin <a class="reference external" href="https://docs.python.org
 <dt id="geppy.core.symbol.PrimitiveSet.input_names">
 <code class="descname">input_names</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.input_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of names for the input arguments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.PrimitiveSet.max_arity">
+<code class="descname">max_arity</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.max_arity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max arity of functions in this primitive set.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -671,6 +878,34 @@ numeric string.</p>
 <dt id="geppy.core.symbol.Terminal.value">
 <code class="descname">value</code><a class="headerlink" href="#geppy.core.symbol.Terminal.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value of this terminal.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.TerminalRNC">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">TerminalRNC</code><span class="sig-paren">(</span><em>name='?'</em>, <em>value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#TerminalRNC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.TerminalRNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
+<p>A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC
+algorithm. This class is mainly used internally by the <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> class. The name of a
+<a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> object is ‘?’ by default, and its value is retrieved dynamically according to the GEP-RNC
+algorithm. Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id7">[FC2006]</a> for more details.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.TerminalRNC.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name='?'</em>, <em>value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#TerminalRNC.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.TerminalRNC.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RNC terminal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – str, name of the terminal</li>
+<li><strong>value</strong> – value of the terminal</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

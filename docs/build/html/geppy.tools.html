@@ -58,7 +58,7 @@ Please refer to Chapter 3 of <a class="reference internal" href="#fc2006" id="id
 <table class="docutils citation" frame="void" id="fc2006" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[FC2006]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
+<tr><td class="label">[FC2006]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id3">3</a>, <a class="fn-backref" href="#id4">4</a>)</em> Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
 intelligence. Vol. 21. Springer, 2006.</td></tr>
 </tbody>
 </table>
@@ -141,6 +141,28 @@ between the two parents if they are multigenic chromosomes.</p>
 <span class="target" id="module-geppy.tools.generator"></span><p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">generator</span></code> provides functionality to generate a genome for a gene. That is, choose functions and
 terminals randomly from a given primitive set to form a linear form gene expression.</p>
 <dl class="function">
+<dt id="geppy.tools.generator.generate_dc">
+<code class="descclassname">geppy.tools.generator.</code><code class="descname">generate_dc</code><span class="sig-paren">(</span><em>rnc_array_length</em>, <em>dc_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/generator.html#generate_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.generator.generate_dc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a Dc domain for a RNC array of size <em>rnc_array_length</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rnc_array_length</strong> – length of the RNC array</li>
+<li><strong>dc_length</strong> – length of the Dc domain</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of integers of length <em>dc_length</em>, each element in range <cite>[0, rnc_array_length - 1]</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id2">[FC2006]</a> for more details.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="geppy.tools.generator.generate_genome">
 <code class="descclassname">geppy.tools.generator.</code><code class="descname">generate_genome</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/generator.html#generate_genome"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.generator.generate_genome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a genome with the given primitive set <em>pset</em> and the specified head domain length <em>head_length</em>.</p>
@@ -167,41 +189,61 @@ determined to be <code class="docutils literal notranslate"><span class="pre">ta
 <div class="section" id="module-geppy.tools.mutation">
 <span id="geppy-tools-mutation-module"></span><h2>geppy.tools.mutation module<a class="headerlink" href="#module-geppy.tools.mutation" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-geppy.tools.mutation"></span><p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">mutation</span></code> provides mutation related genetic modifications in GEP, including point-mutation,
-transposition and inversion. Please refer to Chapter 3 of <a class="reference internal" href="#fc2006" id="id2">[FC2006]</a> for more details.</p>
+transposition and inversion. Please refer to Chapter 3 of <a class="reference internal" href="#fc2006" id="id3">[FC2006]</a> for more details.</p>
 <dl class="function">
-<dt id="geppy.tools.mutation.geneTranspose">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">geneTranspose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#geneTranspose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.geneTranspose" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.tools.mutation.gene_transpose">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">gene_transpose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#gene_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.gene_transpose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform gene transposition in place</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – a chromosome</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of one individual</td>
 </tr>
 </tbody>
 </table>
 <p>An entire gene is selected randomly and exchanged with the first gene in the chromosome.
-Obviously, this operation only makes sense if the chromosome is a multigenic one. Typically, <cite>gpb</cite> is set
-around 0.1.</p>
+Obviously, this operation only makes sense if the chromosome is a multigenic one. Typically, the gene transposition
+rate is set around 0.1.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="geppy.tools.mutation.invert">
 <code class="descclassname">geppy.tools.mutation.</code><code class="descname">invert</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#invert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.invert" title="Permalink to this definition">¶</a></dt>
-<dd><p>A gene is randomly chosen, and afterwards as subsequence within this gene’s head domain is randomly selected
+<dd><p>A gene is randomly chosen, and afterwards a subsequence within this gene’s head domain is randomly selected
 and inverted.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – a chromosome</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of one individual</td>
 </tr>
 </tbody>
 </table>
+<p>Typically, a small inversion rate of 0.1 is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="geppy.tools.mutation.invert_dc">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">invert_dc</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#invert_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.invert_dc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dc-specific inversion. A gene is randomly chosen, and afterwards a subsequence within this gene’s Dc domain is
+randomly selected and inverted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of one individual</td>
+</tr>
+</tbody>
+</table>
+<p>Typically, a small inversion rate of 0.1 is used.</p>
 </dd></dl>
 
 <dl class="function">
@@ -212,7 +254,7 @@ and inverted.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – a chromosome</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of one individual</td>
 </tr>
@@ -220,20 +262,61 @@ and inverted.</p>
 </table>
 <p>An Insertion Sequence (IS) is a random chosen segment across the chromosome, and then the
 IS is copied to be inserted at another position in the head of gene, except the start position. Note that an IS from
-one gene may be copied to a different gene. Typically, <cite>ispb</cite> is set around 0.1.</p>
+one gene may be copied to a different gene.
+Typically, the IS transposition rate is set around 0.1.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="geppy.tools.mutation.mutUniform">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutUniform</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutUniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutUniform" title="Permalink to this definition">¶</a></dt>
-<dd><p>For each symbol in <em>individual</em>, change it to another randomly chosen symbol from <em>pset</em> with the probability
-<em>indpb</em>.</p>
+<dt id="geppy.tools.mutation.mutate_rnc_array_dc">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_rnc_array_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>rnc_gen</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_rnc_array_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direct mutation of RNCs, which changes the values in a gene’s RNC array
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a> randomly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>individual</strong> – the chromosome to be mutated.</li>
+<li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>.</li>
+<li><strong>rnc_gen</strong> – callable, which returns a random numerical constant by calling <code class="docutils literal notranslate"><span class="pre">rnc_gen()</span></code>.</li>
+<li><strong>indpb</strong> – individual probability of a RNC being mutated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple of one individual</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The genetic operators <a class="reference internal" href="#geppy.tools.mutation.mutate_uniform_dc" title="geppy.tools.mutation.mutate_uniform_dc"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutate_uniform_dc()</span></code></a>, <a class="reference internal" href="#geppy.tools.mutation.transpose_dc" title="geppy.tools.mutation.transpose_dc"><code class="xref py py-func docutils literal notranslate"><span class="pre">transpose_dc()</span></code></a> and <a class="reference internal" href="#geppy.tools.mutation.invert_dc" title="geppy.tools.mutation.invert_dc"><code class="xref py py-func docutils literal notranslate"><span class="pre">invert_dc()</span></code></a> actually only move the
+random numerical constants around without generating new numerical values. This method <a class="reference internal" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="geppy.tools.mutation.mutate_rnc_array_dc"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutate_rnc_array_dc()</span></code></a>
+can replace the value of a particular numerical constant by another in the
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="arabic simple">
+<li>The direct mutation of random numerical constants might also have a great impact in the overall solution.</li>
+<li>Interestingly, the direct mutation of RNCs seems to have a very limited impact on the creation of good
+models and better results may be obtained when this operator is switched off.</li>
+<li>Potentially, a well-dimensioned initial diversity of RNCs is more than sufficient to allow their evolutionary
+tuning, as they are constantly being moved around by all the genetic operators.</li>
+<li>Thus, if this operator is adopted, a very small <em>indpb</em> should be set, like 0.01.</li>
+</ol>
+<p class="last">Refer to section 5.4.4 of <a class="reference internal" href="#fc2006" id="id4">[FC2006]</a> for more details.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="geppy.tools.mutation.mutate_uniform">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uniform point mutation. For each symbol in <em>individual</em>, change it to another randomly chosen symbol from <em>pset</em>
+with the probability <em>indpb</em>. A symbol may be a function or a terminal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, the chromosome to be mutated.</li>
 <li><strong>pset</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code>, a primitive set</li>
 <li><strong>indpb</strong> – probability of mutating each symbol</li>
 </ul>
@@ -244,18 +327,45 @@ one gene may be copied to a different gene. Typically, <cite>ispb</cite> is set 
 </tr>
 </tbody>
 </table>
-<p>It is typical to set a mutation rate <em>indpb</em> equivalent to two one-point mutations per chromosome.</p>
+<p>It is typical to set a mutation rate <em>indpb</em> equivalent to two one-point mutations per chromosome. That is,
+<code class="docutils literal notranslate"><span class="pre">indpb</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">/</span> <span class="pre">len(chromosome)</span> <span class="pre">*</span> <span class="pre">len(gene)</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="geppy.tools.mutation.risTranspose">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">risTranspose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#risTranspose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.risTranspose" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.tools.mutation.mutate_uniform_dc">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_dc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices
+in the Dc domain can later be used to retrieve numerical constants from the gene associated
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a></li>
+<li><strong>indpb</strong> – probability of mutating each index/position in the Dc domain</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple of one chromosome</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>It is typical to set a mutation rate <em>indpb</em> equivalent to two one-point mutations per chromosome. That is,
+<code class="docutils literal notranslate"><span class="pre">indpb</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">/</span> <span class="pre">len(chromosome)</span> <span class="pre">*</span> <span class="pre">len(gene)</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="geppy.tools.mutation.ris_transpose">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">ris_transpose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#ris_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.ris_transpose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform RIS transposition in place</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – a chromosome</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of one individual</td>
 </tr>
@@ -263,7 +373,31 @@ one gene may be copied to a different gene. Typically, <cite>ispb</cite> is set 
 </table>
 <p>A Root Insertion Sequence (RIS) is a segment of consecutive elements that starts with a
 function. Once an RIS is randomly chosen, it is copied and inserted at the root (first position) of a gene. Note
-that an RIS from one gene may be copied to a different gene. Typically, <cite>rispb</cite> is set around 0.1.</p>
+that an RIS from one gene may be copied to a different gene.
+Typically, the RIS transposition rate is set around 0.1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="geppy.tools.mutation.transpose_dc">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">transpose_dc</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#transpose_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.transpose_dc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This operator randomly chooses the chromosome, the gene with its respective Dc to be subjected to transposition,
+the start and termination points of the transposon, and the target site; then it inserts a copy of the transposon
+from the place of origin to the target site, while the old content at the target site are shifted to the right
+and the length of the Dc domain is maintained.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple of one individual</td>
+</tr>
+</tbody>
+</table>
+<p>Typically, a small transposition rate of 0.1 is used. Note that a transposon from one gene’s Dc may be copied and
+inserted into another gene’s Dc, which means the genes in a multigenic chromosome <em>individual</em>
+must have an identical structure.</p>
 </dd></dl>
 
 </div>

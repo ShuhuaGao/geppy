@@ -128,8 +128,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+<div class="viewcode-block" id="Primitive.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Primitive.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(name=</span><span class="si">{}</span><span class="s1">, arity=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">)</span></div>
@@ -258,14 +258,38 @@
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(name=</span><span class="si">{}</span><span class="s1">, gen=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="TerminalRNC"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.TerminalRNC">[docs]</a><span class="k">class</span> <span class="nc">TerminalRNC</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC</span>
+<span class="sd">    algorithm. This class is mainly used internally by the :class:`~geppy.core.entity.GeneDc` class. The name of a</span>
+<span class="sd">    :class:`TerminalRNC` object is &#39;?&#39; by default, and its value is retrieved dynamically according to the GEP-RNC</span>
+<span class="sd">    algorithm. Refer to Chapter 5 of [FC2006]_ for more details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TerminalRNC.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.TerminalRNC.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a RNC terminal.</span>
+
+<span class="sd">        :param name: str, name of the terminal</span>
+<span class="sd">        :param value: value of the terminal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+
 <div class="viewcode-block" id="PrimitiveSet"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet">[docs]</a><span class="k">class</span> <span class="nc">PrimitiveSet</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class representing a primitive set, which contains the primitives (terminals and functions) that are used in GEP.</span>
 
-<span class="sd">    .. note:</span>
+<span class="sd">    .. warning::</span>
 <span class="sd">        Each primitive in this set must have a unique name, which should also be a valid non-keyword</span>
-<span class="sd">        Python identifier, except the constant terminals. For more details, refer to the</span>
-<span class="sd">        :meth:`~PrimitiveSet.add_terminal` method.</span>
+<span class="sd">        Python identifier, except the constant terminals and RNC terminals. For more details, refer to the</span>
+<span class="sd">        :meth:`~PrimitiveSet.add_terminal` and :meth:`add_rnc` methods.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        To use the GEP-RNC algorithm, i.e., to use :class:`~geppy.core.entity.GeneDc` for numerical constant handling,</span>
+<span class="sd">        please use the :meth:`PrimitiveSet.add_rnc` method, which will add a special terminal</span>
+<span class="sd">        of type :class:`~geppy.core.symbol.TerminalRNC` internally. Then, use a chromosome composed of</span>
+<span class="sd">        :class:`~geppy.core.entity.GeneDc` genes as the individual.</span>
+<span class="sd">        Refer to Chapter 5 of [FC2006]_ for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="PrimitiveSet.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">input_names</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -350,7 +374,7 @@
 <span class="sd">        Add a non-ephemeral terminal, which is internally encapsulated as a :class:`Terminal` object.</span>
 
 <span class="sd">        :param value: value of the terminal</span>
-<span class="sd">        :param name: name of the terminal, default: ``None``.</span>
+<span class="sd">        :param name: str, name of the terminal, default: ``None``.</span>
 
 <span class="sd">        If a constant terminal like a number 5 is expected, then simply leave *name* as ``None``, and use</span>
 <span class="sd">        ``add_terminal(5)``. Otherwise, please specify a valid *name* to create a symbolic terminal.</span>
@@ -380,6 +404,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_assert_symbol_valid_and_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Ephemeral</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">gen</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="PrimitiveSet.add_rnc"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_rnc">[docs]</a>    <span class="k">def</span> <span class="nf">add_rnc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.</span>
+<span class="sd">        This terminal&#39;s value is retrieved dynamically from an RNC array attached to a gene of type</span>
+<span class="sd">        :class:`~geppy.core.entity.GeneDc` according to the GEP-RNC algorithm.</span>
+<span class="sd">        See also :class:`TerminalRNC` and refer to Chapter 5 of [FC2006]_ about GEP-RNC.</span>
+
+<span class="sd">        :param name: str, name of the terminal. For a RNC terminal, generally there is no need to specify a name and</span>
+<span class="sd">            the default value &#39;?&#39; is recommended.</span>
+
+<span class="sd">        Usually it is sufficient to call this method once to add only one RNC terminal, since the values of the</span>
+<span class="sd">        RNC terminals at different positions are different random numerical constants..</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TerminalRNC</span><span class="p">(</span><span class="n">name</span><span class="p">))</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -416,10 +455,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimitiveSet.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">terminals</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminals</span><span class="p">))</span>
         <span class="n">functions</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">))</span>
-        <span class="k">return</span> <span class="s1">&#39;PrimitiveSet </span><span class="si">{}</span><span class="se">\n\t</span><span class="s1">Functions: </span><span class="si">{}</span><span class="se">\n\t</span><span class="s1">Terminals: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">functions</span><span class="p">,</span> <span class="n">terminals</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;PrimitiveSet </span><span class="si">{}</span><span class="se">\n\t</span><span class="s1">Functions: </span><span class="si">{}</span><span class="se">\n\t</span><span class="s1">Terminals: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">functions</span><span class="p">,</span> <span class="n">terminals</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">globals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -430,8 +469,14 @@
 <span class="sd">        For example, if we call ``add_function(max, 2, &#39;max2&#39;)``, then ``globals[&#39;max2&#39;]`` corresponds to a</span>
 <span class="sd">        :class:`Function` object encapsulating the :func:`max` function.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globals</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globals</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_arity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the max arity of functions in this primitive set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">arity</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

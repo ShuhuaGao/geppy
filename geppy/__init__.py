@@ -34,14 +34,14 @@ except DistributionNotFound as e:
 __author__ = 'Shuhua Gao'
 # __revision__ = "1.2.2"
 
-from .core.entity import KExpression, Gene, Chromosome
+from .core.entity import *
 from .core.symbol import *
-from .tools.crossover import cxOnePoint, cxGene, cxTwoPoint
-from .tools.mutation import geneTranspose, invert, isTranspose, mutUniform, risTranspose
-from .algorithms.basic import gepSimple
+from .tools.crossover import *
+from .tools.mutation import *
+from .algorithms.basic import *
 from .tools.parser import *
 from .tools.generator import *
-from geppy.support.visualization import graph
+from geppy.support.visualization import *
 
 
 def _print_module_not_found(module_name, f_name, http=''):

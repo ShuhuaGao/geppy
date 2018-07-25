@@ -45,3 +45,16 @@ def generate_genome(pset, head_length):
         expr[i] = terminal
     return expr
 
+
+def generate_dc(rnc_array_length, dc_length):
+    """
+    Generate a Dc domain for a RNC array of size *rnc_array_length*.
+
+    :param rnc_array_length: length of the RNC array
+    :param dc_length: length of the Dc domain
+    :return: a list of integers of length *dc_length*, each element in range `[0, rnc_array_length - 1]`
+
+    Refer to Chapter 5 of [FC2006]_ for more details.
+    """
+    return [random.randint(0, rnc_array_length - 1) for _ in range(dc_length)]
+

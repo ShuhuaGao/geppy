@@ -44,6 +44,9 @@ def graph(genome, renamed_labels=None):
         to a new one for better visualization. The default label for each node is just the name of the primitive
         placed on this node. For example, you may provide ``renamed_labels={'and_': 'and'}``.
     :return: A node list, an edge list, and a dictionary of labels.
+
+    You can visualize a genome and export the tree visualization to an image file directly using the
+    :func:`export_expression_tree` function.
     """
     nodes = []
     edges = []
@@ -98,7 +101,7 @@ def export_expression_tree(genome, label_renaming_map=None, file='tree.png'):
         This function currently depends on the :mod:`graphviz` module to render the tree. Please first install the
         `graphviz <https://pypi.org/project/graphviz/>`_ module before using this function.
         Alternatively, you can always obtain the raw graph data with the :func:`graph` function, then postprocess the
-        data and render them with tmp tools as you want.
+        data and render them with other tools as you want.
     """
     import graphviz as gv
     import os.path

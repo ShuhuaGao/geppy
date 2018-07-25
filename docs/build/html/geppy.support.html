@@ -56,7 +56,7 @@
 be used in postprocessing.</p>
 <dl class="data">
 <dt id="geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP">
-<code class="descclassname">geppy.support.simplification.</code><code class="descname">DEFAULT_SYMBOLIC_FUNCTION_MAP</code><em class="property"> = {'add': &lt;built-in function add&gt;, 'and_': And, 'floordiv': &lt;built-in function floordiv&gt;, 'mul': &lt;built-in function mul&gt;, 'neg': &lt;built-in function neg&gt;, 'not_': Not, 'or_': Or, 'sub': &lt;built-in function sub&gt;, 'truediv': &lt;built-in function truediv&gt;}</em><a class="headerlink" href="#geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.support.simplification.</code><code class="descname">DEFAULT_SYMBOLIC_FUNCTION_MAP</code><em class="property"> = {'add': &lt;built-in function add&gt;, 'and_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000152F9EE4048&gt;, 'floordiv': &lt;built-in function floordiv&gt;, 'mul': &lt;built-in function mul&gt;, 'neg': &lt;built-in function neg&gt;, 'not_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000152F9EE4278&gt;, 'or_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000152F9EE4208&gt;, 'sub': &lt;built-in function sub&gt;, 'truediv': &lt;built-in function truediv&gt;}</em><a class="headerlink" href="#geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>the default symbolic function map for the <a class="reference internal" href="#geppy.support.simplification.simplify" title="geppy.support.simplification.simplify"><code class="xref py py-func docutils literal notranslate"><span class="pre">simplify()</span></code></a> function, which includes common arithmetic operations,
 Boolean operations.</p>
 </dd></dl>
@@ -133,7 +133,7 @@ If no extension is included in <em>file</em>, then the default extension ‘png�
 <p class="last">This function currently depends on the <code class="xref py py-mod docutils literal notranslate"><span class="pre">graphviz</span></code> module to render the tree. Please first install the
 <a class="reference external" href="https://pypi.org/project/graphviz/">graphviz</a> module before using this function.
 Alternatively, you can always obtain the raw graph data with the <a class="reference internal" href="#geppy.support.visualization.graph" title="geppy.support.visualization.graph"><code class="xref py py-func docutils literal notranslate"><span class="pre">graph()</span></code></a> function, then postprocess the
-data and render them with tmp tools as you want.</p>
+data and render them with other tools as you want.</p>
 </div>
 </dd></dl>
 
@@ -161,6 +161,8 @@ placed on this node. For example, you may provide <code class="docutils literal 
 </tr>
 </tbody>
 </table>
+<p>You can visualize a genome and export the tree visualization to an image file directly using the
+<a class="reference internal" href="#geppy.support.visualization.export_expression_tree" title="geppy.support.visualization.export_expression_tree"><code class="xref py py-func docutils literal notranslate"><span class="pre">export_expression_tree()</span></code></a> function.</p>
 </dd></dl>
 
 </div>
