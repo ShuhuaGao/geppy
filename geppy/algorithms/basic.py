@@ -115,7 +115,7 @@ def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb,
 
     for gen in range(n_gen + 1):
 
-        # evaluate
+        # evaluate: only evaluate the invalid ones, i.e., no need to reevaluate the unchanged ones
         invalid_individuals = [ind for ind in population if not ind.fitness.valid]
         fitnesses = toolbox.map(toolbox.evaluate, invalid_individuals)
         for ind, fit in zip(invalid_individuals, fitnesses):
@@ -125,7 +125,7 @@ def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb,
         if halloffame is not None:
             halloffame.update(population)
         record = stats.compile(population) if stats else {}
-        logbook.record(gen=0, nevals=len(invalid_individuals), **record)
+        logbook.record(gen=gen, nevals=len(invalid_individuals), **record)
         if verbose:
             print(logbook.stream)
 
@@ -144,7 +144,6 @@ def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb,
 
         # replace the current population with the offsprings
         population = elites + offspring
-        gen += 1
 
     return population, logbook
 

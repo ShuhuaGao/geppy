@@ -3,14 +3,18 @@
 .. module:: geppy.tools.mutation
 .. moduleauthor:: Shuhua Gao
 
-The module :mod:`mutation` provides mutation related genetic modifications in GEP, including point-mutation,
+The module :mod:`mutation` provides mutation related genetic modification operators in GEP, including point-mutation,
 transposition and inversion. Please refer to Chapter 3 of [FC2006]_ for more details.
 
+.. note::
+    1. Operators that can be applied to both :class:`~geppy.core.entity.Gene` and :class:`~geppy.core.entity.GeneDc`:
+       :func:`mutate_uniform`, :func:`invert`, :func:`is_transpose`, :func:`ris_transpose`, :func:`gene_transpose`
+    2. Operators that end with '_dc' are specially designed to handle :class:`~geppy.core.entity.GeneDc`.
 """
 import random
 from ..core.symbol import Function
 
-_DEBUG = True
+_DEBUG = False
 
 
 def _choose_function(pset):
@@ -64,7 +68,7 @@ def mutate_uniform(individual, pset, indpb):
                 else:
                     gene[i] = _choose_terminal(pset)
         # tail: only change to another terminal
-        for i in range(gene.head_length, len(gene)):
+        for i in range(gene.head_length, gene.head_length + gene.tail_length):
             if random.random() < indpb:
                 gene[i] = _choose_terminal(pset)
     return individual,
@@ -109,6 +113,8 @@ def invert(individual):
     gene = random.choice(individual)
     start, end = _choose_subsequence(gene.head, 2, gene.head_length)
     gene[start: end] = reversed(gene[start: end])
+    if _DEBUG:
+        print('invert [{}: {}]'.format(start, end))
     return individual,
 
 
@@ -138,7 +144,7 @@ def _choose_donor_donee(individual):
     return individual[i1], individual[i2], i1, i2
 
 
-def isTranspose(individual):
+def is_transpose(individual):
     """
     Perform IS transposition in place
 
@@ -151,11 +157,13 @@ def isTranspose(individual):
     Typically, the IS transposition rate is set around 0.1.
     """
     donor, donee, i1, i2 = _choose_donor_donee(individual)
-    is_start, is_end = _choose_subsequence(donor, 1, donee.head_length - 1)
+    a, b = _choose_subsequence_indices(0, donor.head_length + donor.tail_length - 1, max_length=donee.head_length - 1)
+    is_start, is_end = a, b + 1
     is_ = donor[is_start: is_end]
     insertion_pos = random.randint(1, donee.head_length - len(is_))
     donee[:] = donee[:insertion_pos] + is_ + \
-               donee[insertion_pos: insertion_pos + donee.head_length - insertion_pos - len(is_)] + donee.tail
+               donee[insertion_pos: insertion_pos + donee.head_length - insertion_pos - len(is_)] + \
+               donee[donee.head_length:]
     if _DEBUG:
         print('IS transpose: g{}[{}:{}] -> g{}[{}:]'.format(i1, is_start, is_end, i2, insertion_pos))
     return individual,
@@ -177,16 +185,16 @@ def ris_transpose(individual):
     while n_trial <= 2 * len(individual):
         donor, donee, i1, i2 = _choose_donor_donee(individual)
         # choose a function node randomly to start RIS
-        function_indices = [i for i, p in enumerate(donor) if isinstance(p, Function)]
+        function_indices = [i for i, p in enumerate(donor.head) if isinstance(p, Function)]
         if not function_indices:  # no functions in this donor, try another
             n_trial += 1
             continue
         ris_start = random.choice(function_indices)
         # determine the length randomly
-        length = random.randint(2, min(donee.head_length, len(donor) - ris_start))
+        length = random.randint(2, min(donee.head_length, donor.head_length + donor.tail_length - ris_start))
         # insert ris at the root of donee
         ris = donor[ris_start: ris_start + length]
-        donee[:] = ris + donee[0: donee.head_length - length] + donee.tail
+        donee[:] = ris + donee[0: donee.head_length - length] + donee[donee.head_length:]
         if _DEBUG:
             print('RIS transpose: g{}[{}:{}] -> g{}[0:]'.format(i1, ris_start, ris_start + length, i2))
         return individual,
