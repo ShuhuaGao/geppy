@@ -13,7 +13,7 @@ from multiple genes into a single result.
 """
 import copy
 from ..tools.generator import *
-from ..core.symbol import Function, TerminalRNC
+from ..core.symbol import Function, TerminalRNC, Terminal
 
 
 _DEBUG = False
@@ -410,6 +410,36 @@ class GeneDc(Gene):
         if isinstance(expr[0], TerminalRNC):  # only contains a single RNC, let's retrieve its value
             return str(self.rnc_array[self.dc[0]])
         return expr[0].format()    # only contains a normal terminal
+
+    @property
+    def kexpression(self):
+        """
+        Get the K-expression of type :class:`KExpression` represented by this gene. The involved RNC terminal will be
+        replaced by a constant terminal with its value retrived from the :meth:`rnc_array` according to the GEP-RNC
+        algorithm.
+        """
+        n_rnc = 0
+
+        def convert_RNC(p):
+            nonlocal n_rnc
+            if isinstance(p, TerminalRNC):
+                index = self.dc[n_rnc]
+                value = self.rnc_array[index]
+                n_rnc += 1
+                t = Terminal(str(value), value)
+                return t
+            return p
+
+        # level-order
+        expr = KExpression([convert_RNC(self[0])])
+        i = 0
+        j = 1
+        while i < len(expr):
+            for _ in range(expr[i].arity):
+                expr.append(convert_RNC(self[j]))
+                j += 1
+            i += 1
+        return expr
 
     def __repr__(self):
         return super().__repr__() + ', rnc_array=[' + ', '.join(str(num) for num in self.rnc_array) + ']'

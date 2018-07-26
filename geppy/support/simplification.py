@@ -6,15 +6,16 @@
 This module :mod:`simplification` provides utility functions for symbolic simplification of GEP individuals, which may
 be used in postprocessing.
 """
-
+import math
 import operator
 from geppy.core.entity import KExpression, Chromosome, Gene
 from geppy.core.symbol import Function, Terminal
 
 import sympy as sp
 
-#: the default symbolic function map for the :func:`simplify` function, which includes common arithmetic operations,
-#: Boolean operations.
+#: The default symbolic function map for the :func:`simplify` function, which includes common arithmetic operations and
+#: Boolean operations. Note that generally normal Python functions cannot work with symbolic variables directly. Thus,
+#: such a map is required.
 DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.and_.__name__: sp.And,
     operator.or_.__name__: sp.Or,
@@ -24,7 +25,8 @@ DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.mul.__name__: operator.mul,
     operator.neg.__name__: operator.neg,
     operator.floordiv.__name__: operator.floordiv,
-    operator.truediv.__name__: operator.truediv
+    operator.truediv.__name__: operator.truediv,
+    math.log.__name__: sp.log
 }
 
 
@@ -98,6 +100,11 @@ def simplify(genome, symbolic_function_map=None):
     elif isinstance(genome, Chromosome):
         if len(genome) == 1:
             return _simplify_kexpression(genome[0].kexpression, symbolic_function_map)
+        else:   # multigenic chromosome
+            simplified_exprs = [_simplify_kexpression(g.kexpression, symbolic_function_map) for g in genome]
+            # combine these sub-expressions into a single one with the linking function
+            linker = symbolic_function_map[genome.linker.__name__]
+            return sp.simplify(linker(*simplified_exprs))
     else:
         raise TypeError('Only an argument of type KExpression, Gene, and Chromosome is acceptable. The provided '
                         'genome type is {}.'.format(type(genome)))
