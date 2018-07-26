@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.tools.mutation
 .. moduleauthor:: Shuhua Gao
 
 The module :mod:`mutation` provides mutation related genetic modification operators in GEP, including point-mutation,
@@ -9,7 +8,8 @@ transposition and inversion. Please refer to Chapter 3 of [FC2006]_ for more det
 .. note::
     1. Operators that can be applied to both :class:`~geppy.core.entity.Gene` and :class:`~geppy.core.entity.GeneDc`:
        :func:`mutate_uniform`, :func:`invert`, :func:`is_transpose`, :func:`ris_transpose`, :func:`gene_transpose`
-    2. Operators that end with '_dc' are specially designed to handle :class:`~geppy.core.entity.GeneDc`.
+    2. Operators that end with '_dc' are specially designed to handle the Dc domain in
+       :class:`~geppy.core.entity.GeneDc`.
 """
 import random
 from ..core.symbol import Function

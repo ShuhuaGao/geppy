@@ -52,9 +52,15 @@
 </div>
 <div class="section" id="module-geppy.tools.crossover">
 <span id="geppy-tools-crossover-module"></span><h2>geppy.tools.crossover module<a class="headerlink" href="#module-geppy.tools.crossover" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.tools.crossover"></span><p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">crossover</span></code> provides crossover (mating, recombination) related genetic modifications in GEP,
+<p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">crossover</span></code> provides crossover (mating, recombination) related genetic modifications in GEP,
 including one-point and two-point crossover, and gene crossover between multigenic chromosomes.
 Please refer to Chapter 3 of <a class="reference internal" href="#fc2006" id="id1">[FC2006]</a> for more details.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All the recombination operators including <a class="reference internal" href="#geppy.tools.crossover.crossover_one_point" title="geppy.tools.crossover.crossover_one_point"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossover_one_point()</span></code></a>, <a class="reference internal" href="#geppy.tools.crossover.crossover_two_point" title="geppy.tools.crossover.crossover_two_point"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossover_two_point()</span></code></a>, and
+<a class="reference internal" href="#geppy.tools.crossover.crossover_gene" title="geppy.tools.crossover.crossover_gene"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossover_gene()</span></code></a> can be applied to both <a class="reference internal" href="geppy.core.html#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>
+and <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>.</p>
+</div>
 <table class="docutils citation" frame="void" id="fc2006" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -63,8 +69,8 @@ intelligence. Vol. 21. Springer, 2006.</td></tr>
 </tbody>
 </table>
 <dl class="function">
-<dt id="geppy.tools.crossover.cxGene">
-<code class="descclassname">geppy.tools.crossover.</code><code class="descname">cxGene</code><span class="sig-paren">(</span><em>ind1</em>, <em>ind2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/crossover.html#cxGene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.crossover.cxGene" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.tools.crossover.crossover_gene">
+<code class="descclassname">geppy.tools.crossover.</code><code class="descname">crossover_gene</code><span class="sig-paren">(</span><em>ind1</em>, <em>ind2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/crossover.html#crossover_gene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.crossover.crossover_gene" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entire genes are exchanged between two parent chromosomes. The two individuals are modified in place, and the two
 children are returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -88,8 +94,8 @@ around 0.3 is used.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="geppy.tools.crossover.cxOnePoint">
-<code class="descclassname">geppy.tools.crossover.</code><code class="descname">cxOnePoint</code><span class="sig-paren">(</span><em>ind1</em>, <em>ind2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/crossover.html#cxOnePoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.crossover.cxOnePoint" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.tools.crossover.crossover_one_point">
+<code class="descclassname">geppy.tools.crossover.</code><code class="descname">crossover_one_point</code><span class="sig-paren">(</span><em>ind1</em>, <em>ind2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/crossover.html#crossover_one_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.crossover.crossover_one_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute one-point recombination of two individuals. The two individuals are modified in place, and the two children
 are returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -112,8 +118,8 @@ between the two parents if they are multigenic chromosomes.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="geppy.tools.crossover.cxTwoPoint">
-<code class="descclassname">geppy.tools.crossover.</code><code class="descname">cxTwoPoint</code><span class="sig-paren">(</span><em>ind1</em>, <em>ind2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/crossover.html#cxTwoPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.crossover.cxTwoPoint" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.tools.crossover.crossover_two_point">
+<code class="descclassname">geppy.tools.crossover.</code><code class="descname">crossover_two_point</code><span class="sig-paren">(</span><em>ind1</em>, <em>ind2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/crossover.html#crossover_two_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.crossover.crossover_two_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute two-point recombination of two individuals. The two individuals are modified in place, and the two children
 are returned. The materials between two randomly chosen points are swapped to generate two children.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -138,7 +144,7 @@ between the two parents if they are multigenic chromosomes.</p>
 </div>
 <div class="section" id="module-geppy.tools.generator">
 <span id="geppy-tools-generator-module"></span><h2>geppy.tools.generator module<a class="headerlink" href="#module-geppy.tools.generator" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.tools.generator"></span><p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">generator</span></code> provides functionality to generate a genome for a gene. That is, choose functions and
+<p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">generator</span></code> provides functionality to generate a genome for a gene. That is, choose functions and
 terminals randomly from a given primitive set to form a linear form gene expression.</p>
 <dl class="function">
 <dt id="geppy.tools.generator.generate_dc">
@@ -188,8 +194,17 @@ determined to be <code class="docutils literal notranslate"><span class="pre">ta
 </div>
 <div class="section" id="module-geppy.tools.mutation">
 <span id="geppy-tools-mutation-module"></span><h2>geppy.tools.mutation module<a class="headerlink" href="#module-geppy.tools.mutation" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.tools.mutation"></span><p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">mutation</span></code> provides mutation related genetic modifications in GEP, including point-mutation,
+<p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">mutation</span></code> provides mutation related genetic modification operators in GEP, including point-mutation,
 transposition and inversion. Please refer to Chapter 3 of <a class="reference internal" href="#fc2006" id="id3">[FC2006]</a> for more details.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="last arabic simple">
+<li>Operators that can be applied to both <a class="reference internal" href="geppy.core.html#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a> and <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>:
+<a class="reference internal" href="#geppy.tools.mutation.mutate_uniform" title="geppy.tools.mutation.mutate_uniform"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutate_uniform()</span></code></a>, <a class="reference internal" href="#geppy.tools.mutation.invert" title="geppy.tools.mutation.invert"><code class="xref py py-func docutils literal notranslate"><span class="pre">invert()</span></code></a>, <a class="reference internal" href="#geppy.tools.mutation.is_transpose" title="geppy.tools.mutation.is_transpose"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_transpose()</span></code></a>, <a class="reference internal" href="#geppy.tools.mutation.ris_transpose" title="geppy.tools.mutation.ris_transpose"><code class="xref py py-func docutils literal notranslate"><span class="pre">ris_transpose()</span></code></a>, <a class="reference internal" href="#geppy.tools.mutation.gene_transpose" title="geppy.tools.mutation.gene_transpose"><code class="xref py py-func docutils literal notranslate"><span class="pre">gene_transpose()</span></code></a></li>
+<li>Operators that end with ‘_dc’ are specially designed to handle the Dc domain in
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>.</li>
+</ol>
+</div>
 <dl class="function">
 <dt id="geppy.tools.mutation.gene_transpose">
 <code class="descclassname">geppy.tools.mutation.</code><code class="descname">gene_transpose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#gene_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.gene_transpose" title="Permalink to this definition">¶</a></dt>
@@ -247,8 +262,8 @@ randomly selected and inverted.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="geppy.tools.mutation.isTranspose">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">isTranspose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#isTranspose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.isTranspose" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.tools.mutation.is_transpose">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">is_transpose</code><span class="sig-paren">(</span><em>individual</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#is_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.is_transpose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform IS transposition in place</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -403,9 +418,12 @@ must have an identical structure.</p>
 </div>
 <div class="section" id="module-geppy.tools.parser">
 <span id="geppy-tools-parser-module"></span><h2>geppy.tools.parser module<a class="headerlink" href="#module-geppy.tools.parser" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.tools.parser"></span><p>This module <a class="reference external" href="https://docs.python.org/3/library/parser.html#module-parser" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">parser</span></code></a> provides functionality for compiling an individual (a chromosome) in GEP into an executable
+<p>This module <a class="reference external" href="https://docs.python.org/3/library/parser.html#module-parser" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">parser</span></code></a> provides functionality for compiling an individual (a chromosome) in GEP into an executable
 lambda function in Python for subsequent fitness evaluation.</p>
-<p>TODO Parse an individual into codes of tmp languages, such as C++/Java, for deployment in an industrial environment.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Parse an individual into codes of other languages, such as C++/Java, for deployment in an industrial environment.</p>
+</div>
 <dl class="function">
 <dt id="geppy.tools.parser.compile_">
 <code class="descclassname">geppy.tools.parser.</code><code class="descname">compile_</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/parser.html#compile_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.parser.compile_" title="Permalink to this definition">¶</a></dt>

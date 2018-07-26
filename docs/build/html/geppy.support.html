@@ -52,13 +52,26 @@
 </div>
 <div class="section" id="module-geppy.support.simplification">
 <span id="geppy-support-simplification-module"></span><h2>geppy.support.simplification module<a class="headerlink" href="#module-geppy.support.simplification" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.support.simplification"></span><p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">simplification</span></code> provides utility functions for symbolic simplification of GEP individuals, which may
+<p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">simplification</span></code> provides utility functions for symbolic simplification of GEP individuals, which may
 be used in postprocessing.</p>
 <dl class="data">
 <dt id="geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP">
-<code class="descclassname">geppy.support.simplification.</code><code class="descname">DEFAULT_SYMBOLIC_FUNCTION_MAP</code><em class="property"> = {'add': &lt;built-in function add&gt;, 'and_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000152F9EE4048&gt;, 'floordiv': &lt;built-in function floordiv&gt;, 'mul': &lt;built-in function mul&gt;, 'neg': &lt;built-in function neg&gt;, 'not_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000152F9EE4278&gt;, 'or_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000152F9EE4208&gt;, 'sub': &lt;built-in function sub&gt;, 'truediv': &lt;built-in function truediv&gt;}</em><a class="headerlink" href="#geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
-<dd><p>the default symbolic function map for the <a class="reference internal" href="#geppy.support.simplification.simplify" title="geppy.support.simplification.simplify"><code class="xref py py-func docutils literal notranslate"><span class="pre">simplify()</span></code></a> function, which includes common arithmetic operations,
-Boolean operations.</p>
+<code class="descclassname">geppy.support.simplification.</code><code class="descname">DEFAULT_SYMBOLIC_FUNCTION_MAP</code><em class="property"> = {'add': &lt;built-in function add&gt;, 'and_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000232E244C2B0&gt;, 'floordiv': &lt;built-in function floordiv&gt;, 'log': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000232E244C588&gt;, 'mul': &lt;built-in function mul&gt;, 'neg': &lt;built-in function neg&gt;, 'not_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000232E244C400&gt;, 'or_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x00000232E244C390&gt;, 'sub': &lt;built-in function sub&gt;, 'truediv': &lt;built-in function truediv&gt;}</em><a class="headerlink" href="#geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently, it is defined as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEFAULT_SYMBOLIC_FUNCTION_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">And</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Or</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">not_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">Not</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">neg</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">neg</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">floordiv</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">floordiv</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">,</span>
+    <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">log</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -105,7 +118,7 @@ solution evolved by GEP.</p>
 </div>
 <div class="section" id="module-geppy.support.visualization">
 <span id="geppy-support-visualization-module"></span><h2>geppy.support.visualization module<a class="headerlink" href="#module-geppy.support.visualization" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.support.visualization"></span><p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> provides utility functions to visualization the expression tree from a given
+<p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> provides utility functions to visualization the expression tree from a given
 K-expression, a gene or a chromosome in GEP.</p>
 <dl class="function">
 <dt id="geppy.support.visualization.export_expression_tree">

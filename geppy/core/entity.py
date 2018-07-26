@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.core.entity
 .. moduleauthor:: Shuhua Gao
 
 The module :mod:`entity` defines the core data structures used in GEP, including the gene, the chromosome, the

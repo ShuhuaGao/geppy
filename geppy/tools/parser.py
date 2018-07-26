@@ -1,12 +1,12 @@
 # coding=utf-8
 """
-.. module:: geppy.tools.parser
 .. moduleauthor:: Shuhua Gao
 
 This module :mod:`parser` provides functionality for compiling an individual (a chromosome) in GEP into an executable
 lambda function in Python for subsequent fitness evaluation.
 
-TODO Parse an individual into codes of tmp languages, such as C++/Java, for deployment in an industrial environment.
+.. todo::
+    Parse an individual into codes of other languages, such as C++/Java, for deployment in an industrial environment.
 """
 
 import sys

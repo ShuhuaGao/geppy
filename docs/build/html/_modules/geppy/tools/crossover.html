@@ -49,22 +49,27 @@
   <h1>Source code for geppy.tools.crossover</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding=utf-8</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">.. module:: geppy.tools.crossover</span>
 <span class="sd">.. moduleauthor:: Shuhua Gao</span>
 
 <span class="sd">The module :mod:`crossover` provides crossover (mating, recombination) related genetic modifications in GEP,</span>
 <span class="sd">including one-point and two-point crossover, and gene crossover between multigenic chromosomes.</span>
 <span class="sd">Please refer to Chapter 3 of [FC2006]_ for more details.</span>
 
+<span class="sd">.. note::</span>
+<span class="sd">    All the recombination operators including :func:`crossover_one_point`, :func:`crossover_two_point`, and</span>
+<span class="sd">    :func:`crossover_gene` can be applied to both :class:`~geppy.core.entity.Gene`</span>
+<span class="sd">    and :class:`~geppy.core.entity.GeneDc`.</span>
+
 <span class="sd">.. [FC2006] Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial</span>
 <span class="sd">    intelligence. Vol. 21. Springer, 2006.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="cxOnePoint"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.crossover.cxOnePoint">[docs]</a><span class="k">def</span> <span class="nf">cxOnePoint</span><span class="p">(</span><span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span><span class="p">):</span>
+<div class="viewcode-block" id="crossover_one_point"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.crossover.crossover_one_point">[docs]</a><span class="k">def</span> <span class="nf">crossover_one_point</span><span class="p">(</span><span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute one-point recombination of two individuals. The two individuals are modified in place, and the two children</span>
 <span class="sd">    are returned.</span>
@@ -89,7 +94,7 @@
     <span class="k">return</span> <span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span></div>
 
 
-<div class="viewcode-block" id="cxTwoPoint"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.crossover.cxTwoPoint">[docs]</a><span class="k">def</span> <span class="nf">cxTwoPoint</span><span class="p">(</span><span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span><span class="p">):</span>
+<div class="viewcode-block" id="crossover_two_point"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.crossover.crossover_two_point">[docs]</a><span class="k">def</span> <span class="nf">crossover_two_point</span><span class="p">(</span><span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Execute two-point recombination of two individuals. The two individuals are modified in place, and the two children</span>
 <span class="sd">    are returned. The materials between two randomly chosen points are swapped to generate two children.</span>
@@ -103,22 +108,27 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind2</span><span class="p">)</span>
     <span class="c1"># the two genes containing the two recombination points</span>
-    <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)),</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># with replacement</span>
+    <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)),</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># with replacement, thus g1 may be equal to g2</span>
     <span class="k">if</span> <span class="n">g2</span> <span class="o">&lt;</span> <span class="n">g1</span><span class="p">:</span>
         <span class="n">g1</span><span class="p">,</span> <span class="n">g2</span> <span class="o">=</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g1</span>
     <span class="c1"># the two points in g1 and g2</span>
     <span class="n">p1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">p2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">[</span><span class="n">g2</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># change the materials between g1-&gt;p1 and g2-&gt;p2: first exchange entire genes, then change partial genes at g1, g2</span>
-    <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">]</span>
-    <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:]</span>
-    <span class="n">ind1</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">g1</span> <span class="o">==</span> <span class="n">g2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p1</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">:</span>
+            <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p1</span>
+        <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:</span> <span class="n">p2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g2</span><span class="p">][</span><span class="n">p1</span><span class="p">:</span> <span class="n">p2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g2</span><span class="p">][</span><span class="n">p1</span><span class="p">:</span> <span class="n">p2</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:</span> <span class="n">p2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="n">g2</span><span class="p">]</span>
+        <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g1</span><span class="p">][</span><span class="n">p1</span><span class="p">:]</span>
+        <span class="n">ind1</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">g2</span><span class="p">][:</span><span class="n">p2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cxTwoPoint: g</span><span class="si">{}</span><span class="s1">[</span><span class="si">{}</span><span class="s1">], g</span><span class="si">{}</span><span class="s1">[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">p2</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span></div>
 
 
-<div class="viewcode-block" id="cxGene"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.crossover.cxGene">[docs]</a><span class="k">def</span> <span class="nf">cxGene</span><span class="p">(</span><span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span><span class="p">):</span>
+<div class="viewcode-block" id="crossover_gene"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.crossover.crossover_gene">[docs]</a><span class="k">def</span> <span class="nf">crossover_gene</span><span class="p">(</span><span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Entire genes are exchanged between two parent chromosomes. The two individuals are modified in place, and the two</span>
 <span class="sd">    children are returned.</span>

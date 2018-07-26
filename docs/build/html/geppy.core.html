@@ -52,7 +52,7 @@
 </div>
 <div class="section" id="module-geppy.core.entity">
 <span id="geppy-core-entity-module"></span><h2>geppy.core.entity module<a class="headerlink" href="#module-geppy.core.entity" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.core.entity"></span><p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">entity</span></code> defines the core data structures used in GEP, including the gene, the chromosome, the
+<p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">entity</span></code> defines the core data structures used in GEP, including the gene, the chromosome, the
 K-expression and the expression tree. We use primitives (functions and terminals) to build genes and then compose
 a chromosome with one or multiple genes. Refer to the <a class="reference internal" href="#module-geppy.core.symbol" title="geppy.core.symbol"><code class="xref py py-mod docutils literal notranslate"><span class="pre">geppy.core.symbol</span></code></a> module for information on primitives.</p>
 <p>A chromosome composed of only one gene is called a <em>monogenic</em> chromosome, while one composed of more than one genes
@@ -413,6 +413,14 @@ can be determined from the head_length: <code class="docutils literal notranslat
 </dd></dl>
 
 <dl class="attribute">
+<dt id="geppy.core.entity.GeneDc.kexpression">
+<code class="descname">kexpression</code><a class="headerlink" href="#geppy.core.entity.GeneDc.kexpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the K-expression of type <a class="reference internal" href="#geppy.core.entity.KExpression" title="geppy.core.entity.KExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">KExpression</span></code></a> represented by this gene. The involved RNC terminal will be
+replaced by a constant terminal with its value retrived from the <a class="reference internal" href="#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a> according to the GEP-RNC
+algorithm.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="geppy.core.entity.GeneDc.max_arity">
 <code class="descname">max_arity</code><a class="headerlink" href="#geppy.core.entity.GeneDc.max_arity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the max arity of functions in the primitive set used to build this gene.</p>
@@ -464,7 +472,7 @@ a linear form of an expression tree obtained by level-order traversal.</p>
 </div>
 <div class="section" id="module-geppy.core.symbol">
 <span id="geppy-core-symbol-module"></span><h2>geppy.core.symbol module<a class="headerlink" href="#module-geppy.core.symbol" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-geppy.core.symbol"></span><p>This <a class="reference external" href="https://docs.python.org/3/library/symbol.html#module-symbol" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symbol</span></code></a> module defines the classes encapsulating the symbols in GEP. A gene in GEP is composed of multiple
+<p>This <a class="reference external" href="https://docs.python.org/3/library/symbol.html#module-symbol" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symbol</span></code></a> module defines the classes encapsulating the symbols in GEP. A gene in GEP is composed of multiple
 symbols,  which include <em>terminals</em> and <em>functions</em>. Together, they are called <em>primitives</em>. This module also
 provides a <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet" title="geppy.core.symbol.PrimitiveSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code></a> class, which represents a primitive set containing <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Terminal</span></code></a>
 and <a class="reference internal" href="#geppy.core.symbol.Function" title="geppy.core.symbol.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> items, for management purpose.</p>

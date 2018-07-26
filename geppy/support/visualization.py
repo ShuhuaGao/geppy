@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.support.visualization
 .. moduleauthor:: Shuhua Gao
 
 This module :mod:`visualization` provides utility functions to visualization the expression tree from a given

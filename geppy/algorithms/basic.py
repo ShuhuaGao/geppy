@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.algorithms.basic
 .. moduleauthor:: Shuhua Gao
 
 This :mod:`basic` module provides fundamental boilerplate GEP algorithm implementations. After registering proper

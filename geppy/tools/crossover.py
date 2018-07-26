@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.tools.crossover
 .. moduleauthor:: Shuhua Gao
 
 The module :mod:`crossover` provides crossover (mating, recombination) related genetic modifications in GEP,
@@ -14,6 +13,7 @@ Please refer to Chapter 3 of [FC2006]_ for more details.
 
 .. [FC2006] Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial
     intelligence. Vol. 21. Springer, 2006.
+
 """
 import random
 
@@ -79,7 +79,7 @@ def crossover_two_point(ind1, ind2):
     return ind1, ind2
 
 
-def crossover_gen(ind1, ind2):
+def crossover_gene(ind1, ind2):
     """
     Entire genes are exchanged between two parent chromosomes. The two individuals are modified in place, and the two
     children are returned.

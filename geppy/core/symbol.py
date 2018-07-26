@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.core.symbol
 .. moduleauthor:: Shuhua Gao
 
 This :mod:`symbol` module defines the classes encapsulating the symbols in GEP. A gene in GEP is composed of multiple

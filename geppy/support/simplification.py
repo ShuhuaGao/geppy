@@ -1,6 +1,5 @@
 # coding=utf-8
 """
-.. module:: geppy.support.simplification
 .. moduleauthor:: Shuhua Gao
 
 This module :mod:`simplification` provides utility functions for symbolic simplification of GEP individuals, which may
@@ -13,9 +12,7 @@ from geppy.core.symbol import Function, Terminal
 
 import sympy as sp
 
-#: The default symbolic function map for the :func:`simplify` function, which includes common arithmetic operations and
-#: Boolean operations. Note that generally normal Python functions cannot work with symbolic variables directly. Thus,
-#: such a map is required.
+
 DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.and_.__name__: sp.And,
     operator.or_.__name__: sp.Or,
@@ -28,6 +25,22 @@ DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.truediv.__name__: operator.truediv,
     math.log.__name__: sp.log
 }
+"""
+Currently, it is defined as::
+
+    DEFAULT_SYMBOLIC_FUNCTION_MAP = {
+        operator.and_.__name__: sp.And,
+        operator.or_.__name__: sp.Or,
+        operator.not_.__name__: sp.Not,
+        operator.add.__name__: operator.add,
+        operator.sub.__name__: operator.sub,
+        operator.mul.__name__: operator.mul,
+        operator.neg.__name__: operator.neg,
+        operator.floordiv.__name__: operator.floordiv,
+        operator.truediv.__name__: operator.truediv,
+        math.log.__name__: sp.log
+    }
+"""
 
 
 def _simplify_kexpression(expr, symbolic_function_map):
