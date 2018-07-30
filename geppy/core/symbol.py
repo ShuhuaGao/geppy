@@ -406,6 +406,9 @@ class PrimitiveSet:
         return self._inputs
 
     def __str__(self):
+        """
+        Gets an overview of the functions and terminals in this primitive set.
+        """
         terminals = '[{}]'.format(', '.join(str(t) for t in self.terminals))
         functions = '[{}]'.format(', '.join(str(f) for f in self.functions))
         return 'PrimitiveSet {}\n\tFunctions: {}\n\tTerminals: {}'.format(self.name, functions, terminals)
