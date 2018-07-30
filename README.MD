@@ -9,7 +9,7 @@ Gene Expression Programming (GEP) is a popular and established evolutionary algo
 GEP can be seen as a variant of the traditional  [genetic programming](https://en.wikipedia.org/wiki/Genetic_programming) (GP) and it uses simple linear chromosomes of fixed lengths to encode the genetic information. Though the chromosome (genes) is of fixed length, it can produce expression trees of various sizes thanks to its genotype-phenotype expressio system. Many experiments show that GEP is more efficient than GP, and the trees evolved by GEP tend to have a smaller size than the ones of GP. 
 
 ## *geppy* and [DEAP](https://github.com/DEAP/deap)
-*geppy* is built on top of the excellent evolutionary computation framework [DEAP](https://github.com/DEAP/deap) for rapid prototyping and testing of ideas with GEP. DEAP provides fundamental support for GP, while lacking support for GEP. *geppy* tries the best to follow the style of DEAP and attempts to maintain compatibility with the major infrastructure of DEAP. In other words, to some degree *geppy* may be considered as a plugin of DEAP to specially support GEP. If you are familiar with DEAP, then it is easy to grasp *geppy*. Besides, comprehensive [documentation](http://geppy.readthedocs.io/en/latest/) is also available.
+*geppy* is built on top of the excellent evolutionary computation framework [DEAP](https://github.com/DEAP/deap) for rapid prototyping and testing of ideas with GEP. DEAP provides fundamental support for GP, while lacking support for GEP. *geppy* tries the best to follow the style of DEAP and attempts to maintain compatibility with the major infrastructure of DEAP. In other words, to some degree *geppy* may be considered as a plugin of DEAP to specially support GEP. If you are familiar with DEAP, then it is easy to grasp *geppy*. Besides, comprehensive [documentation](https://geppy.readthedocs.io/en/latest/) is also available.
 
 ## Features
 - Compatibility with the [DEAP](https://github.com/DEAP/deap) infrastructure and easy accessibility to DEAP's functionality including:
@@ -39,7 +39,7 @@ pip install .
 ```
 (TODO) Later, I will publish *geppy* to pip. 
 ## Documentation
-Check [*geppy* documentation](http://geppy.readthedocs.io/en/latest/) for a comprehensive introduction of its API and typical usages.
+Check [*geppy* documentation](https://geppy.readthedocs.io/en/latest/) for GEP theory and tutorials as well as a comprehensive introduction of *geppy*'s API and typical usages.
 
 TODO: add more examples and tutorials into the documentation.
 
