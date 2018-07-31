@@ -73,8 +73,8 @@ def _crossover(population, toolbox, cx1pb, cx2pb, cxgpb, rep=True):
     return offspring
 
 
-def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb, cxgpb,
-              n_elites, n_gen, stats=None, halloffame=None, verbose=__debug__):
+def gep_simple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb, cxgpb,
+               n_elites, n_gen, stats=None, halloffame=None, verbose=__debug__):
     """
     This sr and the simplest gene expression algorithm. The flowchart of this algorithm can be found
     `here <https://www.gepsoft.com/gxpt4kb/Chapter06/Section1/SS1.htm>`_.
@@ -98,8 +98,8 @@ def gepSimple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb,
                        contain the best individuals, optional.
     :param verbose: whether or not to log the statistics.
     :returns: The final population
-    :returns: A class:`~deap.tools.Logbook` with the statistics of the
-              evolution
+    :returns: A :class:`~deap.tools.Logbook` recording the statistics of the
+              evolution process
 
     .. note::
         This function expects the following aliases to be registered in the toolbox: :meth:`toolbox.mutate`,

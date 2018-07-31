@@ -19,6 +19,7 @@ Get started
 * :doc:`Introduction to GEP <intro_GEP>`
 * :doc:`Overview of geppy for GEP <overview>`
 
+.. _tutorial_example:
 
 Tutorials & Examples
 ================================
@@ -34,6 +35,7 @@ Decision tree induction
    :caption: Contents:
 
 
+.. _lib_ref:
 
 Library Reference
 ================================

@@ -29,6 +29,7 @@ pset.add_function(operator.and_, 2)
 pset.add_function(operator.or_, 2)
 pset.add_function(operator.not_, 1)
 
+
 # Individual class, which is a subclass of gep.Chromosome
 # We want to minimize the fitting error. Check http://deap.readthedocs.io/en/master/api/base.html#deap.base.Fitness.
 creator.create("FitnessMax", base.Fitness, weights=(1,))
@@ -86,10 +87,10 @@ def main():
     stats.register("max", numpy.max)
 
     # start evolution
-    pop, log = gep.gepSimple(pop, toolbox, mutpb=0.9, invpb=0.1, ispb=0.1, rispb=0.1, gpb=0.1,
-                             cx1pb=0.4, cx2pb=0.2, cxgpb=0.1,
-                             n_gen=n_gen, n_elites=2,
-                             stats=stats, halloffame=hof)
+    pop, log = gep.gep_simple(pop, toolbox, mutpb=0.9, invpb=0.1, ispb=0.1, rispb=0.1, gpb=0.1,
+                              cx1pb=0.4, cx2pb=0.2, cxgpb=0.1,
+                              n_gen=n_gen, n_elites=2,
+                              stats=stats, halloffame=hof)
     return pop, log, hof
 
 
@@ -98,4 +99,7 @@ if __name__ == '__main__':
     rename_labels = {'and_': '&', 'or_': '|', 'not_': '~'}
     nodes, edges, labels = gep.graph(hof[0], rename_labels)
     gep.export_expression_tree(hof[0], rename_labels, file='./data/sr_boolean_tree.png')
-    print(gep.simplify(hof[0]))
+
+    best_individual = hof[0]
+    solution = gep.simplify(hof[0])
+    print(solution)
