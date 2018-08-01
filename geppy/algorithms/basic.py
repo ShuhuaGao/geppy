@@ -49,12 +49,12 @@ def _modify(population, toolbox, mutpb, invpb, ispb, rispb, gpb, rep=True):
     if hasattr(toolbox, 'invert'):
         _apply_modification(offspring, toolbox.invert, invpb)
     # transposition
-    if hasattr(toolbox, 'isTranspose'):
-        _apply_modification(offspring, toolbox.isTranspose, ispb)
-    if hasattr(toolbox, 'risTranspose'):
-        _apply_modification(offspring, toolbox.risTranspose, rispb)
-    if hasattr(toolbox, 'geneTranspose'):
-        _apply_modification(offspring, toolbox.geneTranspose, gpb)
+    if hasattr(toolbox, 'is_transpose'):
+        _apply_modification(offspring, toolbox.is_transpose, ispb)
+    if hasattr(toolbox, 'ris_transpose'):
+        _apply_modification(offspring, toolbox.ris_transpose, rispb)
+    if hasattr(toolbox, 'gene_transpose'):
+        _apply_modification(offspring, toolbox.gene_transpose, gpb)
 
     return offspring
 
@@ -67,14 +67,14 @@ def _crossover(population, toolbox, cx1pb, cx2pb, cxgpb, rep=True):
         offspring = [toolbox.clone(ind) for ind in population]
     else:
         offspring = population
-    _apply_crossover(offspring, toolbox.mate1p, cx1pb)
-    _apply_crossover(offspring, toolbox.mate2p, cx2pb)
-    _apply_crossover(offspring, toolbox.mateg, cxgpb)
+    _apply_crossover(offspring, toolbox.crossover_one_point, cx1pb)
+    _apply_crossover(offspring, toolbox.crossover_two_point, cx2pb)
+    _apply_crossover(offspring, toolbox.crossover_gene, cxgpb)
     return offspring
 
 
 def gep_simple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb, cxgpb,
-               n_elites, n_gen, stats=None, halloffame=None, verbose=__debug__):
+               n_elites, n_gen, stats=None, hall_of_fame=None, verbose=__debug__):
     """
     This sr and the simplest gene expression algorithm. The flowchart of this algorithm can be found
     `here <https://www.gepsoft.com/gxpt4kb/Chapter06/Section1/SS1.htm>`_.
@@ -94,7 +94,7 @@ def gep_simple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb
     :param n_elites: number of elites to be cloned to next generation
     :param stats: a :class:`~deap.tools.Statistics` object that is updated
                   inplace, optional.
-    :param halloffame: a :class:`~deap.tools.HallOfFame` object that will
+    :param hall_of_fame: a :class:`~deap.tools.HallOfFame` object that will
                        contain the best individuals, optional.
     :param verbose: whether or not to log the statistics.
     :returns: The final population
@@ -103,11 +103,11 @@ def gep_simple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb
 
     .. note::
         This function expects the following aliases to be registered in the toolbox: :meth:`toolbox.mutate`,
-        :meth:`toolbox.invert`, :meth:`toolbox.isTranspose`, :meth:`toolbox.risTranspose`,
-        :meth:`toolbox.geneTranspose` :meth:`toolbox.mate1p`, :meth:`toolbox.mate2p`, :meth:`toolbox.mateg`
-        for mutation and crossover, and
+        :meth:`toolbox.invert`, :meth:`toolbox.is_transpose`, :meth:`toolbox.ris_transpose`,
+        :meth:`toolbox.gene_transpose` :meth:`toolbox.crossover_one_point`, :meth:`toolbox.crossover_two_point`, 
+        :meth:`toolbox.crossover_gene` for mutation and crossover, and
         :meth:`toolbox.select`, :meth:`toolbox.evaluate` for selection and evaluation. If an alias is missing
-        in *toolbox*, then it is equivalent to setting a zero probability.
+        in *toolbox*, then it is equivalent to setting a zero probability for that operator.
     """
     logbook = tools.Logbook()
     logbook.header = ['gen', 'nevals'] + (stats.fields if stats else [])
@@ -121,8 +121,8 @@ def gep_simple(population, toolbox, mutpb, invpb, ispb, rispb, gpb, cx1pb, cx2pb
             ind.fitness.values = fit
 
         # record statistics and log
-        if halloffame is not None:
-            halloffame.update(population)
+        if hall_of_fame is not None:
+            hall_of_fame.update(population)
         record = stats.compile(population) if stats else {}
         logbook.record(gen=gen, nevals=len(invalid_individuals), **record)
         if verbose:

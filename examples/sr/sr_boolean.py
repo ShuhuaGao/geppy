@@ -64,12 +64,12 @@ toolbox.register('evaluate', evaluate)
 toolbox.register('select', tools.selRoulette)
 toolbox.register('mutate', gep.mutate_uniform, pset=pset, indpb=2 / (2 * h + 1))
 toolbox.register('invert', gep.invert)
-toolbox.register('isTranspose', gep.is_transpose)
-toolbox.register('risTranspose', gep.ris_transpose)
-toolbox.register('geneTranspose', gep.gene_transpose)
-toolbox.register('mate1p', gep.crossover_one_point)
-toolbox.register('mate2p', gep.crossover_two_point)
-toolbox.register('mateg', gep.crossover_gene)
+toolbox.register('is_Transpose', gep.is_transpose)
+toolbox.register('ris_Transpose', gep.ris_transpose)
+toolbox.register('gene_Transpose', gep.gene_transpose)
+toolbox.register('crossover_one_point', gep.crossover_one_point)
+toolbox.register('crossover_two_point', gep.crossover_two_point)
+toolbox.register('crossover_gene', gep.crossover_gene)
 
 
 def main():
@@ -90,7 +90,7 @@ def main():
     pop, log = gep.gep_simple(pop, toolbox, mutpb=0.9, invpb=0.1, ispb=0.1, rispb=0.1, gpb=0.1,
                               cx1pb=0.4, cx2pb=0.2, cxgpb=0.1,
                               n_gen=n_gen, n_elites=2,
-                              stats=stats, halloffame=hof)
+                              stats=stats, hall_of_fame=hof)
     return pop, log, hof
 
 
