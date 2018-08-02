@@ -331,7 +331,7 @@ creation of gene instances.</p>
 <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> terminal. See <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code></a>
 for details.</p>
 </div>
-<p>Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id1">[FC2006]</a> for more knowledge about GEP-RNC.</p>
+<p>Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id1">[FC2006]</a> for more knowledge about GEP-RNC.</p>
 <dl class="method">
 <dt id="geppy.core.entity.GeneDc.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em>, <em>rnc_gen</em>, <em>rnc_array_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#GeneDc.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.GeneDc.__init__" title="Permalink to this definition">¶</a></dt>
@@ -507,7 +507,7 @@ terminal with a randomly produced value when needed using the <a class="referenc
 <p class="last">This special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
 by Koza to handle numerical constants in evolutionary programming. However, it is NOT the recommended way
 to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain
-in genes.See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
+in genes.See Chapter 5 of <a class="reference internal" href="#fc2006" id="id3">[FC2006]</a>.</p>
 </div>
 <dl class="method">
 <dt id="geppy.core.symbol.Ephemeral.__init__">
@@ -681,7 +681,7 @@ Python identifier, except the constant terminals and RNC terminals. For more det
 please use the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PrimitiveSet.add_rnc()</span></code></a> method, which will add a special terminal
 of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> internally. Then, use a chromosome composed of
 <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> genes as the individual.
-Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id4">[FC2006]</a> for more details.</p>
+Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id4">[FC2006]</a> for more details.</p>
 </div>
 <dl class="method">
 <dt id="geppy.core.symbol.PrimitiveSet.__init__">
@@ -733,7 +733,7 @@ be yielded.</p>
 <p class="last">The special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
 by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works
 in GEP, it is NOT the recommended way to evolve constants in GEP, especially for complex problems.
-The recommended method is to add a RNC domain in genes. See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id5">[FC2006]</a>.</p>
+The recommended method is to add a RNC domain in genes. See Chapter 5 of <a class="reference internal" href="#fc2006" id="id5">[FC2006]</a>.</p>
 </div>
 </dd></dl>
 
@@ -762,7 +762,7 @@ The recommended method is to add a RNC domain in genes. See Chapter 5 of <a clas
 <dd><p>Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.
 This terminal’s value is retrieved dynamically from an RNC array attached to a gene of type
 <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> according to the GEP-RNC algorithm.
-See also <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
+See also <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -897,7 +897,7 @@ numeric string.</p>
 <p>A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC
 algorithm. This class is mainly used internally by the <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> class. The name of a
 <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> object is ‘?’ by default, and its value is retrieved dynamically according to the GEP-RNC
-algorithm. Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id7">[FC2006]</a> for more details.</p>
+algorithm. Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id7">[FC2006]</a> for more details.</p>
 <dl class="method">
 <dt id="geppy.core.symbol.TerminalRNC.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name='?'</em>, <em>value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#TerminalRNC.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.TerminalRNC.__init__" title="Permalink to this definition">¶</a></dt>

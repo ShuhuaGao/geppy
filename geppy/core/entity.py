@@ -514,7 +514,11 @@ class Chromosome(list):
         """
         Return the expressions in a human readable string.
         """
-        return '[\n\t' + ',\n\t'.join(str(g) for g in self) + '\n]'
+        if self.linker is not None:
+            return '{0}(\n\t{1}\n)'.format(self.linker.__name__, ',\n\t'.join(str(g) for g in self))
+        else:
+            assert len(self) == 1
+            return str(self[0])
 
     @property
     def kexpressions(self):

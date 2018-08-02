@@ -24,7 +24,7 @@ GEP can be seen as a variant of the traditional  [genetic programming](https://e
 - Support numerical constants inference with a third Dc domain in genes: GEP-RNC.
 - Visualization of the expression tree.
 - Symbolic simplification of a gene, a chromosome, or a K-expression in postprocessing.
-- Examples of different applications  in GEP.
+- Examples of different applications using  GEP with detailed comments in Jupyter notebook.
 
 ## Installation
 Currently, *geppy* is still in its alpha phase. If you want to try it, you can install it from sources.
@@ -44,11 +44,10 @@ Check [*geppy* documentation](https://geppy.readthedocs.io/en/latest/) for GEP t
 TODO: add more examples and tutorials into the documentation.
 
 ## Examples
-
+A getting started example is presented in the Jupyter notebook [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb), which infers a Boolean function from given input-output data with GEP. More examples are listed in the following.
 ### Symbolic regression
-1. [Boolean model identification](./examples/sr/sr_boolean.py)
+1. [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb) (Getting started)
 
-TODO: add more Jupyter notebook based examples
 
 ## Requirements
 - Python 3
@@ -57,7 +56,7 @@ TODO: add more Jupyter notebook based examples
 - [optional] Since GEP/GP doesn't simplify the expressions during evolution, its final result may contain many redundancies, and the tree can be very large,  like `x + 5 * (2 * x - x - x) - 1`,  which is simply `x - 1`. You may like to simplify the final model evolved by GEP with symbolic computation to get better understanding of this model. The corresponding `geppy.simplify` method depends on the [sympy](http://www.sympy.org/en/index.html) package. 
 
 ## Reference
-The bible of GEP is definitely Ferreira, C.'s monograph: *Ferreira, C. (2006). Gene expression programming: mathematical modeling by an artificial intelligence (Vol. 21). Springer*.
+The bible of GEP is definitely Ferreira, C.'s monograph: **Ferreira, C. (2006). Gene expression programming: mathematical modeling by an artificial intelligence (Vol. 21). Springer**.
 
 You can also get a lot of papers/documents by Googling 'gene expression programming'.
 
