@@ -23,6 +23,7 @@ DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.neg.__name__: operator.neg,
     operator.floordiv.__name__: operator.floordiv,
     operator.truediv.__name__: operator.truediv,
+    'protected_div': operator.truediv,
     math.log.__name__: sp.log
 }
 """
@@ -38,6 +39,7 @@ Currently, it is defined as::
         operator.neg.__name__: operator.neg,
         operator.floordiv.__name__: operator.floordiv,
         operator.truediv.__name__: operator.truediv,
+        'protected_dv': operator.truediv,
         math.log.__name__: sp.log
     }
 """
@@ -49,7 +51,14 @@ def _simplify_kexpression(expr, symbolic_function_map):
     :return: a symbolic expression
     """
     assert len(expr) > 0
-    expr = expr[:]
+    if len(expr) == 1: # must be a single terminal
+        t = expr[0]
+        assert isinstance(t, Terminal), 'A K-expression of length 1 must only contain a terminal.'
+        if t.value is None:  # an input
+            return sp.Symbol(t.name)
+        return t.value
+
+    expr = expr[:]  # because we need to change expr
     # K-expression is simply a level-order serialization of an expression tree.
     for i in reversed(range(len(expr))):
         p = expr[i]
@@ -116,7 +125,10 @@ def simplify(genome, symbolic_function_map=None):
         else:   # multigenic chromosome
             simplified_exprs = [_simplify_kexpression(g.kexpression, symbolic_function_map) for g in genome]
             # combine these sub-expressions into a single one with the linking function
-            linker = symbolic_function_map[genome.linker.__name__]
+            try:
+                linker = symbolic_function_map[genome.linker.__name__]
+            except:
+                linker = genome.linker
             return sp.simplify(linker(*simplified_exprs))
     else:
         raise TypeError('Only an argument of type KExpression, Gene, and Chromosome is acceptable. The provided '

@@ -94,14 +94,14 @@
     <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
 
 
-<div class="viewcode-block" id="mutate_uniform"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">indpb</span><span class="p">):</span>
+<div class="viewcode-block" id="mutate_uniform"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">ind_pb</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uniform point mutation. For each symbol in *individual*, change it to another randomly chosen symbol from *pset*</span>
 <span class="sd">    with the probability *indpb*. A symbol may be a function or a terminal.</span>
 
 <span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, the chromosome to be mutated.</span>
 <span class="sd">    :param pset: :class:`~geppy.core.entity.PrimitiveSet`, a primitive set</span>
-<span class="sd">    :param indpb: probability of mutating each symbol</span>
+<span class="sd">    :param ind_pb: probability of mutating each symbol</span>
 <span class="sd">    :return: A tuple of one chromosome</span>
 
 <span class="sd">    It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,</span>
@@ -111,19 +111,19 @@
         <span class="c1"># mutate the gene with the associated pset</span>
         <span class="c1"># head: any symbol can be changed into a function or a terminal</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gene</span><span class="o">.</span><span class="n">head_length</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">indpb</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">ind_pb</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>  <span class="c1"># to a function</span>
                     <span class="n">gene</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_function</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">gene</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_terminal</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
         <span class="c1"># tail: only change to another terminal</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gene</span><span class="o">.</span><span class="n">head_length</span><span class="p">,</span> <span class="n">gene</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="n">gene</span><span class="o">.</span><span class="n">tail_length</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">indpb</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">ind_pb</span><span class="p">:</span>
                 <span class="n">gene</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_terminal</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 
 
-<div class="viewcode-block" id="mutate_uniform_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">indpb</span><span class="p">):</span>
+<div class="viewcode-block" id="mutate_uniform_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">ind_pb</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices</span>
 <span class="sd">    in the Dc domain can later be used to retrieve numerical constants from the gene associated</span>
@@ -131,7 +131,7 @@
 
 <span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type</span>
 <span class="sd">        :class:`~geppy.core.entity.GeneDc`</span>
-<span class="sd">    :param indpb: probability of mutating each index/position in the Dc domain</span>
+<span class="sd">    :param ind_pb: probability of mutating each index/position in the Dc domain</span>
 <span class="sd">    :return: a tuple of one chromosome</span>
 
 <span class="sd">    It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,</span>
@@ -142,7 +142,7 @@
         <span class="n">start</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="n">g</span><span class="o">.</span><span class="n">tail_length</span>
         <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">g</span><span class="o">.</span><span class="n">dc_length</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">indpb</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">ind_pb</span><span class="p">:</span>
                 <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 
@@ -300,7 +300,7 @@
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 
 
-<div class="viewcode-block" id="mutate_rnc_array_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_rnc_array_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_rnc_array_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">indpb</span><span class="p">):</span>
+<div class="viewcode-block" id="mutate_rnc_array_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_rnc_array_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_rnc_array_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">ind_pb</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Direct mutation of RNCs, which changes the values in a gene&#39;s RNC array</span>
 <span class="sd">    :meth:`~geppy.core.entity.GeneDc.rnc_array` randomly.</span>
@@ -308,7 +308,7 @@
 <span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type</span>
 <span class="sd">        :class:`~geppy.core.entity.GeneDc`.</span>
 <span class="sd">    :param rnc_gen: callable, which returns a random numerical constant by calling ``rnc_gen()``.</span>
-<span class="sd">    :param indpb: individual probability of a RNC being mutated</span>
+<span class="sd">    :param ind_pb: individual probability of a RNC being mutated</span>
 <span class="sd">    :return: a tuple of one individual</span>
 
 <span class="sd">    The genetic operators :func:`mutate_uniform_dc`, :func:`transpose_dc` and :func:`invert_dc` actually only move the</span>
@@ -331,7 +331,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">individual</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">indpb</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">ind_pb</span><span class="p">:</span>
                 <span class="n">g</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rnc_gen</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 </pre></div>

@@ -105,4 +105,4 @@ venv.bak/
 .idea/
 tmp_files/
 .mypy_cache/
-examples/sr/tmp_test.py
+examples/sr/tmp_*.*

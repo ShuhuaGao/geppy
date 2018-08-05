@@ -137,15 +137,14 @@
 <span class="sd">    :param ind2: The second individual (chromosome) participating in the crossover.</span>
 <span class="sd">    :return: a tuple of two children individuals</span>
 
-<span class="sd">    For multigenic chromosomes, only a single gene index is randomly chosen and the two genes at that position are</span>
-<span class="sd">    swapped. This operation has no effect if the chromosome has only one gene. Typically, a gene recombination rate</span>
-<span class="sd">    around 0.3 is used.</span>
+<span class="sd">    This operation has no effect if the chromosome has only one gene. Typically, a gene recombination rate</span>
+<span class="sd">    around 0.2 is used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind2</span><span class="p">)</span>
-    <span class="n">position</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">ind1</span><span class="p">[</span><span class="n">position</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">position</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+    <span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind1</span><span class="p">)),</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ind1</span><span class="p">[</span><span class="n">pos1</span><span class="p">],</span> <span class="n">ind2</span><span class="p">[</span><span class="n">pos2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ind2</span><span class="p">[</span><span class="n">pos2</span><span class="p">],</span> <span class="n">ind1</span><span class="p">[</span><span class="n">pos1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">_DEBUG</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cxGene: g</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cxGene: ind1[</span><span class="si">{}</span><span class="s1">] &lt;--&gt; ind2[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">ind1</span><span class="p">,</span> <span class="n">ind2</span></div>
 </pre></div>
 

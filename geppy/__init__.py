@@ -41,7 +41,7 @@ from .tools.mutation import *
 from .algorithms.basic import *
 from .tools.parser import *
 from .tools.generator import *
-from geppy.support.visualization import *
+from .support.visualization import *
 
 
 def _print_module_not_found(module_name, f_name, http=''):

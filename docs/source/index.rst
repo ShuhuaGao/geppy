@@ -26,6 +26,8 @@ Tutorials & Examples
 
 Symbolic regression
 --------------------------------
+1. `Boolean model identification <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/Boolean_function_identification.ipynb>`_ (Getting started)
+2. `A simple mathematical expression inference <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference.ipynb>`_ (Demonstrating the GEP-RNC algorithm for numerical constant evolution)
 
 Decision tree induction
 -------------------------------

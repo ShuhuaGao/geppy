@@ -45,14 +45,14 @@ def _choose_subsequence_indices(i, j, min_length=1, max_length=-1):
     return start, start + length - 1
 
 
-def mutate_uniform(individual, pset, indpb):
+def mutate_uniform(individual, pset, ind_pb):
     """
     Uniform point mutation. For each symbol in *individual*, change it to another randomly chosen symbol from *pset*
     with the probability *indpb*. A symbol may be a function or a terminal.
 
     :param individual: :class:`~geppy.core.entity.Chromosome`, the chromosome to be mutated.
     :param pset: :class:`~geppy.core.entity.PrimitiveSet`, a primitive set
-    :param indpb: probability of mutating each symbol
+    :param ind_pb: probability of mutating each symbol
     :return: A tuple of one chromosome
 
     It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,
@@ -62,19 +62,19 @@ def mutate_uniform(individual, pset, indpb):
         # mutate the gene with the associated pset
         # head: any symbol can be changed into a function or a terminal
         for i in range(gene.head_length):
-            if random.random() < indpb:
+            if random.random() < ind_pb:
                 if random.random() < 0.5:  # to a function
                     gene[i] = _choose_function(pset)
                 else:
                     gene[i] = _choose_terminal(pset)
         # tail: only change to another terminal
         for i in range(gene.head_length, gene.head_length + gene.tail_length):
-            if random.random() < indpb:
+            if random.random() < ind_pb:
                 gene[i] = _choose_terminal(pset)
     return individual,
 
 
-def mutate_uniform_dc(individual, indpb):
+def mutate_uniform_dc(individual, ind_pb):
     """
     Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices
     in the Dc domain can later be used to retrieve numerical constants from the gene associated
@@ -82,7 +82,7 @@ def mutate_uniform_dc(individual, indpb):
 
     :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type
         :class:`~geppy.core.entity.GeneDc`
-    :param indpb: probability of mutating each index/position in the Dc domain
+    :param ind_pb: probability of mutating each index/position in the Dc domain
     :return: a tuple of one chromosome
 
     It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,
@@ -93,7 +93,7 @@ def mutate_uniform_dc(individual, indpb):
         start = g.head_length + g.tail_length
         end = start + g.dc_length
         for i in range(start, end):
-            if random.random() < indpb:
+            if random.random() < ind_pb:
                 g[i] = random.randint(0, len(g.rnc_array) - 1)
     return individual,
 
@@ -251,7 +251,7 @@ def transpose_dc(individual):
     return individual,
 
 
-def mutate_rnc_array_dc(individual, rnc_gen, indpb):
+def mutate_rnc_array_dc(individual, rnc_gen, ind_pb):
     """
     Direct mutation of RNCs, which changes the values in a gene's RNC array
     :meth:`~geppy.core.entity.GeneDc.rnc_array` randomly.
@@ -259,7 +259,7 @@ def mutate_rnc_array_dc(individual, rnc_gen, indpb):
     :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type
         :class:`~geppy.core.entity.GeneDc`.
     :param rnc_gen: callable, which returns a random numerical constant by calling ``rnc_gen()``.
-    :param indpb: individual probability of a RNC being mutated
+    :param ind_pb: individual probability of a RNC being mutated
     :return: a tuple of one individual
 
     The genetic operators :func:`mutate_uniform_dc`, :func:`transpose_dc` and :func:`invert_dc` actually only move the
@@ -282,6 +282,6 @@ def mutate_rnc_array_dc(individual, rnc_gen, indpb):
     """
     for g in individual:
         for i in range(len(g.rnc_array)):
-            if random.random() < indpb:
+            if random.random() < ind_pb:
                 g.rnc_array[i] = rnc_gen()
     return individual,

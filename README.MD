@@ -47,6 +47,7 @@ TODO: add more examples and tutorials into the documentation.
 A getting started example is presented in the Jupyter notebook [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb), which infers a Boolean function from given input-output data with GEP. More examples are listed in the following.
 ### Symbolic regression
 1. [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb) (Getting started)
+2. [A simple mathematical expression inference](./examples/sr/numerical_expression_inference.ipynb) (Demonstrating the GEP-RNC algorithm for numerical constant evolution)
 
 
 ## Requirements

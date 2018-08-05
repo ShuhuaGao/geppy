@@ -197,7 +197,7 @@ Here, instead of the original names 'add' and 'sub', we want them to be displaye
 
 What's next?
 =================================
-This primer introduces the most common features of *geppy*, but there are a lot more to explore.  You can first check how to apply these features in practice by going through the example on `Boolean function identification <../../../examples/sr/Boolean_function_identification.ipynb>`_ using GEP with *geppy*, which is commented in details. 
+This primer introduces the most common features of *geppy*, but there are a lot more to explore.  You can first check how to apply these features in practice by going through the example on `Boolean function identification <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/Boolean_function_identification.ipynb>`_ using GEP with *geppy*, which is commented in details. 
 
 After that, you can refer to :ref:`tutorial_example` to learn more about *geppy* applications in different fields of GEP.  More importantly, the documentation of all the public interfaces of *geppy* can be found at :ref:`lib_ref`.
  

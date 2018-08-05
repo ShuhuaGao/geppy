@@ -88,9 +88,8 @@ children are returned.</p>
 </tr>
 </tbody>
 </table>
-<p>For multigenic chromosomes, only a single gene index is randomly chosen and the two genes at that position are
-swapped. This operation has no effect if the chromosome has only one gene. Typically, a gene recombination rate
-around 0.3 is used.</p>
+<p>This operation has no effect if the chromosome has only one gene. Typically, a gene recombination rate
+around 0.2 is used.</p>
 </dd></dl>
 
 <dl class="function">
@@ -283,7 +282,7 @@ Typically, the IS transposition rate is set around 0.1.</p>
 
 <dl class="function">
 <dt id="geppy.tools.mutation.mutate_rnc_array_dc">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_rnc_array_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>rnc_gen</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_rnc_array_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_rnc_array_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>rnc_gen</em>, <em>ind_pb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_rnc_array_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Direct mutation of RNCs, which changes the values in a gene’s RNC array
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a> randomly.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -294,7 +293,7 @@ Typically, the IS transposition rate is set around 0.1.</p>
 <li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>.</li>
 <li><strong>rnc_gen</strong> – callable, which returns a random numerical constant by calling <code class="docutils literal notranslate"><span class="pre">rnc_gen()</span></code>.</li>
-<li><strong>indpb</strong> – individual probability of a RNC being mutated</li>
+<li><strong>ind_pb</strong> – individual probability of a RNC being mutated</li>
 </ul>
 </td>
 </tr>
@@ -323,7 +322,7 @@ tuning, as they are constantly being moved around by all the genetic operators.<
 
 <dl class="function">
 <dt id="geppy.tools.mutation.mutate_uniform">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em>, <em>ind_pb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uniform point mutation. For each symbol in <em>individual</em>, change it to another randomly chosen symbol from <em>pset</em>
 with the probability <em>indpb</em>. A symbol may be a function or a terminal.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -333,7 +332,7 @@ with the probability <em>indpb</em>. A symbol may be a function or a terminal.</
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, the chromosome to be mutated.</li>
 <li><strong>pset</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code>, a primitive set</li>
-<li><strong>indpb</strong> – probability of mutating each symbol</li>
+<li><strong>ind_pb</strong> – probability of mutating each symbol</li>
 </ul>
 </td>
 </tr>
@@ -348,7 +347,7 @@ with the probability <em>indpb</em>. A symbol may be a function or a terminal.</
 
 <dl class="function">
 <dt id="geppy.tools.mutation.mutate_uniform_dc">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>indpb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_dc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>ind_pb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices
 in the Dc domain can later be used to retrieve numerical constants from the gene associated
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>.</p>
@@ -359,7 +358,7 @@ in the Dc domain can later be used to retrieve numerical constants from the gene
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a></li>
-<li><strong>indpb</strong> – probability of mutating each index/position in the Dc domain</li>
+<li><strong>ind_pb</strong> – probability of mutating each index/position in the Dc domain</li>
 </ul>
 </td>
 </tr>

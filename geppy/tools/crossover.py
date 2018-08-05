@@ -88,13 +88,12 @@ def crossover_gene(ind1, ind2):
     :param ind2: The second individual (chromosome) participating in the crossover.
     :return: a tuple of two children individuals
 
-    For multigenic chromosomes, only a single gene index is randomly chosen and the two genes at that position are
-    swapped. This operation has no effect if the chromosome has only one gene. Typically, a gene recombination rate
-    around 0.3 is used.
+    This operation has no effect if the chromosome has only one gene. Typically, a gene recombination rate
+    around 0.2 is used.
     """
     assert len(ind1) == len(ind2)
-    position = random.randint(0, len(ind1) - 1)
-    ind1[position], ind2[position] = ind2[position], ind1[position]
+    pos1, pos2 = random.choices(range(len(ind1)), k=2)
+    ind1[pos1], ind2[pos2] = ind2[pos2], ind1[pos1]
     if _DEBUG:
-        print('cxGene: g{}'.format(position))
+        print('cxGene: ind1[{}] <--> ind2[{}]'.format(pos1, pos2))
     return ind1, ind2
