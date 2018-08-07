@@ -9,7 +9,7 @@
     <title>geppy.support.visualization &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -55,7 +55,8 @@
 <span class="sd">K-expression, a gene or a chromosome in GEP.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">geppy.core.entity</span> <span class="k">import</span> <span class="n">KExpression</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">Gene</span>
+<span class="kn">from</span> <span class="nn">..core.entity</span> <span class="k">import</span> <span class="n">KExpression</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">Gene</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Terminal</span>
 
 
 <span class="k">def</span> <span class="nf">_graph_kexpression</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">starting_index</span><span class="p">):</span>
@@ -67,11 +68,19 @@
 <span class="sd">    :return: A node list, an edge list, and a dictionary of labels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">starting_index</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">))]</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">starting_index</span> <span class="o">+</span> <span class="n">i</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="p">)}</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Function</span><span class="p">):</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">starting_index</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Terminal</span><span class="p">):</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">starting_index</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Unrecognized symbol. Normally, a symbol in the K-expression is either a function &#39;</span>
+                               <span class="s1">&#39;or a terminal&#39;</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">arity</span><span class="p">):</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -80,7 +89,7 @@
     <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">labels</span>
 
 
-<div class="viewcode-block" id="graph"><a class="viewcode-back" href="../../../geppy.support.html#geppy.support.visualization.graph">[docs]</a><span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">renamed_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="graph"><a class="viewcode-back" href="../../../geppy.support.html#geppy.support.visualization.graph">[docs]</a><span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="n">genome</span><span class="p">,</span> <span class="n">label_renaming_map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Construct the graph of a genome. It returns in order a node list, an edge list, and a dictionary of the per node</span>
 <span class="sd">    labels. The node are represented by numbers, the edges are tuples connecting two nodes (number), and the labels are</span>
@@ -88,7 +97,7 @@
 
 <span class="sd">    :param genome: :class:`~geppy.core.entity.KExpression`, :class:`~geppy.core.entity.Gene`, or</span>
 <span class="sd">        :class:`~geppy.core.entity.Chromosome`, the genotype of an individual</span>
-<span class="sd">    :param renamed_labels: dict, which maps the old name of a primitive (or a linking function)</span>
+<span class="sd">    :param label_renaming_map: dict, which maps the old name of a primitive (or a linking function)</span>
 <span class="sd">        to a new one for better visualization. The default label for each node is just the name of the primitive</span>
 <span class="sd">        placed on this node. For example, you may provide ``renamed_labels={&#39;and_&#39;: &#39;and&#39;}``.</span>
 <span class="sd">    :return: A node list, an edge list, and a dictionary of labels.</span>
@@ -126,10 +135,10 @@
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Only an argument of type KExpression, Gene, and Chromosome is acceptable. The provided &#39;</span>
                         <span class="s1">&#39;genome type is </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">genome</span><span class="p">)))</span>
     <span class="c1"># rename_labels labels</span>
-    <span class="k">if</span> <span class="n">renamed_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">label_renaming_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">labels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">renamed_labels</span><span class="p">:</span>
-                <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">renamed_labels</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">label_renaming_map</span><span class="p">:</span>
+                <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_renaming_map</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">labels</span></div>
 
 
@@ -163,6 +172,9 @@
     <span class="k">for</span> <span class="n">name1</span><span class="p">,</span> <span class="n">name2</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
         <span class="n">g</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">name1</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">name2</span><span class="p">))</span>  <span class="c1"># add edge</span>
     <span class="n">g</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span> <span class="s1">&#39;export_expression_tree&#39;</span><span class="p">]</span>
 </pre></div>
 
           </div>
@@ -207,7 +219,7 @@
     Built on None.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

@@ -9,7 +9,7 @@
     <title>geppy.support package &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -56,7 +56,7 @@
 be used in postprocessing.</p>
 <dl class="data">
 <dt id="geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP">
-<code class="descclassname">geppy.support.simplification.</code><code class="descname">DEFAULT_SYMBOLIC_FUNCTION_MAP</code><em class="property"> = {'add': &lt;built-in function add&gt;, 'and_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x000001ACBBB4C080&gt;, 'floordiv': &lt;built-in function floordiv&gt;, 'log': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x000001ACBBB4C3C8&gt;, 'mul': &lt;built-in function mul&gt;, 'neg': &lt;built-in function neg&gt;, 'not_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x000001ACBBB4C240&gt;, 'or_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x000001ACBBB4C1D0&gt;, 'protected_div': &lt;built-in function truediv&gt;, 'sub': &lt;built-in function sub&gt;, 'truediv': &lt;built-in function truediv&gt;}</em><a class="headerlink" href="#geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.support.simplification.</code><code class="descname">DEFAULT_SYMBOLIC_FUNCTION_MAP</code><em class="property"> = {'add': &lt;built-in function add&gt;, 'and_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x0000018F533895F8&gt;, 'floordiv': &lt;built-in function floordiv&gt;, 'log': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x0000018F533898D0&gt;, 'mul': &lt;built-in function mul&gt;, 'neg': &lt;built-in function neg&gt;, 'not_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x0000018F53389748&gt;, 'or_': &lt;sphinx.ext.autodoc.importer._MockObject object at 0x0000018F533896D8&gt;, 'protected_div': &lt;built-in function truediv&gt;, 'sub': &lt;built-in function sub&gt;, 'truediv': &lt;built-in function truediv&gt;}</em><a class="headerlink" href="#geppy.support.simplification.DEFAULT_SYMBOLIC_FUNCTION_MAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently, it is defined as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEFAULT_SYMBOLIC_FUNCTION_MAP</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="n">And</span><span class="p">,</span>
@@ -122,6 +122,34 @@ solution evolved by GEP.</p>
 <p>This module <code class="xref py py-mod docutils literal notranslate"><span class="pre">visualization</span></code> provides utility functions to visualization the expression tree from a given
 K-expression, a gene or a chromosome in GEP.</p>
 <dl class="function">
+<dt id="geppy.support.visualization.graph">
+<code class="descclassname">geppy.support.visualization.</code><code class="descname">graph</code><span class="sig-paren">(</span><em>genome</em>, <em>label_renaming_map=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/support/visualization.html#graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.support.visualization.graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the graph of a genome. It returns in order a node list, an edge list, and a dictionary of the per node
+labels. The node are represented by numbers, the edges are tuples connecting two nodes (number), and the labels are
+values of a dictionary for which keys are the node numbers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>genome</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.KExpression" title="geppy.core.entity.KExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">KExpression</span></code></a>, <a class="reference internal" href="geppy.core.html#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>, or
+<a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, the genotype of an individual</li>
+<li><strong>label_renaming_map</strong> – dict, which maps the old name of a primitive (or a linking function)
+to a new one for better visualization. The default label for each node is just the name of the primitive
+placed on this node. For example, you may provide <code class="docutils literal notranslate"><span class="pre">renamed_labels={'and_':</span> <span class="pre">'and'}</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A node list, an edge list, and a dictionary of labels.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>You can visualize a genome and export the tree visualization to an image file directly using the
+<a class="reference internal" href="#geppy.support.visualization.export_expression_tree" title="geppy.support.visualization.export_expression_tree"><code class="xref py py-func docutils literal notranslate"><span class="pre">export_expression_tree()</span></code></a> function.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="geppy.support.visualization.export_expression_tree">
 <code class="descclassname">geppy.support.visualization.</code><code class="descname">export_expression_tree</code><span class="sig-paren">(</span><em>genome</em>, <em>label_renaming_map=None</em>, <em>file='tree.png'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/support/visualization.html#export_expression_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.support.visualization.export_expression_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct the graph of a <em>genome</em> and then export it to a <em>file</em>.</p>
@@ -149,34 +177,6 @@ If no extension is included in <em>file</em>, then the default extension ‘png�
 Alternatively, you can always obtain the raw graph data with the <a class="reference internal" href="#geppy.support.visualization.graph" title="geppy.support.visualization.graph"><code class="xref py py-func docutils literal notranslate"><span class="pre">graph()</span></code></a> function, then postprocess the
 data and render them with other tools as you want.</p>
 </div>
-</dd></dl>
-
-<dl class="function">
-<dt id="geppy.support.visualization.graph">
-<code class="descclassname">geppy.support.visualization.</code><code class="descname">graph</code><span class="sig-paren">(</span><em>genome</em>, <em>renamed_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/support/visualization.html#graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.support.visualization.graph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct the graph of a genome. It returns in order a node list, an edge list, and a dictionary of the per node
-labels. The node are represented by numbers, the edges are tuples connecting two nodes (number), and the labels are
-values of a dictionary for which keys are the node numbers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>genome</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.KExpression" title="geppy.core.entity.KExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">KExpression</span></code></a>, <a class="reference internal" href="geppy.core.html#geppy.core.entity.Gene" title="geppy.core.entity.Gene"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gene</span></code></a>, or
-<a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, the genotype of an individual</li>
-<li><strong>renamed_labels</strong> – dict, which maps the old name of a primitive (or a linking function)
-to a new one for better visualization. The default label for each node is just the name of the primitive
-placed on this node. For example, you may provide <code class="docutils literal notranslate"><span class="pre">renamed_labels={'and_':</span> <span class="pre">'and'}</span></code>.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A node list, an edge list, and a dictionary of labels.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>You can visualize a genome and export the tree visualization to an image file directly using the
-<a class="reference internal" href="#geppy.support.visualization.export_expression_tree" title="geppy.support.visualization.export_expression_tree"><code class="xref py py-func docutils literal notranslate"><span class="pre">export_expression_tree()</span></code></a> function.</p>
 </dd></dl>
 
 </div>
@@ -245,7 +245,7 @@ placed on this node. For example, you may provide <code class="docutils literal 
     Built on None.
     <a href="bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

@@ -9,7 +9,7 @@
     <title>geppy.tools.generator &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -55,7 +55,7 @@
 <span class="sd">terminals randomly from a given primitive set to form a linear form gene expression.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Ephemeral</span>
+<span class="kn">from</span> <span class="nn">._util</span> <span class="k">import</span> <span class="n">_choose_a_terminal</span>
 
 
 <div class="viewcode-block" id="generate_genome"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.generator.generate_genome">[docs]</a><span class="k">def</span> <span class="nf">generate_genome</span><span class="p">(</span><span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">):</span>
@@ -81,16 +81,10 @@
         <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
             <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">functions</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">terminal</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">terminals</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">terminal</span><span class="p">,</span> <span class="n">Ephemeral</span><span class="p">):</span>  <span class="c1"># an Ephemeral</span>
-                <span class="n">terminal</span> <span class="o">=</span> <span class="n">terminal</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>    <span class="c1"># generate a normal constant terminal with a random value</span>
-            <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">terminal</span>
+            <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_a_terminal</span><span class="p">(</span><span class="n">terminals</span><span class="p">)</span>
     <span class="c1"># tail part: only terminals are allowed</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">h</span> <span class="o">+</span> <span class="n">t</span><span class="p">):</span>
-        <span class="n">terminal</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">terminals</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">terminal</span><span class="p">,</span> <span class="n">Ephemeral</span><span class="p">):</span>  <span class="c1"># an Ephemeral</span>
-            <span class="n">terminal</span> <span class="o">=</span> <span class="n">terminal</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>  <span class="c1"># generate a normal constant terminal with a random value</span>
-        <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">terminal</span>
+        <span class="n">expr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_choose_a_terminal</span><span class="p">(</span><span class="n">terminals</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">expr</span></div>
 
 
@@ -150,7 +144,7 @@
     Built on None.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

@@ -163,13 +163,13 @@ class Gene(list):
         g._head_length = head_length
         return g
 
-    def __deepcopy__(self, memodict):
-        """
-        Deep copy a gene. Note that there is no need to deep copy the contained primitives since they will not be
-        changed during GEP.
-        If we rely on the default deepcopy implementation, then the contents are also deep copied unnecessarily.
-        """
-        return self.__class__.from_genome(self, head_length=self.head_length)
+    # def __deepcopy__(self, memodict):
+    #     """
+    #     Deep copy a gene. Note that there is no need to deep copy the contained primitives since they will not be
+    #     changed during GEP.
+    #     If we rely on the default deepcopy implementation, then the contents are also deep copied unnecessarily.
+    #     """
+    #     return self.__class__.from_genome(self, head_length=self.head_length)
 
     def __str__(self):
         """
@@ -367,8 +367,8 @@ class GeneDc(Gene):
         """
         return self[self.head_length + self.tail_length: self.head_length + self.tail_length + self.dc_length]
 
-    def __deepcopy__(self, memodict):
-        return self.__class__.from_genome(self, self.head_length, self.rnc_array)
+    # def __deepcopy__(self, memodict):
+    #     return self.__class__.from_genome(self, self.head_length, self.rnc_array)
 
     def __str__(self):
         """

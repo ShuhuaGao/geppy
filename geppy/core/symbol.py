@@ -26,6 +26,7 @@ require specific data types. As a result, the codes can be greatly simplified.
 """
 import numbers
 import keyword
+import copy
 
 
 def _is_identifier_not_keyword(var):
@@ -44,6 +45,7 @@ class Primitive:
     """
     Class that encapsulates a primitive in GEP. A primitive may be a function or a terminal.
     """
+
     def __init__(self, name, arity):
         """
         Initialize a primitive.
@@ -84,6 +86,10 @@ class Primitive:
     def __repr__(self):
         return '{}(name={}, arity={})'.format(self.__class__, self.name, self.arity)
 
+    def __deepcopy__(self, memodict):
+        # faster deep copy because generally a primitive is immutable except the ephemeral ones
+        return self
+
 
 class Function(Primitive):
     """
@@ -92,6 +98,7 @@ class Function(Primitive):
     somewhere else when needed, for example, from :class:`PrimitiveSet`. Thus, in the whole GEP program the provided
     name for each function must be unique.
     """
+
     def __init__(self, name, arity):
         """
                 Initialize a function.
@@ -125,6 +132,7 @@ class Terminal(Primitive):
     """
     Class that encapsulates a terminal in GEP.
     """
+
     def __init__(self, name, value):
         """
         Initialize a terminal.
@@ -166,6 +174,7 @@ class Ephemeral(Terminal):
             to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain
             in genes.See Chapter 5 of [FC2006]_.
     """
+
     def __init__(self, name, gen):
         """
 
@@ -173,7 +182,7 @@ class Ephemeral(Terminal):
         :param gen: callable, an ephemeral number generator, which should return a random value when called with
             no arguments.
         """
-        super().__init__(name, value=None)
+        super().__init__(name, value=gen())
         self._gen = gen
 
     @property
@@ -183,29 +192,38 @@ class Ephemeral(Terminal):
         """
         return self._gen
 
-    @property
-    def value(self):
-        """
-        This doesn't make sense for an ephemeral constant terminal. Simply raise :class:`NotImplementedError`.
-        """
-        raise NotImplementedError
-
-    @property
     def format(self):
         """
-        This doesn't make sense for an ephemeral constant terminal. Simply raise :class:`NotImplementedError`.
+        Get a string representation of this terminal for subsequent evaluation purpose, which is equivalently
+        ``str(self.value)``.
         """
-        raise NotImplementedError
+        return str(self.value)
 
-    def generate(self):
+    def update_value(self):
         """
-        Generate a constant terminal, whose value is randomly produced by the :meth:`~Ephemeral.generator`.
+        Update the value of this ephemeral constant in place, whose new value is randomly produced by the random number
+        generator :meth:`~Ephemeral.generator`.
         """
-        value = self._gen()
-        return Terminal(str(value), value)
+        self._value = self._gen()
+
+    def clone_with_update(self):
+        """
+        Get a copy of this ephemeral but with its value updated by :meth:`update_value`. With this operation, the
+        various instances of a same kind of ephemeral are independent.
+
+        :return: Ephemeral, a new instance
+        """
+        replica = copy.deepcopy(self)
+        replica.update_value()
+        return replica
 
     def __repr__(self):
         return '{}(name={}, gen={})'.format(self.__class__, self.name, self.generator)
+
+    def __deepcopy__(self, memodict):
+        new = self.__class__(self.name, self.generator)
+        new._value = self.value
+        return new
 
 
 class TerminalRNC(Terminal):
@@ -215,6 +233,7 @@ class TerminalRNC(Terminal):
     :class:`TerminalRNC` object is '?' by default, and its value is retrieved dynamically according to the GEP-RNC
     algorithm. Refer to Chapter 5 of [FC2006]_ for more details.
     """
+
     def __init__(self, name='?', value=None):
         """
         Initialize a RNC terminal.
@@ -241,6 +260,7 @@ class PrimitiveSet:
         :class:`~geppy.core.entity.GeneDc` genes as the individual.
         Refer to Chapter 5 of [FC2006]_ for more details.
     """
+
     def __init__(self, name, input_names):
         """
         Initiate a primitive set with the given *name* and the list of input names.
@@ -289,7 +309,7 @@ class PrimitiveSet:
         evaluation, because their string representation acquired by :meth:`~Terminal.format` can be used directly.
         :param value: value of the terminal. Only numeric and Boolean types can be accepted.
         """
-        assert isinstance(value, numbers.Number) or isinstance(value, bool),\
+        assert isinstance(value, numbers.Number) or isinstance(value, bool), \
             '''Only a number or a Boolean value can be used to create a constant terminal. The provided value is {} of 
                 type {}'''.format(value, type(value))
         self._terminals.append(Terminal(str(value), value))
@@ -315,7 +335,7 @@ class PrimitiveSet:
         attribute.
         """
         assert _is_identifier_not_keyword(name), 'A name must be a valid non-keyword Python identifier.' \
-                                                  "The provided name '{}' cannot be accepted.".format(name)
+                                                 "The provided name '{}' cannot be accepted.".format(name)
         assert name not in self._unique_names, "A primitive with the name '{}' already exists.".format(name)
         self._unique_names.add(name)
 
@@ -349,8 +369,14 @@ class PrimitiveSet:
         .. note::
             The special terminal named *ephemeral random constant* was originally introduced in genetic programming
             by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works
-            in GEP, it is NOT the recommended way to evolve constants in GEP, especially for complex problems.
-            The recommended method is to add a RNC domain in genes. See Chapter 5 of [FC2006]_.
+            in GEP, it is NOT the recommended way to evolve constants in GEP.
+            The recommended method is to add a RNC domain in genes and use the GEP-RNC algorithm.
+            See Chapter 5 of [FC2006]_.
+
+        .. seealso:
+            Gene type with an additional Dc domain: :class:`~geppy.core.entity.GeneDc`.
+
+            The GEP-RNC algorithm in *geppy*: :func:`~geppy.algorithms.basic.gep_rnc`.
         """
         self._assert_symbol_valid_and_unique(name)
         self._terminals.append(Ephemeral(name, gen))
@@ -387,7 +413,7 @@ class PrimitiveSet:
     @property
     def ephemerals(self):
         """
-        Get all the ephemeral terminals.
+        Get all the added ephemeral terminals in this set.
         """
         return [t for t in self.terminals if isinstance(t, Ephemeral)]
 

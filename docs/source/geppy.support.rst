@@ -12,7 +12,6 @@ geppy.support.simplification module
     :undoc-members:
     :show-inheritance:
 
-
 geppy.support.visualization module
 ----------------------------------
 

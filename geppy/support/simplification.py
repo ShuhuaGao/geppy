@@ -7,8 +7,8 @@ be used in postprocessing.
 """
 import math
 import operator
-from geppy.core.entity import KExpression, Chromosome, Gene
-from geppy.core.symbol import Function, Terminal
+from ..core.entity import KExpression, Chromosome, Gene
+from ..core.symbol import Function, Terminal
 
 import sympy as sp
 

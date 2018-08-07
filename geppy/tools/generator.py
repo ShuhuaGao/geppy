@@ -6,7 +6,7 @@ This module :mod:`generator` provides functionality to generate a genome for a g
 terminals randomly from a given primitive set to form a linear form gene expression.
 """
 import random
-from ..core.symbol import Ephemeral
+from ._util import _choose_a_terminal
 
 
 def generate_genome(pset, head_length):
@@ -32,16 +32,10 @@ def generate_genome(pset, head_length):
         if random.random() < 0.5:
             expr[i] = random.choice(functions)
         else:
-            terminal = random.choice(terminals)
-            if isinstance(terminal, Ephemeral):  # an Ephemeral
-                terminal = terminal.generate()    # generate a normal constant terminal with a random value
-            expr[i] = terminal
+            expr[i] = _choose_a_terminal(terminals)
     # tail part: only terminals are allowed
     for i in range(h, h + t):
-        terminal = random.choice(terminals)
-        if isinstance(terminal, Ephemeral):  # an Ephemeral
-            terminal = terminal.generate()  # generate a normal constant terminal with a random value
-        expr[i] = terminal
+        expr[i] = _choose_a_terminal(terminals)
     return expr
 
 

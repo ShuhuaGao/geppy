@@ -36,6 +36,14 @@ geppy.tools.parser module
     :undoc-members:
     :show-inheritance:
 
+geppy.tools.toolbox module
+--------------------------
+
+.. automodule:: geppy.tools.toolbox
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

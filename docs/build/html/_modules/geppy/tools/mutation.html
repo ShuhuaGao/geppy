@@ -9,7 +9,7 @@
     <title>geppy.tools.mutation &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -61,7 +61,8 @@
 <span class="sd">       :class:`~geppy.core.entity.GeneDc`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Ephemeral</span>
+<span class="kn">from</span> <span class="nn">._util</span> <span class="k">import</span> <span class="n">_choose_a_terminal</span>
 
 <span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -71,7 +72,7 @@
 
 
 <span class="k">def</span> <span class="nf">_choose_terminal</span><span class="p">(</span><span class="n">pset</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pset</span><span class="o">.</span><span class="n">terminals</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_choose_a_terminal</span><span class="p">(</span><span class="n">pset</span><span class="o">.</span><span class="n">terminals</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_choose_subsequence</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
@@ -94,19 +95,27 @@
     <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
 
 
-<div class="viewcode-block" id="mutate_uniform"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">ind_pb</span><span class="p">):</span>
+<div class="viewcode-block" id="mutate_uniform"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">ind_pb</span><span class="o">=</span><span class="s1">&#39;2p&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uniform point mutation. For each symbol in *individual*, change it to another randomly chosen symbol from *pset*</span>
-<span class="sd">    with the probability *indpb*. A symbol may be a function or a terminal.</span>
+<span class="sd">    Uniform point mutation. For each symbol (primitive) in *individual*, change it to another randomly chosen symbol</span>
+<span class="sd">    from *pset* with the probability *indpb*. A symbol may be a function or a terminal.</span>
 
 <span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, the chromosome to be mutated.</span>
 <span class="sd">    :param pset: :class:`~geppy.core.entity.PrimitiveSet`, a primitive set</span>
-<span class="sd">    :param ind_pb: probability of mutating each symbol</span>
+<span class="sd">    :param ind_pb: float or str, default &#39;2p&#39;. Probability of mutating each symbol.</span>
+<span class="sd">        If *ind_pb* is given as a string ending with &#39;p&#39;,</span>
+<span class="sd">        then it indicates the expected number of point mutations among all the symbols in *individual*. For example,</span>
+<span class="sd">        if the total length of each gene of *individual* is `l` and there are `m` genes in total, then by passing</span>
+<span class="sd">        `ind_pb=&#39;1.5p&#39;` we specify approximately `ind_pb=1.5/(l*m)`.</span>
 <span class="sd">    :return: A tuple of one chromosome</span>
 
 <span class="sd">    It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,</span>
 <span class="sd">    ``indpb = 2 / len(chromosome) * len(gene)``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind_pb</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">ind_pb</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">),</span> <span class="s2">&quot;ind_pb must end with &#39;p&#39; if given in a string form&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">individual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="n">individual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tail_length</span>
+        <span class="n">ind_pb</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ind_pb</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span> <span class="o">*</span> <span class="n">length</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">individual</span><span class="p">:</span>
         <span class="c1"># mutate the gene with the associated pset</span>
         <span class="c1"># head: any symbol can be changed into a function or a terminal</span>
@@ -123,7 +132,7 @@
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 
 
-<div class="viewcode-block" id="mutate_uniform_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">ind_pb</span><span class="p">):</span>
+<div class="viewcode-block" id="mutate_uniform_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">ind_pb</span><span class="o">=</span><span class="s1">&#39;1p&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices</span>
 <span class="sd">    in the Dc domain can later be used to retrieve numerical constants from the gene associated</span>
@@ -131,12 +140,17 @@
 
 <span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type</span>
 <span class="sd">        :class:`~geppy.core.entity.GeneDc`</span>
-<span class="sd">    :param ind_pb: probability of mutating each index/position in the Dc domain</span>
+<span class="sd">    :param ind_pb: float or str, default &#39;1p&#39;. Probability of mutating each index/position in the Dc domain. If given</span>
+<span class="sd">        in str like &#39;xp&#39;, then `x` point mutations for expected for the Dc domains in total of *individual*. For</span>
+<span class="sd">        instance, if there are `d` Dc elements in the whole chromosome, then `1.5p` is equal to `ind_pb = 1.5 / d`.</span>
 <span class="sd">    :return: a tuple of one chromosome</span>
 
 <span class="sd">    It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,</span>
 <span class="sd">    ``indpb = 2 / len(chromosome) * len(gene)``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind_pb</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">ind_pb</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">),</span> <span class="s2">&quot;ind_pb must end with &#39;p&#39; if given in a string form&quot;</span>
+        <span class="n">ind_pb</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ind_pb</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">individual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dc_length</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">))</span>
     <span class="c1"># change the position in the Dc domain to another one</span>
     <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">individual</span><span class="p">:</span>  <span class="c1"># g: GeneDc</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="n">g</span><span class="o">.</span><span class="n">tail_length</span>
@@ -300,7 +314,7 @@
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 
 
-<div class="viewcode-block" id="mutate_rnc_array_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_rnc_array_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_rnc_array_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">ind_pb</span><span class="p">):</span>
+<div class="viewcode-block" id="mutate_rnc_array_dc"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_rnc_array_dc">[docs]</a><span class="k">def</span> <span class="nf">mutate_rnc_array_dc</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">ind_pb</span><span class="o">=</span><span class="s1">&#39;1p&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Direct mutation of RNCs, which changes the values in a gene&#39;s RNC array</span>
 <span class="sd">    :meth:`~geppy.core.entity.GeneDc.rnc_array` randomly.</span>
@@ -308,7 +322,11 @@
 <span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type</span>
 <span class="sd">        :class:`~geppy.core.entity.GeneDc`.</span>
 <span class="sd">    :param rnc_gen: callable, which returns a random numerical constant by calling ``rnc_gen()``.</span>
-<span class="sd">    :param ind_pb: individual probability of a RNC being mutated</span>
+<span class="sd">    :param ind_pb: float or str, default &#39;1p&#39;. Use a float number to specify the probability of each RNC in the array</span>
+<span class="sd">        being mutated. Alternatively, if a str ending with &#39;p&#39; is given in the form like &#39;xp&#39;,  where</span>
+<span class="sd">        &#39;x&#39; is a numerical number, then it specifies how many point mutations are expected for the RNC arrays</span>
+<span class="sd">        in *individual*. For example, if there are *d* RNCs inside the arrays in total in *individual*,</span>
+<span class="sd">        then &#39;1.5p&#39; is approximately equal to `ind_pb = 1.5 / d`.</span>
 <span class="sd">    :return: a tuple of one individual</span>
 
 <span class="sd">    The genetic operators :func:`mutate_uniform_dc`, :func:`transpose_dc` and :func:`invert_dc` actually only move the</span>
@@ -316,23 +334,47 @@
 <span class="sd">    can replace the value of a particular numerical constant by another in the</span>
 <span class="sd">    :meth:`~geppy.core.entity.GeneDc.rnc_array`.</span>
 
-<span class="sd">    .. note::</span>
-<span class="sd">        1. The direct mutation of random numerical constants might also have a great impact in the overall solution.</span>
-
-<span class="sd">        2. Interestingly, the direct mutation of RNCs seems to have a very limited impact on the creation of good</span>
-<span class="sd">           models and better results may be obtained when this operator is switched off.</span>
-
-<span class="sd">        3. Potentially, a well-dimensioned initial diversity of RNCs is more than sufficient to allow their evolutionary</span>
-<span class="sd">           tuning, as they are constantly being moved around by all the genetic operators.</span>
-
-<span class="sd">        4. Thus, if this operator is adopted, a very small *indpb* should be set, like 0.01.</span>
-
-<span class="sd">        Refer to section 5.4.4 of [FC2006]_ for more details.</span>
+<span class="sd">    Refer to section 5.4.4 of [FC2006]_ for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind_pb</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">ind_pb</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">),</span> <span class="s2">&quot;ind_pb must end with &#39;p&#39; if given in a string form&quot;</span>
+        <span class="n">n_rnc_total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_rnc_total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">individual</span><span class="p">,</span>
+        <span class="n">ind_pb</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ind_pb</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_rnc_total</span>
+
     <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">individual</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">ind_pb</span><span class="p">:</span>
                 <span class="n">g</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rnc_gen</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
+
+
+<div class="viewcode-block" id="mutate_uniform_ephemeral"><a class="viewcode-back" href="../../../geppy.tools.html#geppy.tools.mutation.mutate_uniform_ephemeral">[docs]</a><span class="k">def</span> <span class="nf">mutate_uniform_ephemeral</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">ind_pb</span><span class="o">=</span><span class="s1">&#39;1p&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This operator is specially designed for ephemeral numerical constant (ENC) mutation.</span>
+<span class="sd">    It attempts to change the value of the ephemeral constants in the *individual* if any by calling `e.update_value()`,</span>
+<span class="sd">    where `e` is an ephemeral inside *individual*. See :meth:`~geppy.core.symbol.Ephemeral.update_value` for details.</span>
+
+<span class="sd">    :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome</span>
+<span class="sd">    :param ind_pb: float or str, default &#39;1p&#39;. If a float is given, then *ind_pb* specifies the probability of each</span>
+<span class="sd">        ephemeral in the *individual* being mutated. If a str ending with &#39;p&#39; is given in the form like &#39;xp&#39;,  where</span>
+<span class="sd">        &#39;x&#39; is a numerical number, then it</span>
+<span class="sd">        specifies how many point mutations are expected for the ephemeral constants. For example, if there are *d*</span>
+<span class="sd">        ephemeral constants present in total in *individual*, then &#39;1.5p&#39; is approximately equal to `ind_pb = 1.5 / d`.</span>
+
+<span class="sd">    :return: a tuple of one individual</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ephemerals</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">individual</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">g</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ephemeral</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ephemerals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">individual</span><span class="p">,</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind_pb</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">ind_pb</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">),</span> <span class="s2">&quot;ind_pb must end with &#39;p&#39; if given in a string form&quot;</span>
+        <span class="n">np</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ind_pb</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span>
+        <span class="n">ind_pb</span> <span class="o">=</span> <span class="n">np</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ephemerals</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ephemerals</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">ind_pb</span><span class="p">:</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">update_value</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">individual</span><span class="p">,</span></div>
 </pre></div>
 
@@ -378,7 +420,7 @@
     Built on None.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

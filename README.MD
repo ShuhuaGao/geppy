@@ -14,14 +14,15 @@ GEP can be seen as a variant of the traditional  [genetic programming](https://e
 ## Features
 - Compatibility with the [DEAP](https://github.com/DEAP/deap) infrastructure and easy accessibility to DEAP's functionality including:
   - Multi-objective optimisation
-  - Parallelization of the evaluations
+  - Straightforward parallelization of fitness evaluations for speedup
   - Hall of Fame of the best individuals that lived in the population
   - Checkpoints that take snapshots of a system regularly
   - Statistics and logging
-- Core data structures in GEP, including gene, chromosome, expression tree, and K-expression.
+- Core data structures in GEP, including the gene, chromosome, expression tree, and K-expression.
 - Implementation of common mutation, transposition, inversion and crossover operators in GEP.
-- Boilerplate algorithms, including the simple GEP algorithm and symbolic regression algorithm (TODO).
-- Support numerical constants inference with a third Dc domain in genes: GEP-RNC.
+- Boilerplate algorithms, including  the standard GEP algorithm and advanced algorithms integrating a local optimizer for numerical constant optimization.
+- Support numerical constants inference with a third Dc domain in genes: the GEP-RNC algorithm.
+- Flexible built-in algorithm interface, which can support an arbitrary number of custom mutation and crossover-like operators.
 - Visualization of the expression tree.
 - Symbolic simplification of a gene, a chromosome, or a K-expression in postprocessing.
 - Examples of different applications using  GEP with detailed comments in Jupyter notebook.

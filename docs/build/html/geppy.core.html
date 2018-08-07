@@ -9,7 +9,7 @@
     <title>geppy.core package &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -331,7 +331,7 @@ creation of gene instances.</p>
 <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> terminal. See <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code></a>
 for details.</p>
 </div>
-<p>Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id1">[FC2006]</a> for more knowledge about GEP-RNC.</p>
+<p>Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id1">[FC2006]</a> for more knowledge about GEP-RNC.</p>
 <dl class="method">
 <dt id="geppy.core.entity.GeneDc.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>pset</em>, <em>head_length</em>, <em>rnc_gen</em>, <em>rnc_array_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/entity.html#GeneDc.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.entity.GeneDc.__init__" title="Permalink to this definition">¶</a></dt>
@@ -501,13 +501,13 @@ intelligence. Vol. 21. Springer, 2006.</td></tr>
 <em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Ephemeral</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
 <p>Class that encapsulates an ephemeral random constant terminal in GEP, which can be used to build a normal constant
-terminal with a randomly produced value when needed using the <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generate" title="geppy.core.symbol.Ephemeral.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code></a> method.</p>
+terminal with a randomly produced value when needed using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> method.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
 by Koza to handle numerical constants in evolutionary programming. However, it is NOT the recommended way
 to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain
-in genes.See Chapter 5 of <a class="reference internal" href="#fc2006" id="id3">[FC2006]</a>.</p>
+in genes.See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
 </div>
 <dl class="method">
 <dt id="geppy.core.symbol.Ephemeral.__init__">
@@ -527,16 +527,26 @@ no arguments.</li>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="geppy.core.symbol.Ephemeral.format">
-<code class="descname">format</code><a class="headerlink" href="#geppy.core.symbol.Ephemeral.format" title="Permalink to this definition">¶</a></dt>
-<dd><p>This doesn’t make sense for an ephemeral constant terminal. Simply raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.Ephemeral.clone_with_update">
+<code class="descname">clone_with_update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.clone_with_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.clone_with_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a copy of this ephemeral but with its value updated by <a class="reference internal" href="#geppy.core.symbol.Ephemeral.update_value" title="geppy.core.symbol.Ephemeral.update_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_value()</span></code></a>. With this operation, the
+various instances of a same kind of ephemeral are independent.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Ephemeral, a new instance</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="geppy.core.symbol.Ephemeral.generate">
-<code class="descname">generate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.generate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a constant terminal, whose value is randomly produced by the <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generator" title="geppy.core.symbol.Ephemeral.generator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generator()</span></code></a>.</p>
+<dt id="geppy.core.symbol.Ephemeral.format">
+<code class="descname">format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of this terminal for subsequent evaluation purpose, which is equivalently
+<code class="docutils literal notranslate"><span class="pre">str(self.value)</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -545,10 +555,11 @@ no arguments.</li>
 <dd><p>Get the ephemeral random number generator.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="geppy.core.symbol.Ephemeral.value">
-<code class="descname">value</code><a class="headerlink" href="#geppy.core.symbol.Ephemeral.value" title="Permalink to this definition">¶</a></dt>
-<dd><p>This doesn’t make sense for an ephemeral constant terminal. Simply raise <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.Ephemeral.update_value">
+<code class="descname">update_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.update_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.update_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the value of this ephemeral constant in place, whose new value is randomly produced by the random number
+generator <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generator" title="geppy.core.symbol.Ephemeral.generator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generator()</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -681,7 +692,7 @@ Python identifier, except the constant terminals and RNC terminals. For more det
 please use the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PrimitiveSet.add_rnc()</span></code></a> method, which will add a special terminal
 of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> internally. Then, use a chromosome composed of
 <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> genes as the individual.
-Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id4">[FC2006]</a> for more details.</p>
+Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id4">[FC2006]</a> for more details.</p>
 </div>
 <dl class="method">
 <dt id="geppy.core.symbol.PrimitiveSet.__init__">
@@ -713,8 +724,8 @@ Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id4">[FC2
 <code class="descname">add_ephemeral</code><span class="sig-paren">(</span><em>gen</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_ephemeral" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add an ephemeral constant to the set. An ephemeral’s true value is generated by <em>gen</em>, which should be a no
 argument function that returns a random value, when the ephemeral is picked to build a gene. Once an ephemeral
-is picked, its <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generate" title="geppy.core.symbol.Ephemeral.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code></a> method is called to produce a constant terminal with a random value
-generated by <em>gen</em>. Thus, each time <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generate" title="geppy.core.symbol.Ephemeral.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code></a> is called, a terminal with a different value may
+is picked, its <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> method is called to produce a constant terminal with a random value
+generated by <em>gen</em>. Thus, each time <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> is called, a terminal with a different value may
 be yielded.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -732,8 +743,9 @@ be yielded.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">The special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
 by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works
-in GEP, it is NOT the recommended way to evolve constants in GEP, especially for complex problems.
-The recommended method is to add a RNC domain in genes. See Chapter 5 of <a class="reference internal" href="#fc2006" id="id5">[FC2006]</a>.</p>
+in GEP, it is NOT the recommended way to evolve constants in GEP.
+The recommended method is to add a RNC domain in genes and use the GEP-RNC algorithm.
+See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id5">[FC2006]</a>.</p>
 </div>
 </dd></dl>
 
@@ -762,7 +774,7 @@ The recommended method is to add a RNC domain in genes. See Chapter 5 of <a clas
 <dd><p>Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.
 This terminal’s value is retrieved dynamically from an RNC array attached to a gene of type
 <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> according to the GEP-RNC algorithm.
-See also <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
+See also <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -800,7 +812,7 @@ For instance, <code class="docutils literal notranslate"><span class="pre">add_t
 <dl class="attribute">
 <dt id="geppy.core.symbol.PrimitiveSet.ephemerals">
 <code class="descname">ephemerals</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.ephemerals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all the ephemeral terminals.</p>
+<dd><p>Get all the added ephemeral terminals in this set.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -897,7 +909,7 @@ numeric string.</p>
 <p>A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC
 algorithm. This class is mainly used internally by the <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> class. The name of a
 <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> object is ‘?’ by default, and its value is retrieved dynamically according to the GEP-RNC
-algorithm. Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id="id7">[FC2006]</a> for more details.</p>
+algorithm. Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id7">[FC2006]</a> for more details.</p>
 <dl class="method">
 <dt id="geppy.core.symbol.TerminalRNC.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name='?'</em>, <em>value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#TerminalRNC.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.TerminalRNC.__init__" title="Permalink to this definition">¶</a></dt>
@@ -984,7 +996,7 @@ algorithm. Refer to Chapter 5 of <a class="reference internal" href="#fc2006" id
     Built on None.
     <a href="bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

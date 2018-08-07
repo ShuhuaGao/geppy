@@ -42,6 +42,7 @@ from .algorithms.basic import *
 from .tools.parser import *
 from .tools.generator import *
 from .support.visualization import *
+from .tools.toolbox import *
 
 
 def _print_module_not_found(module_name, f_name, http=''):

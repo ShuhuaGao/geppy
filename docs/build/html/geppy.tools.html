@@ -9,7 +9,7 @@
     <title>geppy.tools package &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -282,7 +282,7 @@ Typically, the IS transposition rate is set around 0.1.</p>
 
 <dl class="function">
 <dt id="geppy.tools.mutation.mutate_rnc_array_dc">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_rnc_array_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>rnc_gen</em>, <em>ind_pb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_rnc_array_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_rnc_array_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>rnc_gen</em>, <em>ind_pb='1p'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_rnc_array_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Direct mutation of RNCs, which changes the values in a gene’s RNC array
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a> randomly.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -293,7 +293,11 @@ Typically, the IS transposition rate is set around 0.1.</p>
 <li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a>.</li>
 <li><strong>rnc_gen</strong> – callable, which returns a random numerical constant by calling <code class="docutils literal notranslate"><span class="pre">rnc_gen()</span></code>.</li>
-<li><strong>ind_pb</strong> – individual probability of a RNC being mutated</li>
+<li><strong>ind_pb</strong> – float or str, default ‘1p’. Use a float number to specify the probability of each RNC in the array
+being mutated. Alternatively, if a str ending with ‘p’ is given in the form like ‘xp’,  where
+‘x’ is a numerical number, then it specifies how many point mutations are expected for the RNC arrays
+in <em>individual</em>. For example, if there are <em>d</em> RNCs inside the arrays in total in <em>individual</em>,
+then ‘1.5p’ is approximately equal to <cite>ind_pb = 1.5 / d</cite>.</li>
 </ul>
 </td>
 </tr>
@@ -306,25 +310,14 @@ Typically, the IS transposition rate is set around 0.1.</p>
 random numerical constants around without generating new numerical values. This method <a class="reference internal" href="#geppy.tools.mutation.mutate_rnc_array_dc" title="geppy.tools.mutation.mutate_rnc_array_dc"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutate_rnc_array_dc()</span></code></a>
 can replace the value of a particular numerical constant by another in the
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<ol class="arabic simple">
-<li>The direct mutation of random numerical constants might also have a great impact in the overall solution.</li>
-<li>Interestingly, the direct mutation of RNCs seems to have a very limited impact on the creation of good
-models and better results may be obtained when this operator is switched off.</li>
-<li>Potentially, a well-dimensioned initial diversity of RNCs is more than sufficient to allow their evolutionary
-tuning, as they are constantly being moved around by all the genetic operators.</li>
-<li>Thus, if this operator is adopted, a very small <em>indpb</em> should be set, like 0.01.</li>
-</ol>
-<p class="last">Refer to section 5.4.4 of <a class="reference internal" href="#fc2006" id="id4">[FC2006]</a> for more details.</p>
-</div>
+<p>Refer to section 5.4.4 of <a class="reference internal" href="#fc2006" id="id4">[FC2006]</a> for more details.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="geppy.tools.mutation.mutate_uniform">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em>, <em>ind_pb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uniform point mutation. For each symbol in <em>individual</em>, change it to another randomly chosen symbol from <em>pset</em>
-with the probability <em>indpb</em>. A symbol may be a function or a terminal.</p>
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform</code><span class="sig-paren">(</span><em>individual</em>, <em>pset</em>, <em>ind_pb='2p'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uniform point mutation. For each symbol (primitive) in <em>individual</em>, change it to another randomly chosen symbol
+from <em>pset</em> with the probability <em>indpb</em>. A symbol may be a function or a terminal.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -332,7 +325,11 @@ with the probability <em>indpb</em>. A symbol may be a function or a terminal.</
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, the chromosome to be mutated.</li>
 <li><strong>pset</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code>, a primitive set</li>
-<li><strong>ind_pb</strong> – probability of mutating each symbol</li>
+<li><strong>ind_pb</strong> – float or str, default ‘2p’. Probability of mutating each symbol.
+If <em>ind_pb</em> is given as a string ending with ‘p’,
+then it indicates the expected number of point mutations among all the symbols in <em>individual</em>. For example,
+if the total length of each gene of <em>individual</em> is <cite>l</cite> and there are <cite>m</cite> genes in total, then by passing
+<cite>ind_pb=‘1.5p’</cite> we specify approximately <cite>ind_pb=1.5/(l*m)</cite>.</li>
 </ul>
 </td>
 </tr>
@@ -347,7 +344,7 @@ with the probability <em>indpb</em>. A symbol may be a function or a terminal.</
 
 <dl class="function">
 <dt id="geppy.tools.mutation.mutate_uniform_dc">
-<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>ind_pb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_dc" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_dc</code><span class="sig-paren">(</span><em>individual</em>, <em>ind_pb='1p'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_dc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_dc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices
 in the Dc domain can later be used to retrieve numerical constants from the gene associated
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc.rnc_array" title="geppy.core.entity.GeneDc.rnc_array"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rnc_array()</span></code></a>.</p>
@@ -358,7 +355,9 @@ in the Dc domain can later be used to retrieve numerical constants from the gene
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome, which contains genes of type
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a></li>
-<li><strong>ind_pb</strong> – probability of mutating each index/position in the Dc domain</li>
+<li><strong>ind_pb</strong> – float or str, default ‘1p’. Probability of mutating each index/position in the Dc domain. If given
+in str like ‘xp’, then <cite>x</cite> point mutations for expected for the Dc domains in total of <em>individual</em>. For
+instance, if there are <cite>d</cite> Dc elements in the whole chromosome, then <cite>1.5p</cite> is equal to <cite>ind_pb = 1.5 / d</cite>.</li>
 </ul>
 </td>
 </tr>
@@ -369,6 +368,33 @@ in the Dc domain can later be used to retrieve numerical constants from the gene
 </table>
 <p>It is typical to set a mutation rate <em>indpb</em> equivalent to two one-point mutations per chromosome. That is,
 <code class="docutils literal notranslate"><span class="pre">indpb</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">/</span> <span class="pre">len(chromosome)</span> <span class="pre">*</span> <span class="pre">len(gene)</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="geppy.tools.mutation.mutate_uniform_ephemeral">
+<code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_ephemeral</code><span class="sig-paren">(</span><em>individual</em>, <em>ind_pb='1p'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_ephemeral" title="Permalink to this definition">¶</a></dt>
+<dd><p>This operator is specially designed for ephemeral numerical constant (ENC) mutation.
+It attempts to change the value of the ephemeral constants in the <em>individual</em> if any by calling <cite>e.update_value()</cite>,
+where <cite>e</cite> is an ephemeral inside <em>individual</em>. See <a class="reference internal" href="geppy.core.html#geppy.core.symbol.Ephemeral.update_value" title="geppy.core.symbol.Ephemeral.update_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_value()</span></code></a> for details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>individual</strong> – <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chromosome</span></code></a>, a chromosome</li>
+<li><strong>ind_pb</strong> – float or str, default ‘1p’. If a float is given, then <em>ind_pb</em> specifies the probability of each
+ephemeral in the <em>individual</em> being mutated. If a str ending with ‘p’ is given in the form like ‘xp’,  where
+‘x’ is a numerical number, then it
+specifies how many point mutations are expected for the ephemeral constants. For example, if there are <em>d</em>
+ephemeral constants present in total in <em>individual</em>, then ‘1.5p’ is approximately equal to <cite>ind_pb = 1.5 / d</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a tuple of one individual</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -446,6 +472,92 @@ specific parameter values; otherwise, a numerical result obtained from evaluatio
 </dd></dl>
 
 </div>
+<div class="section" id="module-geppy.tools.toolbox">
+<span id="geppy-tools-toolbox-module"></span><h2>geppy.tools.toolbox module<a class="headerlink" href="#module-geppy.tools.toolbox" title="Permalink to this headline">¶</a></h2>
+<p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">toolbox</span></code> mainly provides a class <a class="reference internal" href="#geppy.tools.toolbox.Toolbox" title="geppy.tools.toolbox.Toolbox"><code class="xref py py-class docutils literal notranslate"><span class="pre">Toolbox</span></code></a> on the basis of <a class="reference external" href="http://deap.readthedocs.io/en/master/api/base.html#deap.base.Toolbox" title="(in DEAP v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">deap.base.Toolbox</span></code></a> for GEP
+operator registration, which is then extensively used in the builtin GEP algorithms. For user-defined custom algorithms,
+they should also accept a toolbox instance and retrieve the operators and their associated probability from the toolbox
+instance.</p>
+<dl class="class">
+<dt id="geppy.tools.toolbox.Toolbox">
+<em class="property">class </em><code class="descclassname">geppy.tools.toolbox.</code><code class="descname">Toolbox</code><a class="reference internal" href="_modules/geppy/tools/toolbox.html#Toolbox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.toolbox.Toolbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.autodoc.importer._MockObject</span></code></p>
+<p>A toolbox for evolution that contains the evolutionary operators.
+Initially, the toolbox contains a <code class="xref py py-meth docutils literal notranslate"><span class="pre">clone()</span></code> method that
+duplicates any element it is passed as argument, this method defaults to
+the <a class="reference external" href="https://docs.python.org/3/library/copy.html#copy.deepcopy" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code></a> function. and a <code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code>
+method that applies the function given as first argument to every items
+of the iterables given as next arguments, this method defaults to the
+<a class="reference external" href="https://docs.python.org/3/library/functions.html#map" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a> function. You may populate the toolbox with any other
+function by using the <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.register" title="geppy.tools.toolbox.Toolbox.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a> method.</p>
+<p>As an extension of <a class="reference external" href="http://deap.readthedocs.io/en/master/api/base.html#deap.base.Toolbox" title="(in DEAP v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">deap.base.Toolbox</span></code></a>, this class adds a <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.pbs" title="geppy.tools.toolbox.Toolbox.pbs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pbs</span></code></a> property to specify the
+probabilities for the registered operators. For example, <cite>pbs[‘mut_uniform’]</cite> gives the probability for an
+operator with the alias <cite>‘mut_uniform’</cite>. Besides, <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.pbs" title="geppy.tools.toolbox.Toolbox.pbs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Toolbox.pbs</span></code></a> is an <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a> instance
+which can remember the order of entry insertion. Thus, if <cite>‘mut_A’</cite> is inserted into <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.pbs" title="geppy.tools.toolbox.Toolbox.pbs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pbs</span></code></a> before
+<cite>‘mut_B’</cite>, then the operator with the alias <cite>‘mut_A’</cite> is applied earlier than the one corresponding to <cite>‘mut_B’</cite>.</p>
+<p>A short way to combine operator registration and probability specification together is to pass a keyword-only argument
+<cite>pb</cite> into the <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.register" title="geppy.tools.toolbox.Toolbox.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a> method, which will insert the probability automatically into <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.pbs" title="geppy.tools.toolbox.Toolbox.pbs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pbs</span></code></a>.</p>
+<dl class="method">
+<dt id="geppy.tools.toolbox.Toolbox.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/toolbox.html#Toolbox.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.toolbox.Toolbox.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize an <em>empty</em> toolbox with only the default <code class="xref py py-meth docutils literal notranslate"><span class="pre">clone()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">map()</span></code> methods.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.tools.toolbox.Toolbox.pbs">
+<code class="descname">pbs</code><a class="headerlink" href="#geppy.tools.toolbox.Toolbox.pbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the probability dictionary which specifies the probabilities for the registered operators.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.tools.toolbox.Toolbox.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>alias</em>, <em>function</em>, <em>*args</em>, <em>**kargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/toolbox.html#Toolbox.register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.toolbox.Toolbox.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a <em>function</em> in the toolbox under the name <em>alias</em>. You
+may provide default arguments that will be passed automatically when
+calling the registered function. Fixed arguments can then be overriden
+at function call time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alias</strong> – The name the operator will take in the toolbox. If the
+alias already exists it will overwrite the the operator
+already present.</li>
+<li><strong>function</strong> – The function to which the alias refers.</li>
+<li><strong>args</strong> – one or more positional arguments to pass to the registered function, optional</li>
+<li><strong>kargs</strong> – one or more keyword arguments to pass to the registered function, optional</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Under the hood lies the partial function binding. Check <a class="reference external" href="https://docs.python.org/3/library/functools.html#functools.partial" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">functools.partial()</span></code></a> for details.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If an operator needs its probability specified, like mutation and crossover operators, it can be done by
+inserting the probability into the <a class="reference internal" href="#geppy.tools.toolbox.Toolbox.pbs" title="geppy.tools.toolbox.Toolbox.pbs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pbs</span></code></a> dictionary with the same alias. Alternatively, it can be
+given with a the special keyword argument <cite>pb</cite> in this method</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tb</span> <span class="o">=</span> <span class="n">Toolbox</span><span class="p">()</span>
+<span class="n">tb</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;mut_uniform&#39;</span><span class="p">,</span> <span class="n">mutate_uniform</span><span class="p">,</span> <span class="n">ind_pb</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="n">tb</span><span class="o">.</span><span class="n">pbs</span><span class="p">[</span><span class="s1">&#39;mut_uniform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+<p>or equivalently</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tb</span> <span class="o">=</span> <span class="n">Toolbox</span><span class="p">()</span>
+<span class="n">tb</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;mut_uniform&#39;</span><span class="p">,</span> <span class="n">mutate_uniform</span><span class="p">,</span> <span class="n">ind_pb</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">pb</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="last">As a result, the special keyword argument <cite>pb</cite> is always excluded from binding into <em>function</em>.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-geppy.tools">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-geppy.tools" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -465,6 +577,7 @@ specific parameter values; otherwise, a numerical result obtained from evaluatio
 <li><a class="reference internal" href="#module-geppy.tools.generator">geppy.tools.generator module</a></li>
 <li><a class="reference internal" href="#module-geppy.tools.mutation">geppy.tools.mutation module</a></li>
 <li><a class="reference internal" href="#module-geppy.tools.parser">geppy.tools.parser module</a></li>
+<li><a class="reference internal" href="#module-geppy.tools.toolbox">geppy.tools.toolbox module</a></li>
 <li><a class="reference internal" href="#module-geppy.tools">Module contents</a></li>
 </ul>
 </li>
@@ -513,7 +626,7 @@ specific parameter values; otherwise, a numerical result obtained from evaluatio
     Built on None.
     <a href="bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

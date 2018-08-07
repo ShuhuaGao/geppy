@@ -33,7 +33,7 @@ We first create a primitive set by initializing the class :class:`~geppy.core.sy
 We may check the functions and terminals stored in this primitive set by accessing the :attr:`~geppy.core.symbol.PrimitiveSet.functions` and :attr:`~geppy.core.symbol.PrimitiveSet.terminals` properties. For example, ::
 
 	for t in pset.terminals:
-		print(t)
+	    print(t)
 
 produces the following output: ::
 
@@ -73,7 +73,7 @@ In DEAP, the tradition is to register all the involved operations including indi
 	
 	h = 7   # head length
 	n_genes = 2
-	toolbox = base.Toolbox()
+	toolbox = gep.Toolbox()
 	
 	toolbox.register('gene_gen', gep.Gene, pset=pset, head_length=h)
 	toolbox.register('individual', creator.Individual, gene_gen=toolbox.gene_gen, n_genes=n_genes, linker=operator.add)
@@ -120,20 +120,33 @@ Similarly, we register the evaluation procedure into the toolbox ::
 	
 Register selection, genetic modification and recombination operators
 =========================================================================
-In common evolutionary algorithms, a selection operator is used to select parents to breed offspring based on their fitness and another two operators including mutation and crossover are required to change the individuals for efficient solution space exploration. In GEP, there are more operators specially designed for such a linear representation, like *inversion* and *transposition*. As documented in the :func:`~geppy.algorithms.basic.gep_simple` function, in a typical GEP program, the following operators are required in the toolbox ::
+In common evolutionary algorithms, a selection operator is used to select parents to breed offspring based on their fitness and another two operators including mutation and crossover are required to change the individuals for efficient solution space exploration. In GEP, there are more operators specially designed for such a linear representation, like *inversion* and *transposition*.  To adapt the toolbox paradigm better to GEP, our :class:`~geppy.tools.toolbox.Toolbox` class has obtained its own features apart from inheriting the :class:`deap.base.Toolbox` class. Most significantly, both the genetic operators and their associated probability (if any) should be registered into the *toolbox*. Besides, compared with :class:`deap.base.Toolbox`, there are no strict requirements on the naming of these operators during registration to be compatible with the builtin algorithms. In short, the mutation-like operators should have an alias starting with `mut`, while the crossover-like operators should be given an alias starting with `cx`. To explore more details on custom operator design and registration, please refer to the :ref:`convention` tutorial.
+
+In a typical GEP program, the following operators are registered in the toolbox ::
 
 	toolbox.register('select', tools.selRoulette)
-	toolbox.register('mutate', gep.mutate_uniform, pset=pset, indpb=2 / (2 * h + 1))
-	toolbox.register('invert', gep.invert)
-	toolbox.register('is_Transpose', gep.is_transpose)
-	toolbox.register('ris_Transpose', gep.ris_transpose)
-	toolbox.register('gene_Transpose', gep.gene_transpose)
-	toolbox.register('crossover_one_point', gep.crossover_one_point)
-	toolbox.register('crossover_two_point', gep.crossover_two_point)
-	toolbox.register('crossover_gene', gep.crossover_gene)
+
+	## general mutations whose aliases start with 'mut'
+	# We can specify the probability for an operator with the .pbs property
+	toolbox.register('mut_uniform', gep.mutate_uniform, pset=pset, ind_pb=2 / (2 * h + 1))
+	toolbox.pbs['mut_uniform'] = 1
+	# Alternatively, assign the probability along with registration using the pb keyword argument
+	toolbox.register('mut_invert', gep.invert, pb=0.1)
+	toolbox.register('mut_is_ts', gep.is_transpose, pb=0.1)
+	toolbox.register('mut_ris_ts', gep.ris_transpose, pb=0.1)
+	toolbox.register('mut_gene_ts', gep.gene_transpose, pb=0.1)
+
+	## general crossover whose aliases start with 'cx'
+	toolbox.register('cx_1p', gep.crossover_one_point, pb=0.1)
+	toolbox.pbs['cx_1p'] = 0.4   # just show that the probability can be overwritten
+	toolbox.register('cx_2p', gep.crossover_two_point, pb=0.2)
+	toolbox.register('cx_gene', gep.crossover_gene, pb=0.1)
 	
 .. hint::
-	Now it is clear that the `toolbox` design of DEAP is very flexible and versatile. For instance, you can provide your own genetic operators like ``toolbox.register('invert', my_own_invert)``, and the builtin algorithms in *geppy* remains compatible with the toolbox. 
+	Now it is clear that the `toolbox` design of *geppy* is very flexible and versatile. For instance, you can provide your own genetic operators like ``toolbox.register('mut_own_invert', my_own_invert)``, and the builtin algorithms in *geppy* remains compatible with the toolbox. You can register as many mutation/crossover operators as you like. Please check the :class:`~geppy.tools.toolbox.Toolbox`  documentation for more details.
+	
+.. attention::
+	Here you may notice ``toolbox.pbs['mut_uniform'] = 1``. Why do we set a mutation probability of 1? Is it too high? Please note that the builtin :func:`~geppy.tools.mutation.mutate_uniform` operator has its own probability control with the argument *ind_pb*, which is suggested to be equal to two point mutations across the whole chromosome. We have set this previously by ``toolbox.register('mut_uniform', gep.mutate_uniform, pset=pset, ind_pb=2 / (2 * h + 1))``. Thus, ``toolbox.pbs['mut_uniform'] = 1`` only means for each individual it is assured that the  :func:`~geppy.tools.mutation.mutate_uniform` operator is applied. It is still possible that no mutation actually happens due to the smal *ind_pb*.
 
 In the above, the roulette wheel selection is done with the DEAP :func:`deap.tools.selRoulette` method and the remaining operators for genetic manipulation in GEP are all provided in *geppy*.
 
@@ -166,18 +179,18 @@ Launch evolution
 ---------------------------
 We use the standard and simplest :func:`~geppy.algorithms.basic.gep_simple` algorithm to perform GEP as follows ::
 
+	# size of population and number of generations
 	n_pop = 100
-	n_gen = 50
-	
-	pop, log = gep.gep_simple(pop, toolbox, mutpb=1, invpb=0.1, ispb=0.1, rispb=0.1, gpb=0.1,
-					cx1pb=0.4, cx2pb=0.2, cxgpb=0.1,
-					n_gen=n_gen, n_elites=2,
-					stats=stats, hall_of_fame=hof)
+	n_gen = 100
 
-We only need to specify and tune the probability of certain operators. Besides, elitism is highly recommended in GEP and that's why we set ``n_elites=2``. 
+	pop = toolbox.population(n=n_pop)
 
-.. attention::
-	Here you may notice ``mutpb=1``. Why do we set a mutation probability of 1? Is it too high? Please note that the builtin :func:`~geppy.tools.mutation.mutate_uniform` operator has its own probability control with the argument *indpb*, which is suggested to be equal to two point mutations across the whole chromosome. We have set this previously by ``toolbox.register('mutate', gep.mutate_uniform, pset=pset, indpb=2 / (2 * h + 1))``. Thus, ``mutpb=1`` only means for each individual it is assured that the  :func:`~geppy.tools.mutation.mutate_uniform` operator is applied. It is still possible that no mutation actually happens.
+	# start evolution
+	pop, log = gep.gep_simple(pop, toolbox, n_generations=n_gen, n_elites=1,
+		stats=stats, hall_of_fame=hof, verbose=True)
+
+We only need to specify and tune the probability of certain operators. Besides, elitism is highly recommended in GEP and that's why we set ``n_elites=2``.  By setting ``verbose=True``, the statistics information will be printed in real time during evolution.
+
 	
 Postprocessing: model simplification and tree visualization
 =======================================================================

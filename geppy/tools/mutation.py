@@ -12,7 +12,8 @@ transposition and inversion. Please refer to Chapter 3 of [FC2006]_ for more det
        :class:`~geppy.core.entity.GeneDc`.
 """
 import random
-from ..core.symbol import Function
+from ..core.symbol import Function, Ephemeral
+from ._util import _choose_a_terminal
 
 _DEBUG = False
 
@@ -22,7 +23,7 @@ def _choose_function(pset):
 
 
 def _choose_terminal(pset):
-    return random.choice(pset.terminals)
+    return _choose_a_terminal(pset.terminals)
 
 
 def _choose_subsequence(seq, min_length=1, max_length=-1):
@@ -45,19 +46,27 @@ def _choose_subsequence_indices(i, j, min_length=1, max_length=-1):
     return start, start + length - 1
 
 
-def mutate_uniform(individual, pset, ind_pb):
+def mutate_uniform(individual, pset, ind_pb='2p'):
     """
-    Uniform point mutation. For each symbol in *individual*, change it to another randomly chosen symbol from *pset*
-    with the probability *indpb*. A symbol may be a function or a terminal.
+    Uniform point mutation. For each symbol (primitive) in *individual*, change it to another randomly chosen symbol
+    from *pset* with the probability *indpb*. A symbol may be a function or a terminal.
 
     :param individual: :class:`~geppy.core.entity.Chromosome`, the chromosome to be mutated.
     :param pset: :class:`~geppy.core.entity.PrimitiveSet`, a primitive set
-    :param ind_pb: probability of mutating each symbol
+    :param ind_pb: float or str, default '2p'. Probability of mutating each symbol.
+        If *ind_pb* is given as a string ending with 'p',
+        then it indicates the expected number of point mutations among all the symbols in *individual*. For example,
+        if the total length of each gene of *individual* is `l` and there are `m` genes in total, then by passing
+        `ind_pb='1.5p'` we specify approximately `ind_pb=1.5/(l*m)`.
     :return: A tuple of one chromosome
 
     It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,
     ``indpb = 2 / len(chromosome) * len(gene)``.
     """
+    if isinstance(ind_pb, str):
+        assert ind_pb.endswith('p'), "ind_pb must end with 'p' if given in a string form"
+        length = individual[0].head_length + individual[0].tail_length
+        ind_pb = float(ind_pb.rstrip('p')) / (len(individual) * length)
     for gene in individual:
         # mutate the gene with the associated pset
         # head: any symbol can be changed into a function or a terminal
@@ -74,7 +83,7 @@ def mutate_uniform(individual, pset, ind_pb):
     return individual,
 
 
-def mutate_uniform_dc(individual, ind_pb):
+def mutate_uniform_dc(individual, ind_pb='1p'):
     """
     Dc-specific mutation. This operator changes one index stored in the Dc domain to another index in place. The indices
     in the Dc domain can later be used to retrieve numerical constants from the gene associated
@@ -82,12 +91,17 @@ def mutate_uniform_dc(individual, ind_pb):
 
     :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type
         :class:`~geppy.core.entity.GeneDc`
-    :param ind_pb: probability of mutating each index/position in the Dc domain
+    :param ind_pb: float or str, default '1p'. Probability of mutating each index/position in the Dc domain. If given
+        in str like 'xp', then `x` point mutations for expected for the Dc domains in total of *individual*. For
+        instance, if there are `d` Dc elements in the whole chromosome, then `1.5p` is equal to `ind_pb = 1.5 / d`.
     :return: a tuple of one chromosome
 
     It is typical to set a mutation rate *indpb* equivalent to two one-point mutations per chromosome. That is,
     ``indpb = 2 / len(chromosome) * len(gene)``.
     """
+    if isinstance(ind_pb, str):
+        assert ind_pb.endswith('p'), "ind_pb must end with 'p' if given in a string form"
+        ind_pb = float(ind_pb.rstrip('p')) / (individual[0].dc_length * len(individual))
     # change the position in the Dc domain to another one
     for g in individual:  # g: GeneDc
         start = g.head_length + g.tail_length
@@ -251,7 +265,7 @@ def transpose_dc(individual):
     return individual,
 
 
-def mutate_rnc_array_dc(individual, rnc_gen, ind_pb):
+def mutate_rnc_array_dc(individual, rnc_gen, ind_pb='1p'):
     """
     Direct mutation of RNCs, which changes the values in a gene's RNC array
     :meth:`~geppy.core.entity.GeneDc.rnc_array` randomly.
@@ -259,7 +273,11 @@ def mutate_rnc_array_dc(individual, rnc_gen, ind_pb):
     :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome, which contains genes of type
         :class:`~geppy.core.entity.GeneDc`.
     :param rnc_gen: callable, which returns a random numerical constant by calling ``rnc_gen()``.
-    :param ind_pb: individual probability of a RNC being mutated
+    :param ind_pb: float or str, default '1p'. Use a float number to specify the probability of each RNC in the array
+        being mutated. Alternatively, if a str ending with 'p' is given in the form like 'xp',  where
+        'x' is a numerical number, then it specifies how many point mutations are expected for the RNC arrays
+        in *individual*. For example, if there are *d* RNCs inside the arrays in total in *individual*,
+        then '1.5p' is approximately equal to `ind_pb = 1.5 / d`.
     :return: a tuple of one individual
 
     The genetic operators :func:`mutate_uniform_dc`, :func:`transpose_dc` and :func:`invert_dc` actually only move the
@@ -267,21 +285,45 @@ def mutate_rnc_array_dc(individual, rnc_gen, ind_pb):
     can replace the value of a particular numerical constant by another in the
     :meth:`~geppy.core.entity.GeneDc.rnc_array`.
 
-    .. note::
-        1. The direct mutation of random numerical constants might also have a great impact in the overall solution.
-
-        2. Interestingly, the direct mutation of RNCs seems to have a very limited impact on the creation of good
-           models and better results may be obtained when this operator is switched off.
-
-        3. Potentially, a well-dimensioned initial diversity of RNCs is more than sufficient to allow their evolutionary
-           tuning, as they are constantly being moved around by all the genetic operators.
-
-        4. Thus, if this operator is adopted, a very small *indpb* should be set, like 0.01.
-
-        Refer to section 5.4.4 of [FC2006]_ for more details.
+    Refer to section 5.4.4 of [FC2006]_ for more details.
     """
+    if isinstance(ind_pb, str):
+        assert ind_pb.endswith('p'), "ind_pb must end with 'p' if given in a string form"
+        n_rnc_total = len(individual[0].rnc_array) * len(individual)
+        if n_rnc_total == 0:
+            return individual,
+        ind_pb = float(ind_pb.rstrip('p')) / n_rnc_total
+
     for g in individual:
         for i in range(len(g.rnc_array)):
             if random.random() < ind_pb:
                 g.rnc_array[i] = rnc_gen()
+    return individual,
+
+
+def mutate_uniform_ephemeral(individual, ind_pb='1p'):
+    """
+    This operator is specially designed for ephemeral numerical constant (ENC) mutation.
+    It attempts to change the value of the ephemeral constants in the *individual* if any by calling `e.update_value()`,
+    where `e` is an ephemeral inside *individual*. See :meth:`~geppy.core.symbol.Ephemeral.update_value` for details.
+
+    :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome
+    :param ind_pb: float or str, default '1p'. If a float is given, then *ind_pb* specifies the probability of each
+        ephemeral in the *individual* being mutated. If a str ending with 'p' is given in the form like 'xp',  where
+        'x' is a numerical number, then it
+        specifies how many point mutations are expected for the ephemeral constants. For example, if there are *d*
+        ephemeral constants present in total in *individual*, then '1.5p' is approximately equal to `ind_pb = 1.5 / d`.
+
+    :return: a tuple of one individual
+    """
+    ephemerals = [p for g in individual for p in g if isinstance(p, Ephemeral)]
+    if len(ephemerals) == 0:
+        return individual,
+    if isinstance(ind_pb, str):
+        assert ind_pb.endswith('p'), "ind_pb must end with 'p' if given in a string form"
+        np = float(ind_pb.rstrip('p'))
+        ind_pb = np / len(ephemerals)
+    for e in ephemerals:
+        if random.random() < ind_pb:
+            e.update_value()
     return individual,

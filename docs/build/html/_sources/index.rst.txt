@@ -16,8 +16,9 @@ Welcome to *geppy*'s documentation!
 Get started
 ===============
 * :doc:`Installation <installation>`
-* :doc:`Introduction to GEP <intro_GEP>`
-* :doc:`Overview of geppy for GEP <overview>`
+* :doc:`Introduction to GEP theory <intro_GEP>`
+* :doc:`Overview of geppy for GEP implementation <overview>`
+* :doc:`Conventions of genetic operator design and registration in geppy <convention>`
 
 .. _tutorial_example:
 
@@ -27,7 +28,8 @@ Tutorials & Examples
 Symbolic regression
 --------------------------------
 1. `Boolean model identification <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/Boolean_function_identification.ipynb>`_ (Getting started)
-2. `A simple mathematical expression inference <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference.ipynb>`_ (Demonstrating the GEP-RNC algorithm for numerical constant evolution)
+2. `Simple numerical expression inference 1 <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-ENC.ipynb>`_  (Using ephemeral numerical constants (ENC))
+3. `Simple numerical expression inference 2 <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-RNC.ipynb>`_ (The GEP-RNC algorithm for numerical constant evolution) 
 
 Decision tree induction
 -------------------------------

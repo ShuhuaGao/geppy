@@ -10,7 +10,7 @@
     <title>Index &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -67,6 +67,7 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  
 </div>
@@ -97,6 +98,8 @@
         <li><a href="geppy.core.html#geppy.core.symbol.Terminal.__init__">(geppy.core.symbol.Terminal method)</a>
 </li>
         <li><a href="geppy.core.html#geppy.core.symbol.TerminalRNC.__init__">(geppy.core.symbol.TerminalRNC method)</a>
+</li>
+        <li><a href="geppy.tools.html#geppy.tools.toolbox.Toolbox.__init__">(geppy.tools.toolbox.Toolbox method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -143,10 +146,12 @@
 </li>
       <li><a href="geppy.core.html#geppy.core.entity.Chromosome">Chromosome (class in geppy.core.entity)</a>
 </li>
-      <li><a href="geppy.tools.html#geppy.tools.parser.compile_">compile_() (in module geppy.tools.parser)</a>
+      <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.clone_with_update">clone_with_update() (geppy.core.symbol.Ephemeral method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="geppy.tools.html#geppy.tools.parser.compile_">compile_() (in module geppy.tools.parser)</a>
+</li>
       <li><a href="geppy.tools.html#geppy.tools.crossover.crossover_gene">crossover_gene() (in module geppy.tools.crossover)</a>
 </li>
       <li><a href="geppy.tools.html#geppy.tools.crossover.crossover_one_point">crossover_one_point() (in module geppy.tools.crossover)</a>
@@ -191,11 +196,11 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.format">format (geppy.core.symbol.Ephemeral attribute)</a>
-</li>
-      <li><a href="geppy.core.html#geppy.core.symbol.Function.format">format() (geppy.core.symbol.Function method)</a>
+      <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.format">format() (geppy.core.symbol.Ephemeral method)</a>
 
       <ul>
+        <li><a href="geppy.core.html#geppy.core.symbol.Function.format">(geppy.core.symbol.Function method)</a>
+</li>
         <li><a href="geppy.core.html#geppy.core.symbol.Primitive.format">(geppy.core.symbol.Primitive method)</a>
 </li>
         <li><a href="geppy.core.html#geppy.core.symbol.Terminal.format">(geppy.core.symbol.Terminal method)</a>
@@ -229,15 +234,11 @@
 </li>
       <li><a href="geppy.core.html#geppy.core.entity.GeneDc">GeneDc (class in geppy.core.entity)</a>
 </li>
-      <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.generate">generate() (geppy.core.symbol.Ephemeral method)</a>
-</li>
       <li><a href="geppy.tools.html#geppy.tools.generator.generate_dc">generate_dc() (in module geppy.tools.generator)</a>
 </li>
       <li><a href="geppy.tools.html#geppy.tools.generator.generate_genome">generate_genome() (in module geppy.tools.generator)</a>
 </li>
       <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.generator">generator (geppy.core.symbol.Ephemeral attribute)</a>
-</li>
-      <li><a href="geppy.algorithms.html#geppy.algorithms.basic.gep_rnc">gep_rnc() (in module geppy.algorithms.basic)</a>
 </li>
       <li><a href="geppy.algorithms.html#geppy.algorithms.basic.gep_simple">gep_simple() (in module geppy.algorithms.basic)</a>
 </li>
@@ -247,12 +248,12 @@
 </li>
       <li><a href="geppy.algorithms.html#module-geppy.algorithms.basic">geppy.algorithms.basic (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="geppy.core.html#module-geppy.core">geppy.core (module)</a>
 </li>
       <li><a href="geppy.core.html#module-geppy.core.entity">geppy.core.entity (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="geppy.core.html#module-geppy.core.symbol">geppy.core.symbol (module)</a>
 </li>
       <li><a href="geppy.support.html#module-geppy.support">geppy.support (module)</a>
@@ -270,6 +271,8 @@
       <li><a href="geppy.tools.html#module-geppy.tools.mutation">geppy.tools.mutation (module)</a>
 </li>
       <li><a href="geppy.tools.html#module-geppy.tools.parser">geppy.tools.parser (module)</a>
+</li>
+      <li><a href="geppy.tools.html#module-geppy.tools.toolbox">geppy.tools.toolbox (module)</a>
 </li>
       <li><a href="geppy.core.html#geppy.core.symbol.PrimitiveSet.globals">globals (geppy.core.symbol.PrimitiveSet attribute)</a>
 </li>
@@ -357,6 +360,8 @@
 </li>
       <li><a href="geppy.tools.html#geppy.tools.mutation.mutate_uniform_dc">mutate_uniform_dc() (in module geppy.tools.mutation)</a>
 </li>
+      <li><a href="geppy.tools.html#geppy.tools.mutation.mutate_uniform_ephemeral">mutate_uniform_ephemeral() (in module geppy.tools.mutation)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -377,10 +382,12 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="geppy.core.html#geppy.core.symbol.Primitive">Primitive (class in geppy.core.symbol)</a>
+      <li><a href="geppy.tools.html#geppy.tools.toolbox.Toolbox.pbs">pbs (geppy.tools.toolbox.Toolbox attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="geppy.core.html#geppy.core.symbol.Primitive">Primitive (class in geppy.core.symbol)</a>
+</li>
       <li><a href="geppy.core.html#geppy.core.symbol.PrimitiveSet">PrimitiveSet (class in geppy.core.symbol)</a>
 </li>
   </ul></td>
@@ -389,6 +396,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="geppy.tools.html#geppy.tools.toolbox.Toolbox.register">register() (geppy.tools.toolbox.Toolbox method)</a>
+</li>
       <li><a href="geppy.tools.html#geppy.tools.mutation.ris_transpose">ris_transpose() (in module geppy.tools.mutation)</a>
 </li>
   </ul></td>
@@ -429,7 +438,17 @@
 </li>
       <li><a href="geppy.core.html#geppy.core.symbol.PrimitiveSet.terminals">terminals (geppy.core.symbol.PrimitiveSet attribute)</a>
 </li>
+      <li><a href="geppy.tools.html#geppy.tools.toolbox.Toolbox">Toolbox (class in geppy.tools.toolbox)</a>
+</li>
       <li><a href="geppy.tools.html#geppy.tools.mutation.transpose_dc">transpose_dc() (in module geppy.tools.mutation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.update_value">update_value() (geppy.core.symbol.Ephemeral method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -437,12 +456,8 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="geppy.core.html#geppy.core.symbol.Ephemeral.value">value (geppy.core.symbol.Ephemeral attribute)</a>
-
-      <ul>
-        <li><a href="geppy.core.html#geppy.core.symbol.Terminal.value">(geppy.core.symbol.Terminal attribute)</a>
+      <li><a href="geppy.core.html#geppy.core.symbol.Terminal.value">value (geppy.core.symbol.Terminal attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -489,7 +504,7 @@
     Built on None.
     <a href="bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {

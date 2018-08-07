@@ -6,7 +6,8 @@ This module :mod:`visualization` provides utility functions to visualization the
 K-expression, a gene or a chromosome in GEP.
 """
 
-from geppy.core.entity import KExpression, Chromosome, Gene
+from ..core.entity import KExpression, Chromosome, Gene
+from ..core.symbol import Function, Terminal
 
 
 def _graph_kexpression(expr, starting_index):
@@ -18,11 +19,19 @@ def _graph_kexpression(expr, starting_index):
     :return: A node list, an edge list, and a dictionary of labels.
     """
     assert len(expr) > 0
-    i = 0
-    j = 0
     nodes = [starting_index + i for i in range(len(expr))]
     edges = []
-    labels = {starting_index + i: p.name for i, p in enumerate(expr)}
+    labels = {}
+    for i, p in enumerate(expr):
+        if isinstance(p, Function):
+            labels[starting_index + i] = p.name
+        elif isinstance(p, Terminal):
+            labels[starting_index + i] = p.format()
+        else:
+            raise RuntimeError('Unrecognized symbol. Normally, a symbol in the K-expression is either a function '
+                               'or a terminal')
+    i = 0
+    j = 0
     while i < len(expr):
         for _ in range(expr[i].arity):
             j += 1
@@ -31,7 +40,7 @@ def _graph_kexpression(expr, starting_index):
     return nodes, edges, labels
 
 
-def graph(genome, renamed_labels=None):
+def graph(genome, label_renaming_map=None):
     """
     Construct the graph of a genome. It returns in order a node list, an edge list, and a dictionary of the per node
     labels. The node are represented by numbers, the edges are tuples connecting two nodes (number), and the labels are
@@ -39,7 +48,7 @@ def graph(genome, renamed_labels=None):
 
     :param genome: :class:`~geppy.core.entity.KExpression`, :class:`~geppy.core.entity.Gene`, or
         :class:`~geppy.core.entity.Chromosome`, the genotype of an individual
-    :param renamed_labels: dict, which maps the old name of a primitive (or a linking function)
+    :param label_renaming_map: dict, which maps the old name of a primitive (or a linking function)
         to a new one for better visualization. The default label for each node is just the name of the primitive
         placed on this node. For example, you may provide ``renamed_labels={'and_': 'and'}``.
     :return: A node list, an edge list, and a dictionary of labels.
@@ -77,10 +86,10 @@ def graph(genome, renamed_labels=None):
         raise TypeError('Only an argument of type KExpression, Gene, and Chromosome is acceptable. The provided '
                         'genome type is {}.'.format(type(genome)))
     # rename_labels labels
-    if renamed_labels is not None:
+    if label_renaming_map is not None:
         for k, v in labels.items():
-            if v in renamed_labels:
-                labels[k] = renamed_labels[v]
+            if v in label_renaming_map:
+                labels[k] = label_renaming_map[v]
     return nodes, edges, labels
 
 
@@ -114,3 +123,6 @@ def export_expression_tree(genome, label_renaming_map=None, file='tree.png'):
     for name1, name2 in edges:
         g.edge(str(name1), str(name2))  # add edge
     g.render(file_name)
+
+
+__all__ = ['graph', 'export_expression_tree']

@@ -9,7 +9,7 @@
     <title>geppy.core.entity &#8212; geppy 0.1.0a0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -212,13 +212,13 @@
         <span class="n">g</span><span class="o">.</span><span class="n">_head_length</span> <span class="o">=</span> <span class="n">head_length</span>
         <span class="k">return</span> <span class="n">g</span></div>
 
-    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Deep copy a gene. Note that there is no need to deep copy the contained primitives since they will not be</span>
-<span class="sd">        changed during GEP.</span>
-<span class="sd">        If we rely on the default deepcopy implementation, then the contents are also deep copied unnecessarily.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">from_genome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">)</span>
+    <span class="c1"># def __deepcopy__(self, memodict):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Deep copy a gene. Note that there is no need to deep copy the contained primitives since they will not be</span>
+    <span class="c1">#     changed during GEP.</span>
+    <span class="c1">#     If we rely on the default deepcopy implementation, then the contents are also deep copied unnecessarily.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     return self.__class__.from_genome(self, head_length=self.head_length)</span>
 
 <div class="viewcode-block" id="Gene.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -416,8 +416,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_length</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">from_genome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)</span>
+    <span class="c1"># def __deepcopy__(self, memodict):</span>
+    <span class="c1">#     return self.__class__.from_genome(self, self.head_length, self.rnc_array)</span>
 
 <div class="viewcode-block" id="GeneDc.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -640,7 +640,7 @@
     Built on None.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.4.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
 </div>
 <script type="text/javascript">
   (function() {
