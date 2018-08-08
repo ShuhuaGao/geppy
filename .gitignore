@@ -106,3 +106,4 @@ venv.bak/
 tmp_files/
 .mypy_cache/
 examples/sr/tmp_*.*
+docs/build/doctrees/

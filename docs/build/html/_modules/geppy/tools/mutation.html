@@ -61,7 +61,7 @@
 <span class="sd">       :class:`~geppy.core.entity.GeneDc`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Ephemeral</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">EphemeralTerminal</span>
 <span class="kn">from</span> <span class="nn">._util</span> <span class="k">import</span> <span class="n">_choose_a_terminal</span>
 
 <span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
@@ -365,7 +365,7 @@
 
 <span class="sd">    :return: a tuple of one individual</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ephemerals</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">individual</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">g</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ephemeral</span><span class="p">)]</span>
+    <span class="n">ephemerals</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">individual</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">g</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">EphemeralTerminal</span><span class="p">)]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ephemerals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">individual</span><span class="p">,</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind_pb</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>

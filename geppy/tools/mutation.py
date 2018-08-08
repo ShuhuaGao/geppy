@@ -12,7 +12,7 @@ transposition and inversion. Please refer to Chapter 3 of [FC2006]_ for more det
        :class:`~geppy.core.entity.GeneDc`.
 """
 import random
-from ..core.symbol import Function, Ephemeral
+from ..core.symbol import Function, EphemeralTerminal
 from ._util import _choose_a_terminal
 
 _DEBUG = False
@@ -316,7 +316,7 @@ def mutate_uniform_ephemeral(individual, ind_pb='1p'):
 
     :return: a tuple of one individual
     """
-    ephemerals = [p for g in individual for p in g if isinstance(p, Ephemeral)]
+    ephemerals = [p for g in individual for p in g if isinstance(p, EphemeralTerminal)]
     if len(ephemerals) == 0:
         return individual,
     if isinstance(ind_pb, str):

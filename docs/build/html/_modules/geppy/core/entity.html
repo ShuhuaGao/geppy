@@ -61,7 +61,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">from</span> <span class="nn">..tools.generator</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">TerminalRNC</span><span class="p">,</span> <span class="n">Terminal</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">RNCTerminal</span><span class="p">,</span> <span class="n">Terminal</span>
 
 
 <span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
@@ -211,14 +211,6 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">genome</span><span class="p">)</span>
         <span class="n">g</span><span class="o">.</span><span class="n">_head_length</span> <span class="o">=</span> <span class="n">head_length</span>
         <span class="k">return</span> <span class="n">g</span></div>
-
-    <span class="c1"># def __deepcopy__(self, memodict):</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     Deep copy a gene. Note that there is no need to deep copy the contained primitives since they will not be</span>
-    <span class="c1">#     changed during GEP.</span>
-    <span class="c1">#     If we rely on the default deepcopy implementation, then the contents are also deep copied unnecessarily.</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
-    <span class="c1">#     return self.__class__.from_genome(self, head_length=self.head_length)</span>
 
 <div class="viewcode-block" id="Gene.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -428,7 +420,7 @@
 <span class="sd">        :return: string form of the expression</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kexpression</span>
-        <span class="n">n_total_rncs</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">TerminalRNC</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">)</span>  <span class="c1"># how many RNCs in total?</span>
+        <span class="n">n_total_rncs</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">RNCTerminal</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">)</span>  <span class="c1"># how many RNCs in total?</span>
         <span class="n">n_encountered_rncs</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># how many RNCs we have encountered in reverse order?</span>
         <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -440,7 +432,7 @@
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ele</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                         <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ele</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>  <span class="c1"># a terminal or a RNC terminal</span>
-                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ele</span><span class="p">,</span> <span class="n">TerminalRNC</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ele</span><span class="p">,</span> <span class="n">RNCTerminal</span><span class="p">):</span>
                             <span class="c1"># retrieve its true value</span>
                             <span class="n">which</span> <span class="o">=</span> <span class="n">n_total_rncs</span> <span class="o">-</span> <span class="n">n_encountered_rncs</span> <span class="o">-</span> <span class="mi">1</span>
                             <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc</span><span class="p">[</span><span class="n">which</span><span class="p">]</span>
@@ -455,7 +447,7 @@
         <span class="c1"># the final result is at the root</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">TerminalRNC</span><span class="p">):</span>  <span class="c1"># only contains a single RNC, let&#39;s retrieve its value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">RNCTerminal</span><span class="p">):</span>  <span class="c1"># only contains a single RNC, let&#39;s retrieve its value</span>
             <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dc</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
         <span class="k">return</span> <span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">()</span>    <span class="c1"># only contains a normal terminal</span></div>
 
@@ -470,7 +462,7 @@
 
         <span class="k">def</span> <span class="nf">convert_RNC</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
             <span class="k">nonlocal</span> <span class="n">n_rnc</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">TerminalRNC</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">RNCTerminal</span><span class="p">):</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc</span><span class="p">[</span><span class="n">n_rnc</span><span class="p">]</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
                 <span class="n">n_rnc</span> <span class="o">+=</span> <span class="mi">1</span>

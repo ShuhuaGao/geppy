@@ -12,7 +12,7 @@ from multiple genes into a single result.
 """
 import copy
 from ..tools.generator import *
-from ..core.symbol import Function, TerminalRNC, Terminal
+from ..core.symbol import Function, RNCTerminal, Terminal
 
 
 _DEBUG = False
@@ -162,14 +162,6 @@ class Gene(list):
         super().__init__(g, genome)
         g._head_length = head_length
         return g
-
-    # def __deepcopy__(self, memodict):
-    #     """
-    #     Deep copy a gene. Note that there is no need to deep copy the contained primitives since they will not be
-    #     changed during GEP.
-    #     If we rely on the default deepcopy implementation, then the contents are also deep copied unnecessarily.
-    #     """
-    #     return self.__class__.from_genome(self, head_length=self.head_length)
 
     def __str__(self):
         """
@@ -379,7 +371,7 @@ class GeneDc(Gene):
         :return: string form of the expression
         """
         expr = self.kexpression
-        n_total_rncs = sum(1 if isinstance(p, TerminalRNC) else 0 for p in expr)  # how many RNCs in total?
+        n_total_rncs = sum(1 if isinstance(p, RNCTerminal) else 0 for p in expr)  # how many RNCs in total?
         n_encountered_rncs = 0  # how many RNCs we have encountered in reverse order?
         i = len(expr) - 1
         while i >= 0:
@@ -391,7 +383,7 @@ class GeneDc(Gene):
                     if isinstance(ele, str):
                         args.append(ele)
                     else:  # a terminal or a RNC terminal
-                        if isinstance(ele, TerminalRNC):
+                        if isinstance(ele, RNCTerminal):
                             # retrieve its true value
                             which = n_total_rncs - n_encountered_rncs - 1
                             index = self.dc[which]
@@ -406,7 +398,7 @@ class GeneDc(Gene):
         # the final result is at the root
         if isinstance(expr[0], str):
             return expr[0]
-        if isinstance(expr[0], TerminalRNC):  # only contains a single RNC, let's retrieve its value
+        if isinstance(expr[0], RNCTerminal):  # only contains a single RNC, let's retrieve its value
             return str(self.rnc_array[self.dc[0]])
         return expr[0].format()    # only contains a normal terminal
 
@@ -421,7 +413,7 @@ class GeneDc(Gene):
 
         def convert_RNC(p):
             nonlocal n_rnc
-            if isinstance(p, TerminalRNC):
+            if isinstance(p, RNCTerminal):
                 index = self.dc[n_rnc]
                 value = self.rnc_array[index]
                 n_rnc += 1

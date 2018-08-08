@@ -23,7 +23,7 @@ We may need functions :math:`+, *, max` and terminals :math:`3, x, y`. The follo
 	pset.add_function(max, 2)
 	pset.add_function(operator.add, 2)
 	pset.add_function(operator.mul, 2)
-	pset.add_terminal(3)
+	pset.add_constant_terminal(3)
 	
 We first create a primitive set by initializing the class :class:`~geppy.core.symbol.PrimitiveSet` , whose arguments are the name of the primitive set itself and the names of the input variables respectively.  By specifying the input variables' names, terminals for such inputs will be created automatically. The next three lines add two functions using the :meth:`~geppy.core.symbol.PrimitiveSet.add_function` method by specifying the function itself and its arity (i.e., number of arguments this function can accept).  Finally, we add a constant terminal for the value 3. 
 

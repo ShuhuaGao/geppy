@@ -3,7 +3,8 @@ Some utility functions used internally.
 """
 
 import random
-from ..core.symbol import Ephemeral
+import copy
+from ..core.symbol import EphemeralTerminal
 
 
 def _choose_a_terminal(terminals):
@@ -14,6 +15,7 @@ def _choose_a_terminal(terminals):
     :return: a terminal
     """
     terminal = random.choice(terminals)
-    if isinstance(terminal, Ephemeral):  # an Ephemeral
-        terminal = terminal.clone_with_update()  # generate a normal constant terminal with a random value
+    if isinstance(terminal, EphemeralTerminal):  # an Ephemeral
+        terminal = copy.deepcopy(terminal)  # generate a new one
+        terminal.update_value()
     return terminal

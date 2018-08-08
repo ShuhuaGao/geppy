@@ -61,6 +61,14 @@ def gep_simple(population, toolbox, n_generations=100, n_elites=1,
     `here <https://www.gepsoft.com/gxpt4kb/Chapter06/Section1/SS1.htm>`_.
     Refer to Chapter 3 of [FC2006]_ to learn more about this basic algorithm.
 
+    .. note::
+        The algorithm framework also supports the GEP-RNC algorithm, which evolves genes with an additional Dc domain for
+        random numerical constant manipulation. To adopt :func:`gep_simple` for GEP-RNC evolution, use the
+        :class:`~geppy.core.entity.GeneDc` objects as the genes and register Dc-specific operators.
+        A detailed example of GEP-RNC can be found at `numerical expression inference with GEP-RNC
+        <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-RNC.ipynb>`_.
+        Users can refer to Chapter 5 of [FC2006]_ to get familiar with the GEP-RNC theory.
+
     :param population: a list of individuals
     :param toolbox: :class:`~geppy.tools.toolbox.Toolbox`, a container of operators. Regarding the conventions of
         operator design and registration, please refer to :ref:`convention`.

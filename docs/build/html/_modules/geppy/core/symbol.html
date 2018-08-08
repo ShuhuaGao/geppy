@@ -73,12 +73,12 @@
 <span class="sd">.. [FC2006] Ferreira, Cândida. Gene expression programming: mathematical modeling by an artificial</span>
 <span class="sd">                intelligence. Vol. 21. Springer, 2006.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">numbers</span>
 <span class="kn">import</span> <span class="nn">keyword</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
 
 
-<span class="k">def</span> <span class="nf">_is_identifier_not_keyword</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_is_nonkeyword_identifier</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check whether the string *var* is a valid non-keyword Python identifier.</span>
 <span class="sd">    For example, &#39;ab&#39; and &#39;x1&#39; satisfy this condition, while &#39;if&#39; and &#39;lambda&#39; are keywords.</span>
@@ -136,25 +136,30 @@
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(name=</span><span class="si">{}</span><span class="s1">, arity=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="p">):</span>
-        <span class="c1"># faster deep copy because generally a primitive is immutable except the ephemeral ones</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Faster deep copy because generally a primitive is immutable except the ephemeral terminals</span>
+<span class="sd">        The derived classes should rewrite this method if needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
 
 <div class="viewcode-block" id="Function"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Function">[docs]</a><span class="k">class</span> <span class="nc">Function</span><span class="p">(</span><span class="n">Primitive</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that encapsulates a function in GEP. Note that this class only stores the function ID, i.e., the *name*</span>
-<span class="sd">    attributed instead of the callable function itself. On the tmp hand, the underlying callable is retrieved</span>
+<span class="sd">    attribute instead of the callable function itself. On the other hand, the underlying callable is retrieved</span>
 <span class="sd">    somewhere else when needed, for example, from :class:`PrimitiveSet`. Thus, in the whole GEP program the provided</span>
 <span class="sd">    name for each function must be unique.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Function.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Function.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">arity</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">                Initialize a function.</span>
+<span class="sd">        Initialize a function.</span>
 
-<span class="sd">                :param name: str, name of the function</span>
-<span class="sd">                :param arity: int, arity of the function</span>
-<span class="sd">                &quot;&quot;&quot;</span>
+<span class="sd">        :param name: str, name of the function, must be valid non-keyword Python identifier</span>
+<span class="sd">        :param arity: int, arity of the function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">_is_nonkeyword_identifier</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> \
+            <span class="s1">&#39;Name of a function must be a valid non-keyword Python identifier&#39;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">arity</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;{{</span><span class="si">{}</span><span class="s1">}}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">arity</span><span class="p">))</span>  <span class="c1"># like &#39;{0}, {1}, {2}&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">args</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>  <span class="c1"># e.g., add, --&gt; &#39;add({0}, {1})&#39;</span></div>
@@ -209,30 +214,78 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(name=</span><span class="si">{}</span><span class="s1">, value=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(name=</span><span class="si">{}</span><span class="s1">, value=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Terminal.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Terminal.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="Ephemeral"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Ephemeral">[docs]</a><span class="k">class</span> <span class="nc">Ephemeral</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
+<div class="viewcode-block" id="ConstantTerminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.ConstantTerminal">[docs]</a><span class="k">class</span> <span class="nc">ConstantTerminal</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class that encapsulates an ephemeral random constant terminal in GEP, which can be used to build a normal constant</span>
+<span class="sd">    Class that represents a constant terminal, whose value will never change during the whole evolution.</span>
+<span class="sd">    The value of a constant terminal can only be a literal variable , such as a numeric number or a Boolean variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ConstantTerminal.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.ConstantTerminal.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a constant terminal with the given *value*.</span>
+
+<span class="sd">        :param value: int, float, bool, value of the constant, can only be a number or a Boolean variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> \
+            <span class="s1">&#39;The value of a constant terminal can only be a number or a bool variable.&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SymbolTerminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.SymbolTerminal">[docs]</a><span class="k">class</span> <span class="nc">SymbolTerminal</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that represents a symbolic terminal. Only the :attr:`name` of a symbol terminal participates in the genome</span>
+<span class="sd">    construction, while its value is retrieved from the :class:`PrimitiveSet` only during evaluation. Therefore, the</span>
+<span class="sd">    :attr:`name` of a symbol terminal must be a valid and unique Python identifier.</span>
+<span class="sd">    The value of a symbol terminal can be any object that leads to a legal expression when evaluated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SymbolTerminal.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.SymbolTerminal.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a symbol terminal with the symbol given by *name*.</span>
+
+<span class="sd">        :param name: str, must be a valid non-keyword Python identifier</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">_is_nonkeyword_identifier</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> \
+            <span class="s1">&#39;Name of a symbol terminal must be a valid non-keyword Python identifier&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EphemeralTerminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.EphemeralTerminal">[docs]</a><span class="k">class</span> <span class="nc">EphemeralTerminal</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that encapsulates an ephemeral numeric constant terminal in GEP, which can be used to build a normal constant</span>
 <span class="sd">    terminal with a randomly produced value when needed using the :meth:`Ephemeral.generate` method.</span>
+
+<span class="sd">    Just as the name implies, the value of an ephemeral terminal may be changed during evolution, either by mutation or</span>
+<span class="sd">    by some local search heuristics, to optimize the numerical constants in a mathematical model.</span>
 
 <span class="sd">    .. note::</span>
 <span class="sd">            This special terminal named *ephemeral random constant* was originally introduced in genetic programming</span>
-<span class="sd">            by Koza to handle numerical constants in evolutionary programming. However, it is NOT the recommended way</span>
-<span class="sd">            to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain</span>
-<span class="sd">            in genes.See Chapter 5 of [FC2006]_.</span>
+<span class="sd">            by Koza to handle numerical constants in evolutionary programming. Another way to evolve simple constants in</span>
+<span class="sd">            GEP is to add a RNC domain in genes and use the GEP-RNC algorithm. See Chapter 5 of [FC2006]_.</span>
+
+<span class="sd">    .. seealso::</span>
+<span class="sd">        :func:`~geppy.tools.mutation.mutate_uniform_ephemeral` for ephemeral mutation, and</span>
+<span class="sd">        :class:`~geppy.core.entity.GeneDc` for the GEP-RNC algorithm.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Ephemeral.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Ephemeral.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gen</span><span class="p">):</span>
+<div class="viewcode-block" id="EphemeralTerminal.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.EphemeralTerminal.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gen</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize an ephemeral terminal with the given *name* and the random number generator *gen*. Its initial value</span>
+<span class="sd">        is randomly generated by *gen* and can later be set explicitly with the :attr:`value` property. Alternatively,</span>
+<span class="sd">        its value can be updated to a new value generated by *gen* with the :meth:`update_value` method. Note that just</span>
+<span class="sd">        like a constant terminal, the value of an ephemeral terminal can only be a number or a bool.</span>
 
 <span class="sd">        :param name: str, name of the ephemeral constant</span>
 <span class="sd">        :param gen: callable, an ephemeral number generator, which should return a random value when called with</span>
-<span class="sd">            no arguments.</span>
+<span class="sd">            no arguments ``gen()``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">gen</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gen</span> <span class="o">=</span> <span class="n">gen</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gen</span> <span class="o">=</span> <span class="n">gen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen</span><span class="p">()</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -241,71 +294,81 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen</span>
 
-<div class="viewcode-block" id="Ephemeral.format"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Ephemeral.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value to be *val*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> \
+            <span class="s1">&#39;The value of a constant terminal can only be a number or a bool variable.&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">val</span>
+
+<div class="viewcode-block" id="EphemeralTerminal.format"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.EphemeralTerminal.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a string representation of this terminal for subsequent evaluation purpose, which is equivalently</span>
-<span class="sd">        ``str(self.value)``.</span>
+<span class="sd">        ``repr(self.value)``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Ephemeral.update_value"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Ephemeral.update_value">[docs]</a>    <span class="k">def</span> <span class="nf">update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="EphemeralTerminal.update_value"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.EphemeralTerminal.update_value">[docs]</a>    <span class="k">def</span> <span class="nf">update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the value of this ephemeral constant in place, whose new value is randomly produced by the random number</span>
-<span class="sd">        generator :meth:`~Ephemeral.generator`.</span>
+<span class="sd">        generator :attr:`generator`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="Ephemeral.clone_with_update"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.Ephemeral.clone_with_update">[docs]</a>    <span class="k">def</span> <span class="nf">clone_with_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a copy of this ephemeral but with its value updated by :meth:`update_value`. With this operation, the</span>
-<span class="sd">        various instances of a same kind of ephemeral are independent.</span>
-
-<span class="sd">        :return: Ephemeral, a new instance</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">replica</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">replica</span><span class="o">.</span><span class="n">update_value</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">replica</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(name=</span><span class="si">{}</span><span class="s1">, gen=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="p">):</span>
-        <span class="n">new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator</span><span class="p">)</span>
-        <span class="n">new</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">return</span> <span class="n">new</span></div>
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deep copy the ephemeral and returns a new ephemeral terminal with the same value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TerminalRNC"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.TerminalRNC">[docs]</a><span class="k">class</span> <span class="nc">TerminalRNC</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
+<div class="viewcode-block" id="RNCTerminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.RNCTerminal">[docs]</a><span class="k">class</span> <span class="nc">RNCTerminal</span><span class="p">(</span><span class="n">Terminal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC</span>
 <span class="sd">    algorithm. This class is mainly used internally by the :class:`~geppy.core.entity.GeneDc` class. The name of a</span>
-<span class="sd">    :class:`TerminalRNC` object is &#39;?&#39; by default, and its value is retrieved dynamically according to the GEP-RNC</span>
+<span class="sd">    :class:`RNCTerminal` object is &#39;?&#39; by default, and its value is retrieved dynamically according to the GEP-RNC</span>
 <span class="sd">    algorithm. Refer to Chapter 5 of [FC2006]_ for more details.</span>
+
+<span class="sd">    In *geppy* and the GEP-RNC algorithm, the RNC terminal is just a placeholder and the default name &#39;?&#39; is</span>
+<span class="sd">    recommended.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TerminalRNC.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.TerminalRNC.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="RNCTerminal.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.RNCTerminal.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a RNC terminal.</span>
 
-<span class="sd">        :param name: str, name of the terminal</span>
-<span class="sd">        :param value: value of the terminal</span>
+<span class="sd">        :param name: str, default &#39;?&#39;, name of the terminal</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="PrimitiveSet"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet">[docs]</a><span class="k">class</span> <span class="nc">PrimitiveSet</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class representing a primitive set, which contains the primitives (terminals and functions) that are used in GEP.</span>
 
-<span class="sd">    .. warning::</span>
-<span class="sd">        Each primitive in this set must have a unique name, which should also be a valid non-keyword</span>
-<span class="sd">        Python identifier, except the constant terminals and RNC terminals. For more details, refer to the</span>
-<span class="sd">        :meth:`~PrimitiveSet.add_terminal` and :meth:`add_rnc` methods.</span>
+<span class="sd">    .. note::</span>
+<span class="sd">        Each function :class:`Function` and symbol terminal :class:`SymbolTerminal`</span>
+<span class="sd">        must have their unique names. This is because internally their true value (or</span>
+<span class="sd">        the callable for a function) will be be stored in a dictionary :attr:`globals` inside :class:`PrimitiveSet` and</span>
+<span class="sd">        later be retrieved when compiling a genome. Consequently, the name must be a valid non-keyword Python identifier.</span>
+<span class="sd">        To learn more about the underlying mechanism, refer to the Python builtin function :func:`compile`.</span>
 
 <span class="sd">    .. note::</span>
 <span class="sd">        To use the GEP-RNC algorithm, i.e., to use :class:`~geppy.core.entity.GeneDc` for numerical constant handling,</span>
-<span class="sd">        please use the :meth:`PrimitiveSet.add_rnc` method, which will add a special terminal</span>
-<span class="sd">        of type :class:`~geppy.core.symbol.TerminalRNC` internally. Then, use a chromosome composed of</span>
+<span class="sd">        please use the :meth:`PrimitiveSet.add_rnc_terminal` method, which will add a special terminal</span>
+<span class="sd">        of type :class:`~geppy.core.symbol.RNCTerminal` internally. Then, use a chromosome composed of</span>
 <span class="sd">        :class:`~geppy.core.entity.GeneDc` genes as the individual.</span>
 <span class="sd">        Refer to Chapter 5 of [FC2006]_ for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -316,7 +379,7 @@
 
 <span class="sd">        :param name: name of the primitive set</span>
 <span class="sd">        :param input_names: iterable, a list of names for the inputs in the GEP problem, for instance,</span>
-<span class="sd">            ``[&#39;x&#39;, &#39;y&#39;]`` for two inputs.</span>
+<span class="sd">            ``[&#39;x&#39;, &#39;y&#39;]`` for two inputs. Internally, a symbol terminal is built for each input.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -326,7 +389,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_unique_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="c1"># add input terminals</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_names</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_add_input_terminal</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_assert_name_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_symbol_terminal</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PrimitiveSet.add_function"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_function">[docs]</a>    <span class="k">def</span> <span class="nf">add_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">arity</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -334,108 +398,86 @@
 
 <span class="sd">        :param func: callable</span>
 <span class="sd">        :param arity: number of arguments accepted by *func*</span>
-<span class="sd">        :param name: name of *func*. If remaining ``None``, then the ``func.__name__`` attribute is used.</span>
+<span class="sd">        :param name: name of *func*, default ``None``.</span>
+<span class="sd">            If remaining ``None``, then the ``func.__name__`` attribute is used instead.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_symbol_valid_and_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_name_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="n">function_</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">arity</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">function_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span></div>
 
-    <span class="k">def</span> <span class="nf">_add_input_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimitiveSet.add_constant_terminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_constant_terminal">[docs]</a>    <span class="k">def</span> <span class="nf">add_constant_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add an input terminal with the given *name*.</span>
-<span class="sd">        :param name: str, which must be a valid Python identifier.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_symbol_valid_and_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">Terminal</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="sd">        Add a terminal which is a constant.</span>
 
-    <span class="k">def</span> <span class="nf">_add_constant_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a terminal which is a constant. There is no need to store such kind of terminals into *globals* for later</span>
+<span class="sd">        There is no need to store such kind of terminals into *globals* for later</span>
 <span class="sd">        evaluation, because their string representation acquired by :meth:`~Terminal.format` can be used directly.</span>
+
 <span class="sd">        :param value: value of the terminal. Only numeric and Boolean types can be accepted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> \
-            <span class="sd">&#39;&#39;&#39;Only a number or a Boolean value can be used to create a constant terminal. The provided value is {} of </span>
-<span class="sd">                type {}&#39;&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Terminal</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">value</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ConstantTerminal</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">_add_symbolic_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimitiveSet.add_symbol_terminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_symbol_terminal">[docs]</a>    <span class="k">def</span> <span class="nf">add_symbol_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a symbolic terminal, whose name differs from the value. For example, we may add a terminal for the constant</span>
-<span class="sd">        pi, with ``name=&#39;pi&#39;`` and ``value=3.1415926``. This kind of terminals are also inserted into *globals* for</span>
-<span class="sd">        later evaluation.</span>
+<span class="sd">        Add a symbolic terminal, whose name points to the true value stored in :attr:`globals`.</span>
 
+<span class="sd">        For example, we may add a terminal for the constant *pi*, with ``add_symbol_terminal(3.1415, &#39;pi&#39;)``.</span>
+
+<span class="sd">        :param name: name of the terminal</span>
 <span class="sd">        :param value: value of the terminal</span>
-<span class="sd">        :param name: name fo the terminal</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_symbol_valid_and_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">Terminal</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_name_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">SymbolTerminal</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_assert_symbol_valid_and_unique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_assert_name_unique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Assert whether a *name* is a valid symbol in this set. It should be (1) unique in *globals* and (2) a valid</span>
 <span class="sd">        Python identifier. If the supplied *name* is acceptable, it is added to the :attr:`~PrimitiveSet._unique_names`</span>
 <span class="sd">        attribute.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">_is_identifier_not_keyword</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s1">&#39;A name must be a valid non-keyword Python identifier.&#39;</span> \
-                                                 <span class="s2">&quot;The provided name &#39;</span><span class="si">{}</span><span class="s2">&#39; cannot be accepted.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_names</span><span class="p">,</span> <span class="s2">&quot;A primitive with the name &#39;</span><span class="si">{}</span><span class="s2">&#39; already exists.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unique_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globals</span><span class="p">,</span> <span class="s2">&quot;A primitive with the name &#39;</span><span class="si">{}</span><span class="s2">&#39; already exists.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PrimitiveSet.add_terminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_terminal">[docs]</a>    <span class="k">def</span> <span class="nf">add_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a non-ephemeral terminal, which is internally encapsulated as a :class:`Terminal` object.</span>
-
-<span class="sd">        :param value: value of the terminal</span>
-<span class="sd">        :param name: str, name of the terminal, default: ``None``.</span>
-
-<span class="sd">        If a constant terminal like a number 5 is expected, then simply leave *name* as ``None``, and use</span>
-<span class="sd">        ``add_terminal(5)``. Otherwise, please specify a valid *name* to create a symbolic terminal.</span>
-<span class="sd">        For instance, ``add_terminal(3.14, &#39;pi&#39;)``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_add_constant_terminal</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_add_symbolic_terminal</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PrimitiveSet.add_ephemeral"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_ephemeral">[docs]</a>    <span class="k">def</span> <span class="nf">add_ephemeral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gen</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimitiveSet.add_ephemeral_terminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_ephemeral_terminal">[docs]</a>    <span class="k">def</span> <span class="nf">add_ephemeral_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gen</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add an ephemeral constant to the set. An ephemeral&#39;s true value is generated by *gen*, which should be a no</span>
 <span class="sd">        argument function that returns a random value, when the ephemeral is picked to build a gene. Once an ephemeral</span>
-<span class="sd">        is picked, its :meth:`Ephemeral.generate` method is called to produce a constant terminal with a random value</span>
-<span class="sd">        generated by *gen*. Thus, each time :meth:`Ephemeral.generate` is called, a terminal with a different value may</span>
-<span class="sd">        be yielded.</span>
+<span class="sd">        is picked, its :meth:`Ephemeral.generate` method is called to produce a random value.</span>
 
-<span class="sd">        :param gen: callable, a random number generator which returns a random constant when called by ``gen()``</span>
+<span class="sd">        In GEP, the ephemeral terminals (i.e., their values) can be evolved by simple mutation or advanced</span>
+<span class="sd">        local search optimization.</span>
+
 <span class="sd">        :param name: str, name of the ephemeral</span>
+<span class="sd">        :param gen: callable, a random number generator which returns a random constant when called by ``gen()``</span>
+
+<span class="sd">        Usually calling :meth:`add_ephemeral_terminal` once is sufficient to generate the numerical coefficients in the</span>
+<span class="sd">        model, because during evolution multiple independent copies of the ephemeral terminal will be built with</span>
+<span class="sd">        various values.</span>
+<span class="sd">        Nevertheless, if the numerical coefficients have various ranges, it may be more efficient to add multiple</span>
+<span class="sd">        ephemeral terminals.</span>
 
 <span class="sd">        .. note::</span>
 <span class="sd">            The special terminal named *ephemeral random constant* was originally introduced in genetic programming</span>
-<span class="sd">            by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works</span>
-<span class="sd">            in GEP, it is NOT the recommended way to evolve constants in GEP.</span>
-<span class="sd">            The recommended method is to add a RNC domain in genes and use the GEP-RNC algorithm.</span>
+<span class="sd">            by Koza to handle numerical constants in evolutionary programming. Alternatively, to evolve the numerical</span>
+<span class="sd">            constants in GEP, we can also use the GEP-RNC algorithm.</span>
 <span class="sd">            See Chapter 5 of [FC2006]_.</span>
 
-<span class="sd">        .. seealso:</span>
-<span class="sd">            Gene type with an additional Dc domain: :class:`~geppy.core.entity.GeneDc`.</span>
-
-<span class="sd">            The GEP-RNC algorithm in *geppy*: :func:`~geppy.algorithms.basic.gep_rnc`.</span>
+<span class="sd">        .. seealso::</span>
+<span class="sd">            :func:`~geppy.tools.mutation.mutate_uniform_ephemeral` for ephemeral mutation, and</span>
+<span class="sd">            :class:`~geppy.core.entity.GeneDc` for the GEP-RNC algorithm.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_symbol_valid_and_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Ephemeral</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">gen</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_assert_name_unique</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EphemeralTerminal</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">gen</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PrimitiveSet.add_rnc"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_rnc">[docs]</a>    <span class="k">def</span> <span class="nf">add_rnc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimitiveSet.add_rnc_terminal"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.symbol.PrimitiveSet.add_rnc_terminal">[docs]</a>    <span class="k">def</span> <span class="nf">add_rnc_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.</span>
 <span class="sd">        This terminal&#39;s value is retrieved dynamically from an RNC array attached to a gene of type</span>
 <span class="sd">        :class:`~geppy.core.entity.GeneDc` according to the GEP-RNC algorithm.</span>
-<span class="sd">        See also :class:`TerminalRNC` and refer to Chapter 5 of [FC2006]_ about GEP-RNC.</span>
+<span class="sd">        See also :class:`RNCTerminal` and refer to Chapter 5 of [FC2006]_ about GEP-RNC.</span>
 
 <span class="sd">        :param name: str, name of the terminal. For a RNC terminal, generally there is no need to specify a name and</span>
 <span class="sd">            the default value &#39;?&#39; is recommended.</span>
@@ -443,7 +485,7 @@
 <span class="sd">        Usually it is sufficient to call this method once to add only one RNC terminal, since the values of the</span>
 <span class="sd">        RNC terminals at different positions are different random numerical constants..</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TerminalRNC</span><span class="p">(</span><span class="n">name</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RNCTerminal</span><span class="p">(</span><span class="n">name</span><span class="p">))</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -455,16 +497,16 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">terminals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all the terminals, including the ephemeral ones and input terminals if any.</span>
+<span class="sd">        Get all the terminals.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_terminals</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ephemerals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all the added ephemeral terminals in this set.</span>
+<span class="sd">        Get all the ephemeral terminals in this set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminals</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Ephemeral</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminals</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">EphemeralTerminal</span><span class="p">)]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

@@ -324,11 +324,11 @@ the attached set of constants <em>rnc_array</em>. Such operators are all suffixe
 a <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> instance. See <a class="reference internal" href="#geppy.core.entity.GeneDc.from_genome" title="geppy.core.entity.GeneDc.from_genome"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_genome()</span></code></a>. Or more generally, a
 random number generator <em>rnc_gen</em> can be provided, with which a specified number of RNCs are generated during the
 creation of gene instances.</p>
-<p>A special terminal of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> is used internally to represent the RNCs.</p>
+<p>A special terminal of type <code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code> is used internally to represent the RNCs.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">To create an effective <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> gene, the primitive set should contain at least one
-<a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> terminal. See <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code></a>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code> terminal. See <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code>
 for details.</p>
 </div>
 <p>Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id1">[FC2006]</a> for more knowledge about GEP-RNC.</p>
@@ -396,7 +396,7 @@ The special terminal representing a RNC will be replaced by their true values re
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>genome</strong> – iterable, a list of symbols representing functions and terminals (especially the special RNC
-terminal of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a>). This genome should have three
+terminal of type <code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code>). This genome should have three
 domains: head, tail and Dc. The Dc domain should be composed only of integers representing indices into the
 <em>rnc_array</em>.</li>
 <li><strong>head_length</strong> – length of the head domain. The length of the tail and Dc domain should follow the rule and
@@ -497,29 +497,61 @@ intelligence. Vol. 21. Springer, 2006.</td></tr>
 </tbody>
 </table>
 <dl class="class">
-<dt id="geppy.core.symbol.Ephemeral">
-<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Ephemeral</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.core.symbol.ConstantTerminal">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">ConstantTerminal</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#ConstantTerminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.ConstantTerminal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
-<p>Class that encapsulates an ephemeral random constant terminal in GEP, which can be used to build a normal constant
+<p>Class that represents a constant terminal, whose value will never change during the whole evolution.
+The value of a constant terminal can only be a literal variable , such as a numeric number or a Boolean variable.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.ConstantTerminal.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#ConstantTerminal.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.ConstantTerminal.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a constant terminal with the given <em>value</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – int, float, bool, value of the constant, can only be a number or a Boolean variable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.EphemeralTerminal">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">EphemeralTerminal</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#EphemeralTerminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.EphemeralTerminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
+<p>Class that encapsulates an ephemeral numeric constant terminal in GEP, which can be used to build a normal constant
 terminal with a randomly produced value when needed using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> method.</p>
+<p>Just as the name implies, the value of an ephemeral terminal may be changed during evolution, either by mutation or
+by some local search heuristics, to optimize the numerical constants in a mathematical model.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
-by Koza to handle numerical constants in evolutionary programming. However, it is NOT the recommended way
-to evolve constants in GEP, especially for complex problems. The recommended method is to add a RNC domain
-in genes.See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
+by Koza to handle numerical constants in evolutionary programming. Another way to evolve simple constants in
+GEP is to add a RNC domain in genes and use the GEP-RNC algorithm. See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id3">[FC2006]</a>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="geppy.tools.html#geppy.tools.mutation.mutate_uniform_ephemeral" title="geppy.tools.mutation.mutate_uniform_ephemeral"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutate_uniform_ephemeral()</span></code></a> for ephemeral mutation, and
+<a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> for the GEP-RNC algorithm.</p>
 </div>
 <dl class="method">
-<dt id="geppy.core.symbol.Ephemeral.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="geppy.core.symbol.EphemeralTerminal.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#EphemeralTerminal.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.EphemeralTerminal.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize an ephemeral terminal with the given <em>name</em> and the random number generator <em>gen</em>. Its initial value
+is randomly generated by <em>gen</em> and can later be set explicitly with the <a class="reference internal" href="#geppy.core.symbol.EphemeralTerminal.value" title="geppy.core.symbol.EphemeralTerminal.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> property. Alternatively,
+its value can be updated to a new value generated by <em>gen</em> with the <a class="reference internal" href="#geppy.core.symbol.EphemeralTerminal.update_value" title="geppy.core.symbol.EphemeralTerminal.update_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_value()</span></code></a> method. Note that just
+like a constant terminal, the value of an ephemeral terminal can only be a number or a bool.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>name</strong> – str, name of the ephemeral constant</li>
 <li><strong>gen</strong> – callable, an ephemeral number generator, which should return a random value when called with
-no arguments.</li>
+no arguments <code class="docutils literal notranslate"><span class="pre">gen()</span></code>.</li>
 </ul>
 </td>
 </tr>
@@ -528,38 +560,29 @@ no arguments.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="geppy.core.symbol.Ephemeral.clone_with_update">
-<code class="descname">clone_with_update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.clone_with_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.clone_with_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a copy of this ephemeral but with its value updated by <a class="reference internal" href="#geppy.core.symbol.Ephemeral.update_value" title="geppy.core.symbol.Ephemeral.update_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_value()</span></code></a>. With this operation, the
-various instances of a same kind of ephemeral are independent.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Ephemeral, a new instance</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="geppy.core.symbol.Ephemeral.format">
-<code class="descname">format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.format" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.core.symbol.EphemeralTerminal.format">
+<code class="descname">format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#EphemeralTerminal.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.EphemeralTerminal.format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation of this terminal for subsequent evaluation purpose, which is equivalently
-<code class="docutils literal notranslate"><span class="pre">str(self.value)</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">repr(self.value)</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="geppy.core.symbol.Ephemeral.generator">
-<code class="descname">generator</code><a class="headerlink" href="#geppy.core.symbol.Ephemeral.generator" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.core.symbol.EphemeralTerminal.generator">
+<code class="descname">generator</code><a class="headerlink" href="#geppy.core.symbol.EphemeralTerminal.generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the ephemeral random number generator.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="geppy.core.symbol.Ephemeral.update_value">
-<code class="descname">update_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Ephemeral.update_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Ephemeral.update_value" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.core.symbol.EphemeralTerminal.update_value">
+<code class="descname">update_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#EphemeralTerminal.update_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.EphemeralTerminal.update_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the value of this ephemeral constant in place, whose new value is randomly produced by the random number
-generator <a class="reference internal" href="#geppy.core.symbol.Ephemeral.generator" title="geppy.core.symbol.Ephemeral.generator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generator()</span></code></a>.</p>
+generator <a class="reference internal" href="#geppy.core.symbol.EphemeralTerminal.generator" title="geppy.core.symbol.EphemeralTerminal.generator"><code class="xref py py-attr docutils literal notranslate"><span class="pre">generator</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="geppy.core.symbol.EphemeralTerminal.value">
+<code class="descname">value</code><a class="headerlink" href="#geppy.core.symbol.EphemeralTerminal.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value.</p>
 </dd></dl>
 
 </dd></dl>
@@ -569,7 +592,7 @@ generator <a class="reference internal" href="#geppy.core.symbol.Ephemeral.gener
 <em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">Function</code><span class="sig-paren">(</span><em>name</em>, <em>arity</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Primitive" title="geppy.core.symbol.Primitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Primitive</span></code></a></p>
 <p>Class that encapsulates a function in GEP. Note that this class only stores the function ID, i.e., the <em>name</em>
-attributed instead of the callable function itself. On the tmp hand, the underlying callable is retrieved
+attribute instead of the callable function itself. On the other hand, the underlying callable is retrieved
 somewhere else when needed, for example, from <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet" title="geppy.core.symbol.PrimitiveSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code></a>. Thus, in the whole GEP program the provided
 name for each function must be unique.</p>
 <dl class="method">
@@ -581,7 +604,7 @@ name for each function must be unique.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> – str, name of the function</li>
+<li><strong>name</strong> – str, name of the function, must be valid non-keyword Python identifier</li>
 <li><strong>arity</strong> – int, arity of the function</li>
 </ul>
 </td>
@@ -680,17 +703,19 @@ implement this method.</p>
 <em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">PrimitiveSet</code><span class="sig-paren">(</span><em>name</em>, <em>input_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A class representing a primitive set, which contains the primitives (terminals and functions) that are used in GEP.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Each primitive in this set must have a unique name, which should also be a valid non-keyword
-Python identifier, except the constant terminals and RNC terminals. For more details, refer to the
-<a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_terminal" title="geppy.core.symbol.PrimitiveSet.add_terminal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_terminal()</span></code></a> and <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_rnc()</span></code></a> methods.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Each function <a class="reference internal" href="#geppy.core.symbol.Function" title="geppy.core.symbol.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> and symbol terminal <a class="reference internal" href="#geppy.core.symbol.SymbolTerminal" title="geppy.core.symbol.SymbolTerminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTerminal</span></code></a>
+must have their unique names. This is because internally their true value (or
+the callable for a function) will be be stored in a dictionary <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.globals" title="geppy.core.symbol.PrimitiveSet.globals"><code class="xref py py-attr docutils literal notranslate"><span class="pre">globals</span></code></a> inside <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet" title="geppy.core.symbol.PrimitiveSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code></a> and
+later be retrieved when compiling a genome. Consequently, the name must be a valid non-keyword Python identifier.
+To learn more about the underlying mechanism, refer to the Python builtin function <a class="reference external" href="https://docs.python.org/3/library/functions.html#compile" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">To use the GEP-RNC algorithm, i.e., to use <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> for numerical constant handling,
-please use the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="geppy.core.symbol.PrimitiveSet.add_rnc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PrimitiveSet.add_rnc()</span></code></a> method, which will add a special terminal
-of type <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> internally. Then, use a chromosome composed of
+please use the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_rnc_terminal" title="geppy.core.symbol.PrimitiveSet.add_rnc_terminal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PrimitiveSet.add_rnc_terminal()</span></code></a> method, which will add a special terminal
+of type <a class="reference internal" href="#geppy.core.symbol.RNCTerminal" title="geppy.core.symbol.RNCTerminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNCTerminal</span></code></a> internally. Then, use a chromosome composed of
 <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> genes as the individual.
 Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id4">[FC2006]</a> for more details.</p>
 </div>
@@ -705,7 +730,7 @@ Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc200
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>name</strong> – name of the primitive set</li>
 <li><strong>input_names</strong> – iterable, a list of names for the inputs in the GEP problem, for instance,
-<code class="docutils literal notranslate"><span class="pre">['x',</span> <span class="pre">'y']</span></code> for two inputs.</li>
+<code class="docutils literal notranslate"><span class="pre">['x',</span> <span class="pre">'y']</span></code> for two inputs. Internally, a symbol terminal is built for each input.</li>
 </ul>
 </td>
 </tr>
@@ -720,32 +745,57 @@ Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc200
 </dd></dl>
 
 <dl class="method">
-<dt id="geppy.core.symbol.PrimitiveSet.add_ephemeral">
-<code class="descname">add_ephemeral</code><span class="sig-paren">(</span><em>gen</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_ephemeral" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.core.symbol.PrimitiveSet.add_constant_terminal">
+<code class="descname">add_constant_terminal</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_constant_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_constant_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a terminal which is a constant.</p>
+<p>There is no need to store such kind of terminals into <em>globals</em> for later
+evaluation, because their string representation acquired by <a class="reference internal" href="#geppy.core.symbol.Terminal.format" title="geppy.core.symbol.Terminal.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">format()</span></code></a> can be used directly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – value of the terminal. Only numeric and Boolean types can be accepted.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="geppy.core.symbol.PrimitiveSet.add_ephemeral_terminal">
+<code class="descname">add_ephemeral_terminal</code><span class="sig-paren">(</span><em>name</em>, <em>gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_ephemeral_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_ephemeral_terminal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add an ephemeral constant to the set. An ephemeral’s true value is generated by <em>gen</em>, which should be a no
 argument function that returns a random value, when the ephemeral is picked to build a gene. Once an ephemeral
-is picked, its <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> method is called to produce a constant terminal with a random value
-generated by <em>gen</em>. Thus, each time <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> is called, a terminal with a different value may
-be yielded.</p>
+is picked, its <code class="xref py py-meth docutils literal notranslate"><span class="pre">Ephemeral.generate()</span></code> method is called to produce a random value.</p>
+<p>In GEP, the ephemeral terminals (i.e., their values) can be evolved by simple mutation or advanced
+local search optimization.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>gen</strong> – callable, a random number generator which returns a random constant when called by <code class="docutils literal notranslate"><span class="pre">gen()</span></code></li>
 <li><strong>name</strong> – str, name of the ephemeral</li>
+<li><strong>gen</strong> – callable, a random number generator which returns a random constant when called by <code class="docutils literal notranslate"><span class="pre">gen()</span></code></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<p>Usually calling <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.add_ephemeral_terminal" title="geppy.core.symbol.PrimitiveSet.add_ephemeral_terminal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_ephemeral_terminal()</span></code></a> once is sufficient to generate the numerical coefficients in the
+model, because during evolution multiple independent copies of the ephemeral terminal will be built with
+various values.
+Nevertheless, if the numerical coefficients have various ranges, it may be more efficient to add multiple
+ephemeral terminals.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The special terminal named <em>ephemeral random constant</em> was originally introduced in genetic programming
-by Koza to handle numerical constants in evolutionary programming. However, though an ephemeral still works
-in GEP, it is NOT the recommended way to evolve constants in GEP.
-The recommended method is to add a RNC domain in genes and use the GEP-RNC algorithm.
+by Koza to handle numerical constants in evolutionary programming. Alternatively, to evolve the numerical
+constants in GEP, we can also use the GEP-RNC algorithm.
 See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id5">[FC2006]</a>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="geppy.tools.html#geppy.tools.mutation.mutate_uniform_ephemeral" title="geppy.tools.mutation.mutate_uniform_ephemeral"><code class="xref py py-func docutils literal notranslate"><span class="pre">mutate_uniform_ephemeral()</span></code></a> for ephemeral mutation, and
+<a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> for the GEP-RNC algorithm.</p>
 </div>
 </dd></dl>
 
@@ -760,7 +810,8 @@ See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>func</strong> – callable</li>
 <li><strong>arity</strong> – number of arguments accepted by <em>func</em></li>
-<li><strong>name</strong> – name of <em>func</em>. If remaining <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the <code class="docutils literal notranslate"><span class="pre">func.__name__</span></code> attribute is used.</li>
+<li><strong>name</strong> – name of <em>func</em>, default <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+If remaining <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the <code class="docutils literal notranslate"><span class="pre">func.__name__</span></code> attribute is used instead.</li>
 </ul>
 </td>
 </tr>
@@ -769,12 +820,12 @@ See Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id
 </dd></dl>
 
 <dl class="method">
-<dt id="geppy.core.symbol.PrimitiveSet.add_rnc">
-<code class="descname">add_rnc</code><span class="sig-paren">(</span><em>name='?'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_rnc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_rnc" title="Permalink to this definition">¶</a></dt>
+<dt id="geppy.core.symbol.PrimitiveSet.add_rnc_terminal">
+<code class="descname">add_rnc_terminal</code><span class="sig-paren">(</span><em>name='?'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_rnc_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_rnc_terminal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a special terminal representing a random numerical constant (RNC), as defined in the GEP-RNC algorithm.
 This terminal’s value is retrieved dynamically from an RNC array attached to a gene of type
 <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> according to the GEP-RNC algorithm.
-See also <a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
+See also <a class="reference internal" href="#geppy.core.symbol.RNCTerminal" title="geppy.core.symbol.RNCTerminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNCTerminal</span></code></a> and refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id6">[FC2006]</a> about GEP-RNC.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -789,30 +840,28 @@ RNC terminals at different positions are different random numerical constants..<
 </dd></dl>
 
 <dl class="method">
-<dt id="geppy.core.symbol.PrimitiveSet.add_terminal">
-<code class="descname">add_terminal</code><span class="sig-paren">(</span><em>value</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_terminal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a non-ephemeral terminal, which is internally encapsulated as a <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Terminal</span></code></a> object.</p>
+<dt id="geppy.core.symbol.PrimitiveSet.add_symbol_terminal">
+<code class="descname">add_symbol_terminal</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#PrimitiveSet.add_symbol_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.add_symbol_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a symbolic terminal, whose name points to the true value stored in <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet.globals" title="geppy.core.symbol.PrimitiveSet.globals"><code class="xref py py-attr docutils literal notranslate"><span class="pre">globals</span></code></a>.</p>
+<p>For example, we may add a terminal for the constant <em>pi</em>, with <code class="docutils literal notranslate"><span class="pre">add_symbol_terminal(3.1415,</span> <span class="pre">'pi')</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – name of the terminal</li>
 <li><strong>value</strong> – value of the terminal</li>
-<li><strong>name</strong> – str, name of the terminal, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>If a constant terminal like a number 5 is expected, then simply leave <em>name</em> as <code class="docutils literal notranslate"><span class="pre">None</span></code>, and use
-<code class="docutils literal notranslate"><span class="pre">add_terminal(5)</span></code>. Otherwise, please specify a valid <em>name</em> to create a symbolic terminal.
-For instance, <code class="docutils literal notranslate"><span class="pre">add_terminal(3.14,</span> <span class="pre">'pi')</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="geppy.core.symbol.PrimitiveSet.ephemerals">
 <code class="descname">ephemerals</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.ephemerals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all the added ephemeral terminals in this set.</p>
+<dd><p>Get all the ephemeral terminals in this set.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -851,7 +900,57 @@ fed into the builtin <a class="reference external" href="https://docs.python.org
 <dl class="attribute">
 <dt id="geppy.core.symbol.PrimitiveSet.terminals">
 <code class="descname">terminals</code><a class="headerlink" href="#geppy.core.symbol.PrimitiveSet.terminals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all the terminals, including the ephemeral ones and input terminals if any.</p>
+<dd><p>Get all the terminals.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.RNCTerminal">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">RNCTerminal</code><span class="sig-paren">(</span><em>name='?'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#RNCTerminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.RNCTerminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
+<p>A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC
+algorithm. This class is mainly used internally by the <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> class. The name of a
+<a class="reference internal" href="#geppy.core.symbol.RNCTerminal" title="geppy.core.symbol.RNCTerminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNCTerminal</span></code></a> object is ‘?’ by default, and its value is retrieved dynamically according to the GEP-RNC
+algorithm. Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id7">[FC2006]</a> for more details.</p>
+<p>In <em>geppy</em> and the GEP-RNC algorithm, the RNC terminal is just a placeholder and the default name ‘?’ is
+recommended.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.RNCTerminal.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name='?'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#RNCTerminal.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.RNCTerminal.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a RNC terminal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – str, default ‘?’, name of the terminal</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="geppy.core.symbol.SymbolTerminal">
+<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">SymbolTerminal</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#SymbolTerminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.SymbolTerminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
+<p>Class that represents a symbolic terminal. Only the <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> of a symbol terminal participates in the genome
+construction, while its value is retrieved from the <a class="reference internal" href="#geppy.core.symbol.PrimitiveSet" title="geppy.core.symbol.PrimitiveSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimitiveSet</span></code></a> only during evaluation. Therefore, the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> of a symbol terminal must be a valid and unique Python identifier.
+The value of a symbol terminal can be any object that leads to a legal expression when evaluated.</p>
+<dl class="method">
+<dt id="geppy.core.symbol.SymbolTerminal.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#SymbolTerminal.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.SymbolTerminal.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a symbol terminal with the symbol given by <em>name</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – str, must be a valid non-keyword Python identifier</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -880,6 +979,12 @@ fed into the builtin <a class="reference external" href="https://docs.python.org
 </dd></dl>
 
 <dl class="method">
+<dt id="geppy.core.symbol.Terminal.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Terminal.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Terminal.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="geppy.core.symbol.Terminal.format">
 <code class="descname">format</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#Terminal.format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.Terminal.format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation of this terminal for subsequent evaluation purpose, which may be a symbol or a
@@ -898,34 +1003,6 @@ numeric string.</p>
 <dt id="geppy.core.symbol.Terminal.value">
 <code class="descname">value</code><a class="headerlink" href="#geppy.core.symbol.Terminal.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value of this terminal.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="geppy.core.symbol.TerminalRNC">
-<em class="property">class </em><code class="descclassname">geppy.core.symbol.</code><code class="descname">TerminalRNC</code><span class="sig-paren">(</span><em>name='?'</em>, <em>value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#TerminalRNC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.TerminalRNC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#geppy.core.symbol.Terminal" title="geppy.core.symbol.Terminal"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.symbol.Terminal</span></code></a></p>
-<p>A special terminal, which is just a placeholder representing a random numerical constant (RNC) in the GEP-RNC
-algorithm. This class is mainly used internally by the <a class="reference internal" href="#geppy.core.entity.GeneDc" title="geppy.core.entity.GeneDc"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneDc</span></code></a> class. The name of a
-<a class="reference internal" href="#geppy.core.symbol.TerminalRNC" title="geppy.core.symbol.TerminalRNC"><code class="xref py py-class docutils literal notranslate"><span class="pre">TerminalRNC</span></code></a> object is ‘?’ by default, and its value is retrieved dynamically according to the GEP-RNC
-algorithm. Refer to Chapter 5 of <a class="reference internal" href="geppy.tools.html#fc2006" id="id7">[FC2006]</a> for more details.</p>
-<dl class="method">
-<dt id="geppy.core.symbol.TerminalRNC.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name='?'</em>, <em>value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/core/symbol.html#TerminalRNC.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.core.symbol.TerminalRNC.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize a RNC terminal.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> – str, name of the terminal</li>
-<li><strong>value</strong> – value of the terminal</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </dd></dl>

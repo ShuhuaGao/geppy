@@ -375,7 +375,7 @@ instance, if there are <cite>d</cite> Dc elements in the whole chromosome, then 
 <code class="descclassname">geppy.tools.mutation.</code><code class="descname">mutate_uniform_ephemeral</code><span class="sig-paren">(</span><em>individual</em>, <em>ind_pb='1p'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geppy/tools/mutation.html#mutate_uniform_ephemeral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geppy.tools.mutation.mutate_uniform_ephemeral" title="Permalink to this definition">¶</a></dt>
 <dd><p>This operator is specially designed for ephemeral numerical constant (ENC) mutation.
 It attempts to change the value of the ephemeral constants in the <em>individual</em> if any by calling <cite>e.update_value()</cite>,
-where <cite>e</cite> is an ephemeral inside <em>individual</em>. See <a class="reference internal" href="geppy.core.html#geppy.core.symbol.Ephemeral.update_value" title="geppy.core.symbol.Ephemeral.update_value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_value()</span></code></a> for details.</p>
+where <cite>e</cite> is an ephemeral inside <em>individual</em>. See <code class="xref py py-meth docutils literal notranslate"><span class="pre">update_value()</span></code> for details.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -506,7 +506,8 @@ which can remember the order of entry insertion. Thus, if <cite>‘mut_A’</cit
 <dl class="attribute">
 <dt id="geppy.tools.toolbox.Toolbox.pbs">
 <code class="descname">pbs</code><a class="headerlink" href="#geppy.tools.toolbox.Toolbox.pbs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the probability dictionary which specifies the probabilities for the registered operators.</p>
+<dd><p>Get the probability dictionary of type <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code></a>,
+which specifies the probabilities for the registered operators.</p>
 </dd></dl>
 
 <dl class="method">

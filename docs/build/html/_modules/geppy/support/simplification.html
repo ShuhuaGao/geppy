@@ -57,7 +57,7 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">from</span> <span class="nn">..core.entity</span> <span class="k">import</span> <span class="n">KExpression</span><span class="p">,</span> <span class="n">Chromosome</span><span class="p">,</span> <span class="n">Gene</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Terminal</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Terminal</span><span class="p">,</span> <span class="n">SymbolTerminal</span>
 
 <span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
 
@@ -121,9 +121,8 @@
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">arity</span><span class="p">):</span>
                 <span class="n">t</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  <span class="c1"># t may be a terminal or a symbolic expression already</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Terminal</span><span class="p">):</span>
-                    <span class="c1"># a terminal may be a constant or an input</span>
-                    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># an input</span>
-                        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>  <span class="c1"># &#39;x&#39; -&gt; symbol x</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">SymbolTerminal</span><span class="p">):</span>
+                        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>

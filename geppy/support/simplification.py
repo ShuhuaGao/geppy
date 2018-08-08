@@ -8,7 +8,7 @@ be used in postprocessing.
 import math
 import operator
 from ..core.entity import KExpression, Chromosome, Gene
-from ..core.symbol import Function, Terminal
+from ..core.symbol import Function, Terminal, SymbolTerminal
 
 import sympy as sp
 
@@ -72,9 +72,8 @@ def _simplify_kexpression(expr, symbolic_function_map):
             for _ in range(p.arity):
                 t = expr.pop()  # t may be a terminal or a symbolic expression already
                 if isinstance(t, Terminal):
-                    # a terminal may be a constant or an input
-                    if t.value is None:  # an input
-                        args.append(sp.Symbol(t.name))  # 'x' -> symbol x
+                    if isinstance(t, SymbolTerminal):
+                        args.append(sp.Symbol(t.name))
                     else:
                         args.append(t.value)
                 else:

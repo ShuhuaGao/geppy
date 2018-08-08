@@ -60,7 +60,7 @@ In *geppy*, the conventions for such operators' design and registration into a t
 
 Code example
 =================================================
-The following code code snippet is extracted from `Boolean </../../examples/sr/Boolean_function_identification.ipynb>`_ showing the registration of genetic operators into a :class:`~geppy.tools.toolbox.Toolbox` ::
+The following code code snippet is extracted from `Boolean model symbolic regression <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/Boolean_function_identification.ipynb>`_ showing the registration of genetic operators into a :class:`~geppy.tools.toolbox.Toolbox` ::
 
 	toolbox.register('select', tools.selRoulette)
 
