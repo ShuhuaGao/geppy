@@ -40,19 +40,20 @@ pip install .
 ```
 (TODO) Later, I will publish *geppy* to pip. 
 ## Documentation
-Check [*geppy* documentation](https://geppy.readthedocs.io/en/latest/) for GEP theory and tutorials as well as a comprehensive introduction of *geppy*'s API and typical usages.
-
-TODO: add more examples and tutorials into the documentation.
+Check [*geppy* documentation](https://geppy.readthedocs.io/en/latest/) for GEP theory and tutorials as well as a comprehensive introduction of *geppy*'s API and typical usages with comprehensive tutorials and examples.
 
 ## Examples
 A getting started example is presented in the Jupyter notebook [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb), which infers a Boolean function from given input-output data with GEP. More examples are listed in the following.
-### Symbolic regression
-1. [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb) (Getting started)
-2. [A simple mathematical expression inference](./examples/sr/numerical_expression_inference.ipynb) (Demonstrating the GEP-RNC algorithm for numerical constant evolution)
+### Simple symbolic regression
+1. [Boolean model identification](./examples/sr/Boolean_function_identification.ipynb) (Getting started with no constants involved)
+2. [Simple mathematical expression inference](./examples/sr/numerical_expression_inference-ENC.ipynb) (Constants finding with ephemeral random constants (ERC))
+3. [Simple mathematical expression inference with the GEP-RNC algorithm](./examples/sr/numerical_expression_inference-RNC.ipynb) (Demonstrating the GEP-RNC algorithm for numerical constant evolution)
+### Advanced symbolic regression
+1. [Improving symbolic regression with linear scaling](./examples/sr/numerical_expression_inference-Linear_scaling.ipynb) (Use the linear scaling technique to evolve models with continuous real constants more efficiently)
 
 
 ## Requirements
-- Python 3
+- Python 3.5 and afterwards
 - [DEAP](https://github.com/DEAP/deap), which should be installed automatically if you haven't got it when installing *geppy*.
 - [optional] To visualize the expression tree using the `geppy.export_expression_tree` method, you need the [graphviz](https://pypi.org/project/graphviz/) module.
 - [optional] Since GEP/GP doesn't simplify the expressions during evolution, its final result may contain many redundancies, and the tree can be very large,  like `x + 5 * (2 * x - x - x) - 1`,  which is simply `x - 1`. You may like to simplify the final model evolved by GEP with symbolic computation to get better understanding of this model. The corresponding `geppy.simplify` method depends on the [sympy](http://www.sympy.org/en/index.html) package. 

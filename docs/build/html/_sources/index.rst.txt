@@ -25,14 +25,15 @@ Get started
 Tutorials & Examples
 ================================
 
-Symbolic regression
+Simple symbolic regression
 --------------------------------
 1. `Boolean model identification <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/Boolean_function_identification.ipynb>`_ (Getting started)
 2. `Simple numerical expression inference 1 <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-ENC.ipynb>`_  (Using ephemeral numerical constants (ENC))
 3. `Simple numerical expression inference 2 <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-RNC.ipynb>`_ (The GEP-RNC algorithm for random numerical constant evolution) 
 
-Decision tree induction
--------------------------------
+Advanced symbolic regression
+------------------------------------------
+1. `Improving symbolic regression with linear scaling <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-Linear_scaling.ipynb>`_ (Paper: *Improving    Symbolic Regression with Interval Arithmetic and Linear Scaling*)
 
 .. toctree::
    :maxdepth: 2
