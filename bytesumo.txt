@@ -1,0 +1,25 @@
+
+----------------------------------------------------------------
+
+             
+              |       |     
+              |--\  /-|-.-.             .
+              |__/\/  | \/_            . :.
+               ___/__  __ __  __   ___/ . .
+              / ._|| | | || \/  \ / _ \ . : .: 
+              \_  \| |_| || | | || [_] | .. 
+              \___/|____/||_|_|_| \___/ ..
+                                  / . ..  .:
+                                   .: .  .:  
+                
+ Data Science | Data Engineering | Data Architecture & Strategy 
+----------------------------------------------------------------
+
+NOTES:
+
+This code is a fork of https://github.com/ShuhuaGao/geppy
+
+I have included a new example notebook demonstrating how to do symbolic regression over a real file of data.
+The example is found here:
+
+/examples/sr/GEP_RNC_for_ML_with_UCI_Power_Plant_dataset.ipynb
