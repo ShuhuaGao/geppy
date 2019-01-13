@@ -12,6 +12,14 @@ geppy.algorithms.basic module
     :undoc-members:
     :show-inheritance:
 
+geppy.algorithms.copt module
+----------------------------
+
+.. automodule:: geppy.algorithms.copt
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

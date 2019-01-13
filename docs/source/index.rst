@@ -34,6 +34,7 @@ Simple symbolic regression
 Advanced symbolic regression
 ------------------------------------------
 1. `Improving symbolic regression with linear scaling <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/numerical_expression_inference-Linear_scaling.ipynb>`_ (Paper: *Improving    Symbolic Regression with Interval Arithmetic and Linear Scaling*)
+2. `Apply symbolic regression to teh UCI Power Plant dataset <https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/GEP_RNC_for_ML_with_UCI_Power_Plant_dataset.ipynb>`_
 
 .. toctree::
    :maxdepth: 2
