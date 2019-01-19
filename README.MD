@@ -51,6 +51,8 @@ A getting started example is presented in the Jupyter notebook [Boolean model id
 ### Advanced symbolic regression
 1. [Improving symbolic regression with linear scaling](./examples/sr/numerical_expression_inference-Linear_scaling.ipynb) (Use the linear scaling technique to evolve models with continuous real constants more efficiently)
 
+2. [Use the GEP-RNC algorithm with linear scaling on  the UCI Power Plant dataset](https://github.com/ShuhuaGao/geppy/blob/master/examples/sr/GEP_RNC_for_ML_with_UCI_Power_Plant_dataset.ipynb) See how to apply GEP based symbolic regression on a real machine learning dataset.
+
 
 ## Requirements
 - Python 3.5 and afterwards
