@@ -202,7 +202,7 @@ class SymbolTerminal(Terminal):
         """
         assert _is_nonkeyword_identifier(name), \
             'Name of a symbol terminal must be a valid non-keyword Python identifier'
-        super().__init__(name, value='symbol')
+        super().__init__(name, value=None)
 
 
 class EphemeralTerminal(Terminal):
