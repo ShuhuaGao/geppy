@@ -85,6 +85,12 @@ def _simplify_kexpression(expr, symbolic_function_map):
 
 
 def simplify(genome, symbolic_function_map=None):
+    def link(linker, a):
+        a = list(a)
+        if len(a) == 2:
+            return linker(*a)
+        else:
+            return linker(a[0], link(linker, a[1:]))
     """
     Compile the primitive tree into a (possibly simplified) symbolic expression.
 
@@ -128,7 +134,7 @@ def simplify(genome, symbolic_function_map=None):
                 linker = symbolic_function_map[genome.linker.__name__]
             except:
                 linker = genome.linker
-            return sp.simplify(linker(*simplified_exprs))
+            return sp.simplify(link(linker, simplified_exprs))
     else:
         raise TypeError('Only an argument of type KExpression, Gene, and Chromosome is acceptable. The provided '
                         'genome type is {}.'.format(type(genome)))

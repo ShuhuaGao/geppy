@@ -32,6 +32,13 @@ def _compile_gene(g, pset):
 
 
 def compile_(individual, pset):
+    def link(linker, a):
+        a = list(a)
+        if len(a) == 2:
+            return linker(*a)
+        else:
+            return linker(a[0], link(linker, a[1:]))
+
     """
     Compile the individual into a Python lambda expression.
 
@@ -47,7 +54,8 @@ def compile_(individual, pset):
             return fs[0]
         else:
             return lambda *x: tuple((f(*x) for f in fs))
-    return lambda *x: linker(*(f(*x) for f in fs))
+    # return lambda *x: linker(*(f(*x) for f in fs))
+    return lambda *x: link(linker, (f(*x) for f in fs))
 
 
 __all__ = ['compile_']
