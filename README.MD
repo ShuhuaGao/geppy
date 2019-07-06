@@ -55,7 +55,7 @@ A getting started example is presented in the Jupyter notebook [Boolean model id
 
 
 ## Requirements
-- Python 3.5 and afterwards
+- Python 3.6 and afterwards
 - [DEAP](https://github.com/DEAP/deap), which should be installed automatically if you haven't got it when installing *geppy*.
 - [optional] To visualize the expression tree using the `geppy.export_expression_tree` method, you need the [graphviz](https://pypi.org/project/graphviz/) module.
 - [optional] Since GEP/GP doesn't simplify the expressions during evolution, its final result may contain many redundancies, and the tree can be very large,  like `x + 5 * (2 * x - x - x) - 1`,  which is simply `x - 1`. You may like to simplify the final model evolved by GEP with symbolic computation to get better understanding of this model. The corresponding `geppy.simplify` method depends on the [sympy](http://www.sympy.org/en/index.html) package. 
