@@ -21,6 +21,8 @@ DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.sub.__name__: operator.sub,
     operator.mul.__name__: operator.mul,
     operator.neg.__name__: operator.neg,
+	operator.pow.__name__: operator.pow,
+	operator.abs.__name__: operator.abs,
     operator.floordiv.__name__: operator.floordiv,
     operator.truediv.__name__: operator.truediv,
     'protected_div': operator.truediv,
@@ -30,18 +32,20 @@ DEFAULT_SYMBOLIC_FUNCTION_MAP = {
 Currently, it is defined as::
 
     DEFAULT_SYMBOLIC_FUNCTION_MAP = {
-        operator.and_.__name__: sp.And,
-        operator.or_.__name__: sp.Or,
-        operator.not_.__name__: sp.Not,
-        operator.add.__name__: operator.add,
-        operator.sub.__name__: operator.sub,
-        operator.mul.__name__: operator.mul,
-        operator.neg.__name__: operator.neg,
-        operator.floordiv.__name__: operator.floordiv,
-        operator.truediv.__name__: operator.truediv,
-        'protected_dv': operator.truediv,
-        math.log.__name__: sp.log
-    }
+		operator.and_.__name__: sp.And,
+		operator.or_.__name__: sp.Or,
+		operator.not_.__name__: sp.Not,
+		operator.add.__name__: operator.add,
+		operator.sub.__name__: operator.sub,
+		operator.mul.__name__: operator.mul,
+		operator.neg.__name__: operator.neg,
+		operator.pow.__name__: operator.pow,
+		operator.abs.__name__: operator.abs,
+		operator.floordiv.__name__: operator.floordiv,
+		operator.truediv.__name__: operator.truediv,
+		'protected_div': operator.truediv,
+		math.log.__name__: sp.log
+	}
 """
 
 
