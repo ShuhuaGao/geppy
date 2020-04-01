@@ -21,31 +21,37 @@ DEFAULT_SYMBOLIC_FUNCTION_MAP = {
     operator.sub.__name__: operator.sub,
     operator.mul.__name__: operator.mul,
     operator.neg.__name__: operator.neg,
-	operator.pow.__name__: operator.pow,
-	operator.abs.__name__: operator.abs,
+    operator.pow.__name__: operator.pow,
+    operator.abs.__name__: operator.abs,
     operator.floordiv.__name__: operator.floordiv,
     operator.truediv.__name__: operator.truediv,
     'protected_div': operator.truediv,
-    math.log.__name__: sp.log
+    math.log.__name__: sp.log,
+    math.sin.__name__: sp.sin,
+    math.cos.__name__: sp.cos,
+    math.tan.__name__: sp.tan
 }
 """
 Currently, it is defined as::
 
     DEFAULT_SYMBOLIC_FUNCTION_MAP = {
-		operator.and_.__name__: sp.And,
-		operator.or_.__name__: sp.Or,
-		operator.not_.__name__: sp.Not,
-		operator.add.__name__: operator.add,
-		operator.sub.__name__: operator.sub,
-		operator.mul.__name__: operator.mul,
-		operator.neg.__name__: operator.neg,
-		operator.pow.__name__: operator.pow,
-		operator.abs.__name__: operator.abs,
-		operator.floordiv.__name__: operator.floordiv,
-		operator.truediv.__name__: operator.truediv,
-		'protected_div': operator.truediv,
-		math.log.__name__: sp.log
-	}
+        operator.and_.__name__: sp.And,
+        operator.or_.__name__: sp.Or,
+        operator.not_.__name__: sp.Not,
+        operator.add.__name__: operator.add,
+        operator.sub.__name__: operator.sub,
+        operator.mul.__name__: operator.mul,
+        operator.neg.__name__: operator.neg,
+        operator.pow.__name__: operator.pow,
+        operator.abs.__name__: operator.abs,
+        operator.floordiv.__name__: operator.floordiv,
+        operator.truediv.__name__: operator.truediv,
+        'protected_div': operator.truediv,
+        math.log.__name__: sp.log,
+        math.sin.__name__: sp.sin,
+        math.cos.__name__: sp.cos,
+        math.tan.__name__: sp.tan
+    }
 """
 
 
@@ -55,9 +61,10 @@ def _simplify_kexpression(expr, symbolic_function_map):
     :return: a symbolic expression
     """
     assert len(expr) > 0
-    if len(expr) == 1: # must be a single terminal
+    if len(expr) == 1:  # must be a single terminal
         t = expr[0]
-        assert isinstance(t, Terminal), 'A K-expression of length 1 must only contain a terminal.'
+        assert isinstance(
+            t, Terminal), 'A K-expression of length 1 must only contain a terminal.'
         if t.value is None:  # an input
             return sp.Symbol(t.name)
         return t.value
@@ -70,7 +77,8 @@ def _simplify_kexpression(expr, symbolic_function_map):
             try:
                 sym_func = symbolic_function_map[p.name]
             except KeyError as e:
-                print("Please provide the symbolic function mapping for '{}' in symbolic_function_map.".format(p.name))
+                print(
+                    "Please provide the symbolic function mapping for '{}' in symbolic_function_map.".format(p.name))
                 raise e
             args = []
             for _ in range(p.arity):
@@ -126,7 +134,8 @@ def simplify(genome, symbolic_function_map=None):
         if len(genome) == 1:
             return _simplify_kexpression(genome[0].kexpression, symbolic_function_map)
         else:   # multigenic chromosome
-            simplified_exprs = [_simplify_kexpression(g.kexpression, symbolic_function_map) for g in genome]
+            simplified_exprs = [_simplify_kexpression(
+                g.kexpression, symbolic_function_map) for g in genome]
             # combine these sub-expressions into a single one with the linking function
             try:
                 linker = symbolic_function_map[genome.linker.__name__]
