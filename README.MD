@@ -72,7 +72,7 @@ You can also get a lot of papers/documents by Googling 'gene expression programm
 [1] Ferreira, C. (2001). Gene Expression Programming: a New Adaptive Algorithm for Solving Problems. Complex Systems, 13.
 [2] Zhong, J., Feng, L., & Ong, Y. S. (2017). Gene expression programming: a survey. IEEE Computational Intelligence Magazine, 12(3), 54-72.
 
-## How to cite
+## How to cite *geppy*
 If you find *geppy* useful in your projects, please cite it such that more researchers/engineers will know it. A BibTeX entry for *geppy* is given below.
 ```
 @misc{geppy_2020,

@@ -10,7 +10,7 @@ except:
 
 setuptools.setup(
     name="geppy",
-    version="0.1.1",
+    version="0.1",
     license='LGPL-3.0 License',
     author="Shuhua Gao",
     author_email="nus.gao.shuhua@gmail.com",
