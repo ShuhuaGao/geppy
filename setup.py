@@ -30,6 +30,6 @@ setuptools.setup(
     keywords=['evolutionary computation', 'gene expression programming', 'computational intelligence'],
     packages=setuptools.find_packages(),
     install_requires=['deap'],
-    download_url='https://github.com/ShuhuaGao/geppy/archive/0.1.1.zip'
+    download_url='https://github.com/ShuhuaGao/geppy/archive/0.1.tar.gz'
 )
 

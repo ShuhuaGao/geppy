@@ -77,11 +77,11 @@ If you find *geppy* useful in your projects, please cite it such that more resea
 ```
 @misc{geppy_2020,
     author       = {Shuhua Gao},
-    title        = {{geppy: a framework for gene expression programming }},
+    title        = {{geppy: a Python framework for gene expression programming }},
     month        = July,
     year         = 2020,
-    doi          = {10.5281/zenodo.3946275},
-    version      = {0.1.1},
+    doi          = {10.5281/zenodo.3946297},
+    version      = {0.1},
     publisher    = {Zenodo},
     url          = {https://github.com/ShuhuaGao/geppy}
     }
