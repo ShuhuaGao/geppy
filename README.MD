@@ -1,5 +1,5 @@
 # *geppy:* a gene expression programming framework in Python
-![geppy](https://github.com/ShuhuaGao/geppy/blob/master/docs/source/_static/geppy-icon.png)
+<img src="https://github.com/ShuhuaGao/geppy/blob/master/docs/source/_static/geppy-icon.png" width="300">
 
 *geppy* is a computational framework dedicated to [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP),  which is proposed by C. Ferreira  in 2001 [1].  *geppy* is developed in Python 3.
 
