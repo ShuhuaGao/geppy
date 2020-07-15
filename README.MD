@@ -1,5 +1,5 @@
 # *geppy:* a gene expression programming framework in Python
-<img src="docs/source/_static/geppy-icon.png" alt="drawing" width="300px"/>
+![geppy](https://github.com/ShuhuaGao/geppy/blob/master/docs/source/_static/geppy-icon.png)
 
 *geppy* is a computational framework dedicated to [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP),  which is proposed by C. Ferreira  in 2001 [1].  *geppy* is developed in Python 3.
 
@@ -28,7 +28,12 @@ GEP can be seen as a variant of the traditional  [genetic programming](https://e
 - Examples of different applications using  GEP with detailed comments in Jupyter notebook.
 
 ## Installation
-Currently, *geppy* is still in its alpha phase. If you want to try it, you can install it from sources.
+### From PyPI (recommended)
+```bash
+pip install geppy
+```
+### From source
+You can install it from sources.
 1. First download or clone this repository
 ```bash
 git clone https://github.com/ShuhuaGao/geppy
@@ -38,7 +43,6 @@ git clone https://github.com/ShuhuaGao/geppy
 cd geppy
 pip install .
 ```
-(TODO) Later, I will publish *geppy* to pip. 
 ## Documentation
 Check [*geppy* documentation](https://geppy.readthedocs.io/en/latest/) for GEP theory and tutorials as well as a comprehensive introduction of *geppy*'s API and typical usages with comprehensive tutorials and examples.
 
