@@ -65,9 +65,9 @@ A getting started example is presented in the Jupyter notebook [Boolean model id
 - [optional] Since GEP/GP doesn't simplify the expressions during evolution, its final result may contain many redundancies, and the tree can be very large,  like `x + 5 * (2 * x - x - x) - 1`,  which is simply `x - 1`. You may like to simplify the final model evolved by GEP with symbolic computation to get better understanding of this model. The corresponding `geppy.simplify` method depends on the [sympy](http://www.sympy.org/en/index.html) package. 
 
 ## Common pitfalls in using GP
-Always keep in mind that evolution is random. Thus, any values may be input into a function. If issues like "overflow", "nan", or "not a number", or unreasonally huge values are encounterred, the most possible reason is that you did not protect a possibly _dangerous_ function. For example, if the `sqrt` function lies in the function set, then in evaluating one individual evolved by `geppy` (or GP in general), it is likely that a negative input `sqrt(-1.24)` happens. 
+Always keep in mind that evolution is random. Thus, any values may be input into a function. If issues like "overflow", "nan", or "not a number", or unreasonally huge values are encounterred, the most possible reason is that you did not protect a possibly _dangerous_ function. For example, if the `sqrt` function lies in the function set, then in evaluating one individual evolved by `geppy` (or GP in general), it is likely that a negative input `sqrt(-1.24)` may happen. 
 
-Refer to issues #28 #26 #4 for more details.
+Refer to issues [#28](https://github.com/ShuhuaGao/geppy/issues/28) [#26](https://github.com/ShuhuaGao/geppy/issues/26) [#4](https://github.com/ShuhuaGao/geppy/issues/4) for more details.
 
 ## Reference
 The bible of GEP is definitely Ferreira, C.'s monograph: **Ferreira, C. (2006). Gene expression programming: mathematical modeling by an artificial intelligence (Vol. 21). Springer**.
