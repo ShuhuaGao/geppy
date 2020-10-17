@@ -10,7 +10,7 @@ except:
 
 setuptools.setup(
     name="geppy",
-    version="0.1",
+    version="0.1.2",
     license='LGPL-3.0 License',
     author="Shuhua Gao",
     author_email="nus.gao.shuhua@gmail.com",
@@ -21,15 +21,17 @@ setuptools.setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
         "Operating System :: OS Independent",
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ),
 	long_description_content_type='text/markdown',
-    keywords=['evolutionary computation', 'gene expression programming', 'computational intelligence'],
+    keywords=['evolutionary computation', 'gene expression programming',
+              'computational intelligence', 'genetic programming'],
     packages=setuptools.find_packages(),
     install_requires=['deap'],
-    download_url='https://github.com/ShuhuaGao/geppy/archive/0.1.tar.gz'
+    download_url='https://github.com/ShuhuaGao/geppy/archive/v0.1.2.tar.gz'
 )
 
