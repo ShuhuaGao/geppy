@@ -42,7 +42,7 @@ def compile_(individual, pset):
     """
     fs = [_compile_gene(gene, pset) for gene in individual]
     linker = individual.linker
-    if linker is None:
+    if linker is None:  # return the gene itself for a monogenic one or tuple of all genes
         if len(fs) == 1:
             return fs[0]
         else:

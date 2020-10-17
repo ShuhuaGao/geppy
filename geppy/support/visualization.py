@@ -72,7 +72,8 @@ def graph(genome, label_renaming_map=None):
             for gene in genome:
                 expr = gene.kexpression
                 sub_roots.append(starting_index)
-                sub_nodes, sub_edges, sub_labels = _graph_kexpression(expr, starting_index)
+                sub_nodes, sub_edges, sub_labels = _graph_kexpression(
+                    expr, starting_index)
                 nodes.extend(sub_nodes)
                 edges.extend(sub_edges)
                 labels.update(sub_labels)
@@ -114,7 +115,7 @@ def export_expression_tree(genome, label_renaming_map=None, file='tree.png'):
     import graphviz as gv
     import os.path
 
-    nodes, edges, labels = graph(genome, label_renaming_map)
+    _, edges, labels = graph(genome, label_renaming_map)
     file_name, ext = os.path.splitext(file)
     ext = ext.lstrip('.')
     g = gv.Graph(format=ext)

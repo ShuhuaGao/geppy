@@ -454,7 +454,8 @@ class Chromosome(list):
         .. note:
             If a linker is specified, then it must accept *n_genes* arguments, each produced by one gene. If the
             *linker* parameter is the default value ``None``, then for a monogenic chromosome, no linking is applied,
-            while for a multigenic chromosome, the ``tuple`` function is used.
+            while for a multigenic chromosome, the ``tuple`` function is used, i.e., a tuple of values of all genes 
+            is returned.
         """
         list.__init__(self, (gene_gen() for _ in range(n_genes)))
         self._linker = linker
@@ -522,10 +523,13 @@ class Chromosome(list):
     @property
     def linker(self):
         """
-        Get the linking function.
+        Get the linking function. 
+
+        .. note:
+            If linker is `None`, then the actual linking function during evaluation of an individual
+            returns the value of the single gene for a single-gene (monogenic) chromosome or a tuple of values of all 
+            genes for a multi-gene chromosome.
         """
-        if self._linker is None and len(self) > 1:
-            return tuple
         return self._linker
 
     def __repr__(self):
