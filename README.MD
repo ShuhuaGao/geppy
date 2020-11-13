@@ -91,3 +91,15 @@ If you find *geppy* useful in your projects, please cite it such that more resea
     url          = {https://github.com/ShuhuaGao/geppy}
     }
 ```
+Alternatively, if you want a more *academic* citation, you may cite our relevant paper
+```
+@ARTICLE{learn_async,
+  author={S. {Gao} and C. {Sun} and C. {Xiang} and K. {Qin} and T. H. {Lee}},
+  journal={IEEE Transactions on Cybernetics}, 
+  title={Learning Asynchronous Boolean Networks From Single-Cell Data Using Multiobjective Cooperative Genetic Programming}, 
+  year={2020},
+  volume={},
+  number={},
+  pages={1-15},
+  doi={10.1109/TCYB.2020.3022430}}
+```
