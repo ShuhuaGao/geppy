@@ -17,7 +17,7 @@ setuptools.setup(
     description="A package for gene expression programming in Python.",
     long_description=long_description,
     url="https://github.com/ShuhuaGao/geppy",
-    classifiers=(
+    classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
@@ -26,7 +26,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
-    ),
+    ],
 	long_description_content_type='text/markdown',
     keywords=['evolutionary computation', 'gene expression programming',
               'computational intelligence', 'genetic programming'],

@@ -451,7 +451,7 @@ class Chromosome(list):
         :param n_genes: number of genes
         :param linker: callable, a linking function
 
-        .. note:
+        .. note::
             If a linker is specified, then it must accept *n_genes* arguments, each produced by one gene. If the
             *linker* parameter is the default value ``None``, then for a monogenic chromosome, no linking is applied,
             while for a multigenic chromosome, the ``tuple`` function is used, i.e., a tuple of values of all genes 

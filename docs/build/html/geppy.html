@@ -1,19 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>geppy package &#8212; geppy 0.1.0a0 documentation</title>
-    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>geppy package &#8212; geppy 0.1.2 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
  
@@ -35,8 +37,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
     <li><a href="https://github.com/ShuhuaGao/geppy"><img src="_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
-	<li><a href="index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
- 
+	<li><a href="index.html">geppy 0.1.2 documentation</a> &#187; </li>
+
+        <li class="nav-item nav-item-this"><a href="">geppy package</a></li> 
       </ul>
     </div>  
 
@@ -89,8 +92,8 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-geppy" title="Permalink to this headline">¶</a></h2>
 <p>The <em>geppy</em> package supports gene expression programming in Python.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">For convenience of usage, all APIs have been imported into the top-level package <em>geppy</em> and can be used with the
+<p class="admonition-title">Tip</p>
+<p>For convenience of usage, all APIs have been imported into the top-level package <em>geppy</em> and can be used with the
 short form <code class="docutils literal notranslate"><span class="pre">geppy.API</span></code> directly. For example, simply use <code class="docutils literal notranslate"><span class="pre">geppy.Chromosome</span></code> as an alias of the class
 <a class="reference internal" href="geppy.core.html#geppy.core.entity.Chromosome" title="geppy.core.entity.Chromosome"><code class="xref py py-class docutils literal notranslate"><span class="pre">geppy.core.entity.Chromosome</span></code></a> and <code class="docutils literal notranslate"><span class="pre">geppy.invert</span></code> as the alias of the function
 <a class="reference internal" href="geppy.tools.html#geppy.tools.mutation.invert" title="geppy.tools.mutation.invert"><code class="xref py py-func docutils literal notranslate"><span class="pre">geppy.tools.mutation.invert()</span></code></a>.</p>
@@ -99,12 +102,13 @@ short form <code class="docutils literal notranslate"><span class="pre">geppy.AP
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">geppy package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
@@ -121,17 +125,15 @@ short form <code class="docutils literal notranslate"><span class="pre">geppy.AP
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -146,17 +148,18 @@ short form <code class="docutils literal notranslate"><span class="pre">geppy.AP
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
     <li><a href="https://github.com/ShuhuaGao/geppy"><img src="_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
-	<li><a href="index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
- 
+	<li><a href="index.html">geppy 0.1.2 documentation</a> &#187; </li>
+
+        <li class="nav-item nav-item-this"><a href="">geppy package</a></li> 
       </ul>
     </div>
 <div class="footer">
-    &copy; Copyright 2018, Shuhua Gao.
+    &copy; Copyright 2018-2020, Shuhua Gao.
     <br />
     Built on None.
     <a href="bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.3.1.
 </div>
 <script type="text/javascript">
   (function() {

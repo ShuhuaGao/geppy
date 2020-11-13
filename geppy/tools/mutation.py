@@ -305,7 +305,7 @@ def mutate_uniform_ephemeral(individual, ind_pb='1p'):
     """
     This operator is specially designed for ephemeral numerical constant (ENC) mutation.
     It attempts to change the value of the ephemeral constants in the *individual* if any by calling `e.update_value()`,
-    where `e` is an ephemeral inside *individual*. See :meth:`~geppy.core.symbol.Ephemeral.update_value` for details.
+    where `e` is an ephemeral inside *individual*. See :meth:`~geppy.core.symbol.EphemeralTerminal.update_value` for details.
 
     :param individual: :class:`~geppy.core.entity.Chromosome`, a chromosome
     :param ind_pb: float or str, default '1p'. If a float is given, then *ind_pb* specifies the probability of each

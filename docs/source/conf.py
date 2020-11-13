@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('../../'))   # path of the parent dir of the 
 # -- Project information -----------------------------------------------------
 
 project = 'geppy'
-copyright = '2018, Shuhua Gao'
+copyright = '2018-2020, Shuhua Gao'
 author = 'Shuhua Gao'
 
 # The short X.Y version
@@ -108,9 +108,9 @@ html_static_path = ['_static']
 #
 # html_sidebars = {}
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {
-    'index': 'indexsidebar.html',
-}
+# html_sidebars = {
+#     'index': 'indexsidebar.html',
+# }
 
 
 # -- Options for HTMLHelp output ---------------------------------------------

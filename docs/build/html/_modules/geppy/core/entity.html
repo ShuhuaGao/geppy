@@ -1,19 +1,21 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>geppy.core.entity &#8212; geppy 0.1.0a0 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>geppy.core.entity &#8212; geppy 0.1.2 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="stylesheet" href="../../../_static/pydoctheme.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
  
@@ -35,9 +37,10 @@
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
     <li><a href="https://github.com/ShuhuaGao/geppy"><img src="../../../_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
-	<li><a href="../../../index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+	<li><a href="../../../index.html">geppy 0.1.2 documentation</a> &#187; </li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">geppy.core.entity</a></li> 
       </ul>
     </div>  
 
@@ -60,8 +63,8 @@
 <span class="sd">from multiple genes into a single result.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">..tools.generator</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="k">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">RNCTerminal</span><span class="p">,</span> <span class="n">Terminal</span>
+<span class="kn">from</span> <span class="nn">..tools.generator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..core.symbol</span> <span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">RNCTerminal</span><span class="p">,</span> <span class="n">Terminal</span>
 
 
 <span class="n">_DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
@@ -72,7 +75,7 @@
 <span class="sd">    Class representing the K-expression, or the open reading frame (ORF), of a gene in GEP. A K-expression is actually</span>
 <span class="sd">    a linear form of an expression tree obtained by level-order traversal.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="KExpression.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.KExpression.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+<div class="viewcode-block" id="KExpression.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.KExpression.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a K-expression.</span>
 
@@ -80,14 +83,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="KExpression.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.KExpression.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="KExpression.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.KExpression.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a string representation of this expression by joining the name of each primitive.</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ele</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span></div>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">))</span></div>
 
 
@@ -96,7 +99,7 @@
 <span class="sd">    Class representing an expression tree (ET) in GEP, which may be obtained by translating a K-expression, a</span>
 <span class="sd">    gene, or a chromosome, i.e., genotype-phenotype mapping.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ExpressionTree.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.ExpressionTree.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<div class="viewcode-block" id="ExpressionTree.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.ExpressionTree.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a tree with the given *root* node.</span>
 
@@ -116,7 +119,7 @@
 <span class="sd">        Class representing a node in the expression tree. Each node has a variable number of children, depending on</span>
 <span class="sd">        the arity of the primitive at this node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ExpressionTree.Node.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.ExpressionTree.Node.__init__">[docs]</a>        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="ExpressionTree.Node.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.ExpressionTree.Node.__init__">[docs]</a>        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span></div>
 
@@ -184,7 +187,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A single gene in GEP, which is a fixed-length linear sequence composed of functions and terminals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Gene.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">):</span>
+<div class="viewcode-block" id="Gene.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate a gene.</span>
 <span class="sd">        :param head_length: length of the head domain</span>
@@ -212,7 +215,7 @@
         <span class="n">g</span><span class="o">.</span><span class="n">_head_length</span> <span class="o">=</span> <span class="n">head_length</span>
         <span class="k">return</span> <span class="n">g</span></div>
 
-<div class="viewcode-block" id="Gene.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Gene.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Gene.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the expression in a human readable string, which is also a legal python code that can be evaluated.</span>
 
@@ -286,7 +289,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_length</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail_length</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a string representation of a gene including all the symbols. Mainly for debugging purpose.</span>
 
@@ -327,7 +330,7 @@
 
 <span class="sd">    Refer to Chapter 5 of [FC2006]_ for more knowledge about GEP-RNC.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="GeneDc.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">rnc_array_length</span><span class="p">):</span>
+<div class="viewcode-block" id="GeneDc.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">head_length</span><span class="p">,</span> <span class="n">rnc_gen</span><span class="p">,</span> <span class="n">rnc_array_length</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a gene with a Dc domain.</span>
 
@@ -411,7 +414,7 @@
     <span class="c1"># def __deepcopy__(self, memodict):</span>
     <span class="c1">#     return self.__class__.from_genome(self, self.head_length, self.rnc_array)</span>
 
-<div class="viewcode-block" id="GeneDc.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="GeneDc.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.GeneDc.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the expression in a human readable string, which is also a legal python code that can be evaluated.</span>
 <span class="sd">        The special terminal representing a RNC will be replaced by their true values retrieved from the array</span>
@@ -481,7 +484,7 @@
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">expr</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;, rnc_array=[&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnc_array</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span></div>
 
 
@@ -492,7 +495,7 @@
 <span class="sd">    :class:`Chromosome` is of type :class:`Gene`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Chromosome.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Chromosome.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gene_gen</span><span class="p">,</span> <span class="n">n_genes</span><span class="p">,</span> <span class="n">linker</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Chromosome.__init__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Chromosome.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gene_gen</span><span class="p">,</span> <span class="n">n_genes</span><span class="p">,</span> <span class="n">linker</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize an individual in GEP.</span>
 
@@ -500,10 +503,11 @@
 <span class="sd">        :param n_genes: number of genes</span>
 <span class="sd">        :param linker: callable, a linking function</span>
 
-<span class="sd">        .. note:</span>
+<span class="sd">        .. note::</span>
 <span class="sd">            If a linker is specified, then it must accept *n_genes* arguments, each produced by one gene. If the</span>
 <span class="sd">            *linker* parameter is the default value ``None``, then for a monogenic chromosome, no linking is applied,</span>
-<span class="sd">            while for a multigenic chromosome, the ``tuple`` function is used.</span>
+<span class="sd">            while for a multigenic chromosome, the ``tuple`` function is used, i.e., a tuple of values of all genes </span>
+<span class="sd">            is returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">gene_gen</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_genes</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_linker</span> <span class="o">=</span> <span class="n">linker</span></div>
@@ -551,7 +555,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max_arity</span>
 
-<div class="viewcode-block" id="Chromosome.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Chromosome.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Chromosome.__str__"><a class="viewcode-back" href="../../../geppy.core.html#geppy.core.entity.Chromosome.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the expressions in a human readable string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -571,13 +575,16 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">linker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the linking function.</span>
+<span class="sd">        Get the linking function. </span>
+
+<span class="sd">        .. note:</span>
+<span class="sd">            If linker is `None`, then the actual linking function during evaluation of an individual</span>
+<span class="sd">            returns the value of the single gene for a single-gene (monogenic) chromosome or a tuple of values of all </span>
+<span class="sd">            genes for a multi-gene chromosome.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linker</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">tuple</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linker</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a string representation of the chromosome including all the symbols in all the genes.</span>
 <span class="sd">        Mainly for debugging purpose.</span>
@@ -590,23 +597,22 @@
 
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -621,18 +627,19 @@
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
     <li><a href="https://github.com/ShuhuaGao/geppy"><img src="../../../_static/geppy-icon.png" style="height: 30px; vertical-align: middle; padding-right: 1em;" />Project Homepage</a> &#187;</li>
-	<li><a href="../../../index.html">geppy 0.1.0a0 documentation</a> &#187; </li>
+	<li><a href="../../../index.html">geppy 0.1.2 documentation</a> &#187; </li>
 
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">geppy.core.entity</a></li> 
       </ul>
     </div>
 <div class="footer">
-    &copy; Copyright 2018, Shuhua Gao.
+    &copy; Copyright 2018-2020, Shuhua Gao.
     <br />
     Built on None.
     <a href="../../../bugs.html">Found a bug</a>?
     <br />
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.6.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.3.1.
 </div>
 <script type="text/javascript">
   (function() {
