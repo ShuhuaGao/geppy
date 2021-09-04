@@ -458,7 +458,7 @@ class Chromosome(list):
             is returned.
         """
         list.__init__(self, (gene_gen() for _ in range(n_genes)))
-        self._linker = linker
+        self._linker = linker if linker is not None else lambda *args:tuple(args)
 
     @classmethod
     def from_genes(cls, genes, linker=None):
