@@ -436,6 +436,10 @@ class GeneDc(Gene):
         return super().__repr__() + ', rnc_array=[' + ', '.join(str(num) for num in self.rnc_array) + ']'
 
 
+def _default_linker(*args): 
+    return tuple(args)
+
+
 class Chromosome(list):
     """
     Individual representation in gene expression programming (GEP), which may contain one or more genes. Note that in a
@@ -530,6 +534,9 @@ class Chromosome(list):
             returns the value of the single gene for a single-gene (monogenic) chromosome or a tuple of values of all 
             genes for a multi-gene chromosome.
         """
+        # the default linker for a multi-gene chromosome
+        if self._linker is None and len(self) > 1:
+            return _default_linker
         return self._linker
 
     def __repr__(self):
