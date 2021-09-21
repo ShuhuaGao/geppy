@@ -20,13 +20,13 @@ sys.path.insert(0, os.path.abspath('../../'))   # path of the parent dir of the 
 # -- Project information -----------------------------------------------------
 
 project = 'geppy'
-copyright = '2018-2020, Shuhua Gao'
+copyright = '2018-2021, Shuhua Gao'
 author = 'Shuhua Gao'
 
 # The short X.Y version
-version = '0.1.2'
+version = '0.1.3'
 # The full version, including alpha/beta/rc tags
-release = '0.1.2'
+release = '0.1.3'
 
 autodoc_mock_imports=['numpy', 'deap', 'sympy', 'graphviz']
 

@@ -10,7 +10,7 @@ except:
 
 setuptools.setup(
     name="geppy",
-    version="0.1.2",
+    version="0.1.3",
     license='LGPL-3.0 License',
     author="Shuhua Gao",
     author_email="nus.gao.shuhua@gmail.com",
@@ -32,6 +32,6 @@ setuptools.setup(
               'computational intelligence', 'genetic programming'],
     packages=setuptools.find_packages(),
     install_requires=['deap'],
-    download_url='https://github.com/ShuhuaGao/geppy/archive/v0.1.2.tar.gz'
+    download_url='https://github.com/ShuhuaGao/geppy/archive/v0.1.3.tar.gz'
 )
 
