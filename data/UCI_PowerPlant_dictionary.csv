@@ -1,0 +1,6 @@
+Field,Symbol,Type,Description
+1,AT,Input,Atmospheric Temperature(Celius)
+2,V,Input,Exhaust Vacuum (cm Hg)
+3,AP,Input,Ambient Pressure (milibar)
+4,RH,Input,Relative Humidity (%)
+5,PE,Target,Plant Output Energy (MegaWatt)
