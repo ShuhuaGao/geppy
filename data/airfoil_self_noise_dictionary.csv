@@ -1,0 +1,7 @@
+Field,Symbol,Type,Description
+1,F,Input,Frequency (Hertz)
+2,A,Input,Angle of attack (degrees)
+3,C,Input,Chord length (meters)
+4,V,Input,Free-stream velocity (meters/second
+5,S,Input,Suction side displacement thickness (meters)
+6,P,Target,Scaled sound pressure level (decibels)

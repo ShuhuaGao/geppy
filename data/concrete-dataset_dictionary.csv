@@ -1,0 +1,10 @@
+Field,Symbol,Type,Description
+1,C,Input,Cement (component 1)(kg in a m^3 mixture)
+2,BF,Input,Blast Furnace Slag (component 2)(kg in a m^3 mixture)
+3,FL,Input,Fly Ash (component 3)(kg in a m^3 mixture)
+4,W,Input,Water  (component 4)(kg in a m^3 mixture)
+5,S,Input,Superplasticizer (component 5)(kg in a m^3 mixture)
+6,CA,Input,Coarse Aggregate  (component 6)(kg in a m^3 mixture)
+7,FN,Input,Fine Aggregate (component 7)(kg in a m^3 mixture)
+8,A,Input,Age (day)
+9,CCS,Target,Concrete compressive strength (MPa megapascals)
