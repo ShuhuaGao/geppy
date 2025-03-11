@@ -74,30 +74,21 @@ The bible of GEP is definitely Ferreira, C.'s monograph: **Ferreira, C. (2006). 
 
 
 ## How to cite *geppy*
-If you find *geppy* useful in your projects, please cite it such that more researchers/engineers will know it. A BibTeX entry for *geppy* is given below.
+If you find *geppy* useful in your projects, please cite it such that more researchers/engineers will know it. 
+You may cite any of the articles below, which contributed to the creation and development of the Geppy software package. 
 ```
-@misc{geppy_2020,
-    author       = {Shuhua Gao},
-    title        = {{geppy: a Python framework for gene expression programming }},
-    month        = July,
-    year         = 2020,
-    doi          = {10.5281/zenodo.3946297},
-    version      = {0.1},
-    publisher    = {Zenodo},
-    url          = {https://github.com/ShuhuaGao/geppy}
-    }
-```
-Alternatively, if you want a more *academic* citation, you may cite our relevant paper that further improves *geppy* for inference of logical dynamic networks. 
-```
-@ARTICLE{learn_async,
-  author={S. {Gao} and C. {Sun} and C. {Xiang} and K. {Qin} and T. H. {Lee}},
-  journal={IEEE Transactions on Cybernetics}, 
-  title={Learning Asynchronous Boolean Networks From Single-Cell Data Using Multiobjective Cooperative Genetic Programming}, 
-  year={2020},
-  volume={},
-  number={},
-  pages={1-15},
-  doi={10.1109/TCYB.2020.3022430}}
+@article{gao2022LearningAsynchronousBoolean,
+  title = {Learning {{Asynchronous Boolean Networks From Single-Cell Data Using Multiobjective Cooperative Genetic Programming}}},
+  author = {Gao, Shuhua and Sun, Changkai and Xiang, Cheng and Qin, Kairong and Lee, Tong Heng},
+  year = {2022},
+  month = may,
+  journal = {IEEE Transactions on Cybernetics},
+  volume = {52},
+  number = {5},
+  pages = {2916--2930},
+  doi = {10.1109/TCYB.2020.3022430}
+}
+
 
 @article{zhang2024LogicGepBooleanNetworksa,
   title = {{{LogicGep}}: {{Boolean}} Networks Inference Using Symbolic Regression from Time-Series Transcriptomic Profiling Data},
