@@ -1,7 +1,7 @@
 # *geppy:* a gene expression programming framework in Python
 <img src="https://github.com/ShuhuaGao/geppy/blob/master/docs/source/_static/geppy-icon.png" width="300">
 
-*geppy* is a computational framework dedicated to [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP),  which is proposed by C. Ferreira  in 2001 [1].  *geppy* is developed in Python 3.
+*geppy* is a computational framework dedicated to [Gene Expression Programming](https://en.wikipedia.org/wiki/Gene_expression_programming) (GEP),  which is used for system modeling from observation data. *geppy* learns both the model structure and parameters simultaneously.  *geppy* is developed in Python 3.
 
 ## What is GEP?
 Gene Expression Programming (GEP) is a popular and established evolutionary algorithm for automatic generation of computer programs and mathematical models.  It has found wide applications in symbolic regression, classification, automatic model design, combinatorial optimization and real parameter optimization problems [2].
@@ -72,10 +72,6 @@ Refer to issues [#28](https://github.com/ShuhuaGao/geppy/issues/28) [#26](https:
 ## Reference
 The bible of GEP is definitely Ferreira, C.'s monograph: **Ferreira, C. (2006). Gene expression programming: mathematical modeling by an artificial intelligence (Vol. 21). Springer**.
 
-You can also get a lot of papers/documents by Googling 'gene expression programming'.
-
-[1] Ferreira, C. (2001). Gene Expression Programming: a New Adaptive Algorithm for Solving Problems. Complex Systems, 13.
-[2] Zhong, J., Feng, L., & Ong, Y. S. (2017). Gene expression programming: a survey. IEEE Computational Intelligence Magazine, 12(3), 54-72.
 
 ## How to cite *geppy*
 If you find *geppy* useful in your projects, please cite it such that more researchers/engineers will know it. A BibTeX entry for *geppy* is given below.
@@ -91,7 +87,7 @@ If you find *geppy* useful in your projects, please cite it such that more resea
     url          = {https://github.com/ShuhuaGao/geppy}
     }
 ```
-Alternatively, if you want a more *academic* citation, you may cite our relevant paper
+Alternatively, if you want a more *academic* citation, you may cite our relevant paper that further improves *geppy* for inference of logical dynamic networks. 
 ```
 @ARTICLE{learn_async,
   author={S. {Gao} and C. {Sun} and C. {Xiang} and K. {Qin} and T. H. {Lee}},
@@ -102,4 +98,19 @@ Alternatively, if you want a more *academic* citation, you may cite our relevant
   number={},
   pages={1-15},
   doi={10.1109/TCYB.2020.3022430}}
+
+@article{zhang2024LogicGepBooleanNetworksa,
+  title = {{{LogicGep}}: {{Boolean}} Networks Inference Using Symbolic Regression from Time-Series Transcriptomic Profiling Data},
+  shorttitle = {{{LogicGep}}},
+  author = {Zhang, Dezhen and Gao, Shuhua and Liu, Zhi-Ping and Gao, Rui},
+  year = {2024},
+  month = may,
+  journal = {Briefings in Bioinformatics},
+  volume = {25},
+  number = {4},
+  pages = {bbae286},
+  doi = {10.1093/bib/bbae286},
+  urldate = {2024-06-25}
+}
+
 ```
